@@ -166,12 +166,13 @@
 // };
 
 // export default Register;
-
+import React from "react"
 import { useState } from "react"
 import Input from "./Form/Input"
 import SubmitButton from "../authorization/Form/SubmitButton"
 import SwapToRegister from "./Form/SwapToRegisterButton"
 import SwapToLogin from "./Form/SwapToLoginButton"
+import { AiFillHome } from "react-icons/ai"
 
 export default function Register() {
     const [newUserData, setNewUserData] = useState({
@@ -181,8 +182,68 @@ export default function Register() {
         confirmPassword: ""
     })
 
+    const [errors, setErrors] = useState({
+        usernameError: "",
+        emailError: "",
+        passwordError: "",
+        confirmPasswordError: ""
+    })
+
     const onChange = (e) => {
         setNewUserData({ ...newUserData, [e.target.name]: e.target.value })
+
+        if (e.target.name === "username") validateUsername(e.target.value)
+        if (e.target.name === "email") validateEmail(e.target.value)
+        if (e.target.name === "password") validatePasswords(e.target.value)
+    }
+
+    const validateUsername = (username) => {
+        const charRegex = new RegExp('(?=.*[a-zA-Z0-9!@#$%^&*])')
+        const lengthRegex = new RegExp('(?=.{5,})')
+
+        if (!lengthRegex.test(username)) {
+            setErrors({...errors, "usernameError": "Nazwa musi się składać z minimum 5 znaków"})
+            return
+        }
+
+        if (!charRegex.test(username)) {
+            setErrors({...errors, "usernameError": "Nazwa może zawierać litery alfabetu angielskiego oraz znaki specjalne"})
+            return
+        }
+
+        setErrors({...errors, "usernameError": ""})
+        return
+    }
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+        if (!emailRegex.test(email)) {
+            setErrors({...errors, "emailError": "Upewnij się że email posiada znak ( @ )"})
+            return
+        }
+
+        setErrors({...errors, "emailError": ""})
+        return
+    }
+
+    const validatePasswords = () => {
+        console.log(newUserData.password.length)
+        if (newUserData.password.length < 8) {
+            setErrors({...errors, "passwordError": "Hasło musi się składać z minimum 8 znaków"})
+            return
+        }
+
+        setErrors({...errors, "passwordError": ""})
+        
+
+        if (newUserData.confirmPassword !== newUserData.password) {
+            setErrors({...errors, "confirmPasswordError": "Hasła muszą być identyczne"})
+            return
+        }
+
+        setErrors({...errors, "confirmPasswordError": ""})
+        return
     }
 
     const inputs = [
@@ -192,7 +253,6 @@ export default function Register() {
             type: "text",
             placeholder: "Podaj nazwę użytkownika",
             label: "Nazwa użytkownika",
-            errorMessage: "Wprowadź poprawną nazwę użytkownika"
         },
         {
             id: 2,
@@ -200,7 +260,6 @@ export default function Register() {
             type: "email",
             placeholder: "Podaj email",
             label: "Email",
-            errorMessage: "Wprowadź poprawny email"
         },
         {
             id: 3,
@@ -208,36 +267,50 @@ export default function Register() {
             type: "password",
             placeholder: "Podaj hasło",
             label: "Hasło",
-            errorMessage: "Wprowadź poprawny email"
         },
         {
             id: 4,
             name: "confirmPassword",
             type: "password",
             placeholder: "Podaj ponownie hasło",
-            label: "Ponowne hasło",
-            errorMessage: "Wprowadź poprawny email"
+            label: "Powtórz hasło",
         }
     ]
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(newUserData)
+
+        if (errors.confirmPasswordError.length === 0 &&
+            errors.passwordError.length === 0 &&
+            errors.emailError.length === 0 &&
+            errors.usernameError.length === 0) {
+                console.log("Nie ma bledow")
+            } else {
+                console.log("Są błędy")
+            }
     }
 
     return (
         <div className="flex items-center justify-center h-screen linear gradient-bg">
+            <div className="group">
+                <AiFillHome onClick={() => window.location = "/"} className="absolute top-6 left-8 text-5xl text-white hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200 rounded bg-blue-600/15" />
+                <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
+            </div>
             <form className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96" onSubmit={handleSubmit}>
                 <div className="flex">
-                    <SwapToRegister isOn={true}/>
+                    <SwapToRegister isOn={true} />
                     <SwapToLogin />
                 </div>
                 {inputs.map((input) => (
-                    <Input
-                        key={input.id}
-                        {...input}
-                        value={newUserData[input.name]}
-                        onChange={onChange} />
+                    <React.Fragment key={input.id}>
+                        <Input
+                            key={input.id}
+                            {...input}
+                            value={newUserData[input.name]}
+                            onChange={onChange} />
+                        <span
+                            className={`text-sm mt-1 text-red-600 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>{errors[input.name + "Error"]}</span>
+                    </React.Fragment>
                 ))}
                 <div className="flex space-x-4 mt-5">
                     <SubmitButton />

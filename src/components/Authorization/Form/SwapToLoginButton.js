@@ -8,7 +8,7 @@ export default function SwapToLogin({isOn}) {
                     LOGOWANIE
                 </button>
             ) : (
-                <button className="swap-button hover:ease-linear hover:bg-sky-700/50 hover:text-white hover:border-sky-700/50">
+                <button className="swap-button hover:ease-linear hover:text-blue-500 hover:text-lg duration-75">
                     LOGOWANIE
                 </button>
             )}
