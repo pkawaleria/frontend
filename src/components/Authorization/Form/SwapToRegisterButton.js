@@ -8,7 +8,7 @@ export default function SwapToRegister({isOn}) {
                     REJESTRACJA
                 </button>
             ) : (
-                <button className="swap-button">
+                <button className="swap-button hover:ease-linear hover:text-blue-500 hover:text-lg duration-75 mw-2xs:hover:text-sm">
                     REJESTRACJA
                 </button>
             )

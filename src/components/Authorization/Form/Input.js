@@ -13,7 +13,7 @@ export default function Input(props) {
     return (
         <div className="mt-4 mh-xs:mt-2">
             <label
-                className="text-gray-400 text-sm ml-3 mh-xs:text-xs">{label}</label>
+                className="text-gray-400 text-sm ml-3 mw-2xs:text-xs mh-xs:text-xs">{label}</label>
             <div className={`flex border-blue-600 border rounded-xl ${isDivFocused ? "border-2 shadow-2xl" : "border"}`}>
                 <input
                     className="w-11/12 p-4 pr-0 mx-0 placeholder-blue-600/40 text-blue-600 bg-transparent outline-0 mh-xs:p-3"

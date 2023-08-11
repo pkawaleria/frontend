@@ -1,128 +1,79 @@
-// import React, { useState } from 'react';
-// import Layout from './Layout';
-// import { Link } from 'react-router-dom';
+import React, { useState } from "react"
+import { AiFillHome } from "react-icons/ai"
 
-// const Login = () => {
-//     const [email, setEmail] = useState('');
-//     const [password, setPassword] = useState('');
-//     const [errors, setErrors] = useState({});
+import LoginButton from "./form/LoginButton"
+import SwapToRegisterButton from "./form/SwapToRegisterButton"
+import SwapToLoginButton from "./form/SwapToLoginButton"
+import Input from "./form/Input"
 
-//     const handleLogin = (e) => {
-//         e.preventDefault();
+import { validateField } from "./utils/LoginValidators"
+import { inputs } from "./utils/LoginInputs"
 
-//         // Walidacja pól
-//         const formErrors = {};
-//         let isValid = true;
+export default function Login() {
+    const [loginData, setLoginData] = useState({
+        login: "",
+        password: "",
+    })
 
-//         if (!email.trim()) {
-//             formErrors.email = 'Email is required';
-//             isValid = false;
-//         }
+    const [errors, setErrors] = useState({
+        loginError: "",
+        passwordError: "",
+    })
 
-//         if (!password.trim()) {
-//             formErrors.password = 'Password is required';
-//             isValid = false;
-//         }
+    const handleInputChange = (e) => {
+        setLoginData({ ...loginData, [e.target.name]: e.target.value })
+        let error = ""
 
-//         setErrors(formErrors);
+        if (e.target.name === "login") {
+            error = validateField(e.target.value, "Login nie może być pusty")
+            setErrors({...errors, "loginError": error})
+        }
 
-//         if (!isValid) {
-//             return;
-//         }
+        if (e.target.name === "password") {
+            error = validateField(e.target.value, "Hasło nie może być puste")
+            setErrors({...errors, "passwordError": error})
+        }
+    }
 
-//         fetch('http://localhost:5000/users/login', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 email,
-//                 password,
-//             }),
-//         })
-//             .then((response) => response.json())
-//             .then((data) => {
-//                 const accessToken = data.access_token;
-                
-//                 localStorage.setItem('accessToken', accessToken);
-//                 //Przekierowanie na stronę główną
-//                 window.location = "/"
-//             })
-//             .catch((error) => {
-//                 console.error(error);
-//             });
-//     };
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
-//     return (
-//         <Layout> 
-//             <div className="content-section">
-//                 <form onSubmit={handleLogin}>
-//                     <fieldset className="form-group">
-//                         <legend className="border-bottom mb-4">Log In</legend>
-//                         <div className="form-group">
-//                             <label htmlFor="email" className="form-control-label">
-//                                 Email
-//                             </label>
-//                             <input
-//                                 type="email"
-//                                 id="email"
-//                                 className={`form-control form-control-lg ${errors.email ? 'is-invalid' : ''}`}
-//                                 value={email}
-//                                 onChange={(e) => setEmail(e.target.value)}
-//                             />
-//                             {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-//                         </div>
-//                         <div className="form-group">
-//                             <label htmlFor="password" className="form-control-label">
-//                                 Password
-//                             </label>
-//                             <input
-//                                 type="password"
-//                                 id="password"
-//                                 className={`form-control form-control-lg ${errors.password ? 'is-invalid' : ''}`}
-//                                 value={password}
-//                                 onChange={(e) => setPassword(e.target.value)}
-//                             />
-//                             {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-//                         </div>
-//                         <div className="form-check">
-//                             <input type="checkbox" className="form-check-input" id="remember" onChange={setRememberMe} />
-//                             <label htmlFor="remember" className="form-check-label">
-//                                 Remember Me
-//                             </label>
-//                         </div>
-//                     </fieldset>
-//                     <div className="form-group">
-//                         <button type="submit" className="btn btn-outline-info">
-//                             Log In
-//                         </button>
-//                     </div>
-//                 </form>
-//             </div>
-//             <div className="border-top pt-3">
-//                 <small className="text-muted">
-//                     Need An Account? <Link className="ml-2" to="/register">Sign Up Now</Link>
-//                 </small>
-//             </div>
-//         </Layout>
-//     );
-// };
+        // TODO Dodanie obsługi endpointu do logowania
+    }
 
-// export default Login;
-
-import Input from "./Form/Input"
-
-function Login() {
     return (
-        <div className="flex items-center justify-center h-screen">
-            <form> 
-                <Input placeholder="Podaj nazwe użytkownika"/>
-                <Input placeholder="Podaj nazwe użytkownika"/>
-                <Input placeholder="Podaj nazwe użytkownika"/>
-                <Input placeholder="Podaj nazwe użytkownika"/>
+        <div className="flex items-center justify-center h-screen linear gradient-bg">
+            <div className="group">
+                <AiFillHome 
+                    onClick={() => window.location = "/"} 
+                    className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
+                                mw-xs:text-3xl mh-xs:text-3xl"/>
+                <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
+            </div>
+            <form 
+                className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
+                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4" 
+                    onSubmit={handleSubmit}>
+                <div className="flex">
+                    <SwapToRegisterButton />
+                    <SwapToLoginButton isOn={true} />
+                </div>
+                {inputs.map((input) => (
+                    <React.Fragment key={input.id}>
+                        <Input
+                            key={input.id}
+                            {...input}
+                            value={loginData[input.name]}
+                            onChange={handleInputChange}
+                        />
+                        <span
+                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>{errors[input.name + "Error"]}</span>
+                    </React.Fragment>
+                ))}
+                <div className="flex space-x-4 mt-5">
+                    <LoginButton />
+                </div>
             </form>
         </div>
     )
 }
-
-export default Login

@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import { AiFillHome } from "react-icons/ai"
 
-import SubmitButton from "./Form/SubmitButton"
-import SwapToRegisterButton from "./Form/SwapToRegisterButton"
-import SwapToLoginButton from "./Form/SwapToLoginButton"
-import Input from "./Form/Input"
+import SubmitButton from "./form/SubmitButton"
+import SwapToRegisterButton from "./form/SwapToRegisterButton"
+import SwapToLoginButton from "./form/SwapToLoginButton"
+import Input from "./form/Input"
 
-import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical } from "./utils/Validators"
-import { inputs } from "./utils/Inputs"
+import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical } from "./utils/RegisterValidators"
+import { inputs } from "./utils/RegisterInputs"
 
 export default function Register() {
     const [newUserData, setNewUserData] = useState({
