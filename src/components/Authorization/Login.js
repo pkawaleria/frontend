@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { AiFillHome } from "react-icons/ai"
 
 import LoginButton from "./form/LoginButton"
