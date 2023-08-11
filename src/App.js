@@ -1,19 +1,17 @@
-import { Route, Routes } from "react-router-dom";
-
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import Help from "./components/Help/Help";
-import Rules from "./components/Rules/Rules";
+import { Route, Routes } from "react-router";
+import { LoginPage } from "./pages/LoginPage"
+import { RegisterPage } from "./pages/RegisterPage"
 
 function App() {
+  //const accessToken = localStorage.getItem("accessToken")
+
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Help />} />
-        <Route path="/logowanie" element={<LoginPage />} />
-        <Route path="/rejestracja" element={<RegisterPage />} />
-      </Routes>
-    </div>
+    <Routes>
+      {/* <Route path="/" element={ <HomePage/> } /> */}
+      <Route path="/logowanie" element={ <LoginPage/> } />
+      <Route path="/rejestracja" element={ <RegisterPage/> } />
+
+    </Routes>
   );
 }
 
