@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../assets/style/SingleCard/singlecard.css'
+import '../../assets/styles/SingleCard/singlecard.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const SingleCard = ({ point }) => {

@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { AiFillHome } from "react-icons/ai"
+import { Link } from "react-router-dom"
 
-import LoginButton from "./Form/LoginButton"
-import SwapToRegisterButton from "./Form/SwapToRegisterButton"
-import SwapToLoginButton from "./Form/SwapToLoginButton"
-import Input from "./Form/Input"
+import LoginButton from "./form/LoginButton"
+import SwapToRegisterButton from "./form/SwapToRegisterButton"
+import SwapToLoginButton from "./form/SwapToLoginButton"
+import Input from "./form/Input"
 
 import { validateField } from "./utils/LoginValidators"
 import { inputs } from "./utils/LoginInputs"
@@ -43,12 +44,12 @@ export default function Login() {
 
     return (
         <div className="flex items-center justify-center h-screen linear gradient-bg">
-
             <div className="group">
-                <AiFillHome
-                    onClick={() => window.location = "/"}
-                    className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
+                <Link to="/">
+                    <AiFillHome
+                        className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
                                 mw-xs:text-3xl mh-xs:text-3xl"/>
+                </Link>
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form

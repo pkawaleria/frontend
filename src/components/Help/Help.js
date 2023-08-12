@@ -1,8 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import Input from '../Authorization/Form/Input'
-import Navbar from "../Navbar/Navbar"
-import Footer from '../Footer/Footer'
+import Input from '../authorization/form/Input'
 
 export default function Help() {
     const [newUserData, setNewUserData] = useState({

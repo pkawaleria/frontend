@@ -1,7 +1,7 @@
 import React from 'react';
 import SingleCard from './SingleCard';
 import Backimg from '../../assets/images/background.jpg'
-import '../../assets/style/rules/rules.css'
+import '../../assets/styles/rules/rules.css'
 
 const Regulamin = () => {
     const rulesPoints = [
