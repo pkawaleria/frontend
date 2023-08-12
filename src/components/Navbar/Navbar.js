@@ -1,12 +1,11 @@
-
-import '../../assets/style/navbar/navbar.css';
+import '../../assets/styles/navbar/navbar.css';
 import React, { useState, useEffect } from 'react';
 import Logo from '../../assets/images/logo.png';
 import { FaHome } from 'react-icons/fa';
 import { BiUser } from 'react-icons/bi';
 import { Tooltip } from 'react-tooltip';
 
-const Navbar = () => {
+export default function Navbar() {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
 
@@ -47,5 +46,3 @@ const Navbar = () => {
         </nav>
     );
 };
-
-export default Navbar;

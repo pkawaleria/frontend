@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { AiFillHome } from "react-icons/ai"
+import { Link } from "react-router-dom"
 
 import SubmitButton from "./form/SubmitButton"
 import SwapToRegisterButton from "./form/SwapToRegisterButton"
@@ -61,10 +62,12 @@ export default function Register() {
     return (
         <div className="flex items-center justify-center h-screen linear gradient-bg">
             <div className="group">
+                <Link to="/">
                 <AiFillHome 
-                    onClick={() => window.location = "/"} 
+                    // onClick={() => window.location = "/"} 
                     className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
                                 mw-xs:text-3xl mh-xs:text-3xl"/>
+                                </Link>
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form 

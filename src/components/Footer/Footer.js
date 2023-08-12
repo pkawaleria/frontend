@@ -1,4 +1,4 @@
-import '../../assets/style/footer/footer.css';
+import '../../assets/styles/footer/footer.css';
 import React from 'react';
 import { BiHelpCircle } from 'react-icons/bi';
 import { FcRules } from 'react-icons/fc';
