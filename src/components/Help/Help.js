@@ -1,8 +1,6 @@
 import React from "react"
 import { useState } from "react"
 import Input from '../Authorization/Form/Input'
-import Navbar from "../Navbar/Navbar"
-import Footer from '../Footer/Footer'
 
 const Help = () => {
     const [newUserData, setNewUserData] = useState({
@@ -54,8 +52,7 @@ const Help = () => {
     };
 
     return (
-        <div className="linear gradient-bg min-h-screen flex flex-col justify-between">
-            <Navbar />
+        <div className="flex items-center justify-center h-screen linear gradient-bg">
             <div className="group">
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
@@ -88,7 +85,6 @@ const Help = () => {
 
                 {messageSent && <p className="text-green-600 mt-2">Wiadomość została wysłana!</p>}
             </form>
-            <Footer />
         </div>
     )
 }

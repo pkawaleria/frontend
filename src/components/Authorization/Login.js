@@ -1,10 +1,11 @@
+import React from "react"
 import { useState } from "react"
 import { AiFillHome } from "react-icons/ai"
 
-import LoginButton from "./form/LoginButton"
-import SwapToRegisterButton from "./form/SwapToRegisterButton"
-import SwapToLoginButton from "./form/SwapToLoginButton"
-import Input from "./form/Input"
+import LoginButton from "./Form/LoginButton"
+import SwapToRegisterButton from "./Form/SwapToRegisterButton"
+import SwapToLoginButton from "./Form/SwapToLoginButton"
+import Input from "./Form/Input"
 
 import { validateField } from "./utils/LoginValidators"
 import { inputs } from "./utils/LoginInputs"
@@ -26,12 +27,12 @@ export default function Login() {
 
         if (e.target.name === "login") {
             error = validateField(e.target.value, "Login nie może być pusty")
-            setErrors({...errors, "loginError": error})
+            setErrors({ ...errors, "loginError": error })
         }
 
         if (e.target.name === "password") {
             error = validateField(e.target.value, "Hasło nie może być puste")
-            setErrors({...errors, "passwordError": error})
+            setErrors({ ...errors, "passwordError": error })
         }
     }
 
@@ -43,17 +44,18 @@ export default function Login() {
 
     return (
         <div className="flex items-center justify-center h-screen linear gradient-bg">
+
             <div className="group">
-                <AiFillHome 
-                    onClick={() => window.location = "/"} 
+                <AiFillHome
+                    onClick={() => window.location = "/"}
                     className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
                                 mw-xs:text-3xl mh-xs:text-3xl"/>
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
-            <form 
+            <form
                 className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
-                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4" 
-                    onSubmit={handleSubmit}>
+                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
+                onSubmit={handleSubmit}>
                 <div className="flex">
                     <SwapToRegisterButton />
                     <SwapToLoginButton isOn={true} />
