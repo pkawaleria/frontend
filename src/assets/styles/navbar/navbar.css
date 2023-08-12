@@ -11,12 +11,3 @@
     transform: translateY(0);
     transition: transform 1s ease-in-out;
 }
-
-.logo-container {
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 50%;
-    margin-top: 2px;
-    margin-bottom: 2px;
-}
-

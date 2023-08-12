@@ -1,9 +1,9 @@
 import '../../assets/styles/navbar/navbar.css';
 import React, { useState, useEffect } from 'react';
 import Logo from '../../assets/images/logo.png';
-import { FaHome } from 'react-icons/fa';
 import { BiUser } from 'react-icons/bi';
 import { Tooltip } from 'react-tooltip';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -23,24 +23,17 @@ export default function Navbar() {
     }, [prevScrollPos, visible]);
 
     return (
-        <nav className={`navbar navbar-expand-md navbar-dark bg-custom-blue sticky-top${visible ? ' navbar-show' : ' navbar-hidden'}`}>
+        <nav className={`w-4/5 m-auto navbar navbar-expand-md navbar-dark bg-custom-blue sticky-top${visible ? ' navbar-show' : ' navbar-hidden'}`}>
             <div className="container mx-auto flex justify-between items-center">
-                <a className="logo-container" href="/" data-tooltip-id='home' data-tooltip-content="Strona Głowna">
-                    <img src={Logo} alt="..." width="60" />
+                <Link className="navbar-logo" to="/" data-tooltip-id='home' data-tooltip-content="Strona Głowna">
+                    <img src={Logo} alt="..." className='object-hover w-16' />
                     <Tooltip id="home" type="dark" effect="solid" />
-                </a>
-                <button className="navbar-toggler md:hidden" type="button">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="flex items-center space-x-4">
-                    <a className="nav-link" href="/" data-tooltip-id='homeTooltip' data-tooltip-content="Strona Głowna">
-                        <FaHome size={35} className="icon-hover" />
-                        <Tooltip id="homeTooltip" type="dark" effect="solid" />
-                    </a>
-                    <a className="nav-link" href="/logowanie" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
-                        <BiUser size={35} className="icon-hover" />
+                </Link>
+                <div className="flex items-center space-x-4 mr-4">
+                    <Link className="nav-link" href="/logowanie" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
+                        <BiUser className="icon-hover text-white text-4xl hover:text-5xl ease-linear duration-200" />
                         <Tooltip id="accountTooltip" type="dark" effect="solid" />
-                    </a>
+                    </Link>
                 </div>
             </div>
         </nav>
