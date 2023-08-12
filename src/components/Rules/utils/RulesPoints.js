@@ -1,0 +1,15 @@
+export const rulesPoints = [
+    "Zabronione jest zamieszczanie treści obraźliwych, nielegalnych, lub naruszających prawa innych osób.",
+    "Użytkownicy są odpowiedzialni za treść zamieszczanych ogłoszeń oraz komentarzy.",
+    "Zabronione jest rozsyłanie spamu i niechcianych wiadomości innym użytkownikom.",
+    "Administracja serwisu zobowiązuje się do ochrony danych osobowych użytkowników zgodnie z obowiązującymi przepisami.",
+    "Serwis zastrzega sobie prawo do usuwania ogłoszeń naruszających regulamin lub prawo.",
+    "Użytkownicy nie mogą podszywać się pod innych osób lub instytucje.",
+    "Użytkownicy mogą zgłaszać naruszenia regulaminu poprzez formularz kontaktowy.",
+    "Zabronione jest zamieszczanie treści naruszających prawa autorskie innych osób.",
+    "Za naruszenie regulaminu grozi blokada konta.",
+    "Serwis nie ponosi odpowiedzialności za treści zamieszczone przez użytkowników.",
+    "Administracja zastrzega sobie prawo do modyfikacji regulaminu w każdym czasie.",
+    "Zabronione jest podejmowanie działań mających na celu naruszenie działania serwisu.",
+    "Wszelkie pytania i skargi można kierować na adres e-mail podany w sekcji Kontakt",
+];

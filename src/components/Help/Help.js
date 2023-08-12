@@ -1,9 +1,9 @@
-import React from "react"
-import { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import Input from '../authorization/form/Input'
+import { SupportMessageButton } from "./utlis/SupportMessageButton";
 
 export default function Help() {
-    const [newUserData, setNewUserData] = useState({
+    const [newMessageData, setNewMessageData] = useState({
         email: "",
         message: ""
     });
@@ -15,8 +15,21 @@ export default function Help() {
 
     const [messageSent, setMessageSent] = useState(false);
 
-    const onChange = (e) => {
-        setNewUserData({ ...newUserData, [e.target.name]: e.target.value });
+    const textareaRef = useRef(null);
+
+    useEffect(() => {
+        adjustTextareaHeight();
+    }, [newMessageData.message]);
+
+    const adjustTextareaHeight = () => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = "auto";
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+        }
+    };
+
+    const handleInputChange = (e) => {
+        setNewMessageData({ ...newMessageData, [e.target.name]: e.target.value });
 
         if (e.target.name === "email") validateEmail(e.target.value);
     };
@@ -36,52 +49,50 @@ export default function Help() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const isEmailValid = validateEmail(newUserData.email);
-        const isMessageNotEmpty = newUserData.message.trim() !== "";
+        const isEmailValid = validateEmail(newMessageData.email);
+        const isMessageNotEmpty = newMessageData.message.trim() !== "";
 
         if (!isEmailValid) {
             console.log("Błędny email");
         } else if (!isMessageNotEmpty) {
             setErrors({ ...errors, "messageError": "Wiadomość nie może być pusta" });
         } else {
-            console.log("Formularz został wysłany:", newUserData);
+            console.log("Formularz został wysłany:", newMessageData);
             setMessageSent(true);
-            setNewUserData({ email: "", message: "" });
+            setNewMessageData({ email: "", message: "" });
             setErrors({ emailError: "", messageError: "" });
         }
     };
 
     return (
-        <div className="flex items-center justify-center h-screen linear gradient-bg">
-            <div className="group">
-                <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
-            </div>
-            <form className="bg-white py-3 px-8 rounded-md border-0 border-blue-600 w-96 self-center" onSubmit={handleSubmit}>
+        <div className="flex justify-center linear gradient-bg-color-only h-[800px]">
+            <form className="bg-white py-3 px-8 rounded-md border-0 w-96 min-h-72 max-h-[720px] self-center" onSubmit={handleSubmit}>
+                <h1 className="text-center text-xl font-semibold">Potrzebujesz pomocy?</h1>
+                <h1 className="text-center text-xl font-semibold">Napisz do nas :)</h1>
                 <Input
                     name="email"
                     type="email"
+                    label="Email"
                     placeholder="Podaj email"
-                    value={newUserData.email}
-                    onChange={onChange}
-                    className="mb-2 rounded-md border-2 border-blue-600"
+                    value={newMessageData.email}
+                    onChange={handleInputChange}
                 />
                 <span className="text-sm mt-1 text-red-600">{errors.emailError}</span>
+                <div className="mt-4 mh-xs:mt-2 mw-2xs:mt-0">
+                    <label
+                        className="text-gray-400 text-sm ml-3 mw-2xs:text-xs mh-xs:text-xs">Wiadomość</label>
+                    <textarea
+                        ref={textareaRef}
+                        name="message"
+                        placeholder="Wprowadź wiadomość"
+                        className="mw-xs:placeholder:text-sm min-h-55 max-h-[450px] focus:shadow-2xl focus:border-2 p-2 w-full placeholder-blue-600/50 text-blue-600 bg-transparent outline-none border border-blue-500 rounded-xl"
+                        value={newMessageData.message}
+                        onChange={handleInputChange}
+                    />
+                    <span className="text-sm mt-1 text-red-600">{errors.messageError}</span>
+                </div>
 
-                <textarea
-                    name="message"
-                    placeholder="Wprowadź wiadomość"
-                    className="mt-3 block w-full rounded-md border-blue-600 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 border-2"
-                    value={newUserData.message}
-                    onChange={onChange}
-                />
-                <span className="text-sm mt-1 text-red-600">{errors.messageError}</span>
-
-                <button
-                    type="submit"
-                    className="mt-4 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                    Wyślij
-                </button>
+                <SupportMessageButton />
 
                 {messageSent && <p className="text-green-600 mt-2">Wiadomość została wysłana!</p>}
             </form>
