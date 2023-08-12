@@ -64,7 +64,6 @@ export default function Register() {
             <div className="group">
                 <Link to="/">
                 <AiFillHome 
-                    // onClick={() => window.location = "/"} 
                     className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
                                 mw-xs:text-3xl mh-xs:text-3xl"/>
                                 </Link>

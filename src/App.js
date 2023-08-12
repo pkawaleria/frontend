@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router";
 import { LoginPage } from "./pages/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage"
-import HelpPage from "./pages/HelpPage"
-import RulesPage from "./pages/RulesPage"
+import { HelpPage } from "./pages/HelpPage"
+import { RulesPage } from "./pages/RulesPage"
 
 function App() {
   //const accessToken = localStorage.getItem("accessToken")
