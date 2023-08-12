@@ -11,13 +11,13 @@ const Footer = () => {
                 <div className="flex justify-center">
                     <ul className="flex space-x-6">
                         <li className="nav-item">
-                            <a className="nav-link" href="/" data-tooltip-id='helpTooltip' data-tooltip-content="Pomoc">
+                            <a className="nav-link" href="/pomoc" data-tooltip-id='helpTooltip' data-tooltip-content="Pomoc">
                                 <BiHelpCircle size={40} className="icon-hover text-white" />
                             </a>
                             <Tooltip id="helpTooltip" type="dark" effect="solid" />
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/rules" data-tooltip-id='rulesTooltip' data-tooltip-content="Regulamin">
+                            <a className="nav-link" href="/regulamin" data-tooltip-id='rulesTooltip' data-tooltip-content="Regulamin">
                                 <FcRules size={40} className="icon-hover text-white" />
                             </a>
                             <Tooltip id="rulesTooltip" type="dark" effect="solid" />
