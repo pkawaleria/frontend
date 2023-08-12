@@ -32,12 +32,12 @@ export default function Navbar() {
                 <button className="navbar-toggler md:hidden" type="button">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="hidden md:flex items-center space-x-4">
+                <div className="flex items-center space-x-4">
                     <a className="nav-link" href="/" data-tooltip-id='homeTooltip' data-tooltip-content="Strona Głowna">
                         <FaHome size={35} className="icon-hover" />
                         <Tooltip id="homeTooltip" type="dark" effect="solid" />
                     </a>
-                    <a className="nav-link" href="/login" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
+                    <a className="nav-link" href="/logowanie" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
                         <BiUser size={35} className="icon-hover" />
                         <Tooltip id="accountTooltip" type="dark" effect="solid" />
                     </a>
