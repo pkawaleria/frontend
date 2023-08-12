@@ -70,8 +70,8 @@ export default function Register() {
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form 
-                className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
-                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4" 
+                className="bg-white py-5 px-8 rounded-md border-0 w-96 
+                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3" 
                     onSubmit={handleSubmit}>
                 <div className="flex">
                     <SwapToRegisterButton isOn={true} />
@@ -83,13 +83,12 @@ export default function Register() {
                             key={input.id}
                             {...input}
                             value={newUserData[input.name]}
-                            onChange={handleInputChange}
-                        />
+                            onChange={handleInputChange}/>
                         <span
                             className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>{errors[input.name + "Error"]}</span>
                     </React.Fragment>
                 ))}
-                <div className="flex space-x-4 mt-5">
+                <div className="flex space-x-4 mt-5 mw-2xs:mt-3">
                     <SubmitButton />
                 </div>
             </form>
