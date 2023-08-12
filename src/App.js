@@ -1,9 +1,8 @@
 import { Route, Routes } from "react-router";
 import { LoginPage } from "./pages/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage"
-import Help from "./components/Help/Help"
-import Navbar from "./components/Navbar/Navbar"
-import Rules from "./components/Rules/Rules"
+import HelpPage from "./pages/HelpPage"
+import RulesPage from "./pages/RulesPage"
 
 function App() {
   //const accessToken = localStorage.getItem("accessToken")
@@ -12,9 +11,8 @@ function App() {
     <Routes>
       {/* <Route path="/" element={ <HomePage/> } /> */}
       <Route path="/logowanie" element={ <LoginPage/> } />
-      <Route path="/pomoc" element={ <Help/> } />
-      <Route path="/nav" element={ <Navbar/> } />
-      <Route path="/regulamin" element={ <Rules/> } />
+      <Route path="/pomoc" element={ <HelpPage/> } />
+      <Route path="/regulamin" element={ <RulesPage/> } />
       <Route path="/rejestracja" element={ <RegisterPage/> } />
 
     </Routes>

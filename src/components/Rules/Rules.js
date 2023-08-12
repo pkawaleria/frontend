@@ -1,7 +1,5 @@
 import React from 'react';
 import SingleCard from './SingleCard';
-import Footer from '../Footer/Footer';
-import Navbar from '../Navbar/Navbar';
 import Backimg from '../../assets/images/background.jpg'
 import '../../assets/style/rules/rules.css'
 
@@ -34,14 +32,13 @@ const Regulamin = () => {
 
     return (
         <div
-            className="bg-cover bg-center bg-no-repeat bg-image"
+            className="bg-cover bg-center bg-no-repeat bg-image "
             style={{ backgroundImage: `url(${Backimg})` }}
         >
-            <Navbar/>
-            <div className="container mx-auto px-4 mt-2">
+            <div className="container mx-auto px-4">
                 <h1 className="text-center text-black text-3xl font-bold mb-4">Regulamin Serwisu Ogłoszeniowego</h1>
                 {chunkedRulesPoints.map((chunk, rowIndex) => (
-                    <div key={rowIndex} className="flex justify-center mb-4">
+                    <div key={rowIndex} className="flex justify-center">
                         {chunk.map((point, index) => (
                             <div key={index} className="w-full md:w-1/3 px-4">
                                 <SingleCard point={point} />
@@ -50,7 +47,6 @@ const Regulamin = () => {
                     </div>
                 ))}
             </div>
-            <Footer />
         </div>
     );
 };

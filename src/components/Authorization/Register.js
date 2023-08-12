@@ -5,8 +5,6 @@ import SubmitButton from "./Form/SubmitButton"
 import SwapToRegisterButton from "./Form/SwapToRegisterButton"
 import SwapToLoginButton from "./Form/SwapToLoginButton"
 import Input from "./Form/Input"
-import Navbar from "../Navbar/Navbar"
-import Footer from '../Footer/Footer'
 
 import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical } from "./utils/RegisterValidators"
 import { inputs } from "./utils/RegisterInputs"
@@ -61,42 +59,38 @@ export default function Register() {
     }
 
     return (
-        <div>
-            <Navbar/>
-            <div className="flex items-center justify-center h-screen linear gradient-bg">
-                <div className="group">
-                    <AiFillHome
-                        onClick={() => window.location = "/"}
-                        className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
+        <div className="flex items-center justify-center h-screen linear gradient-bg">
+            <div className="group">
+                <AiFillHome
+                    onClick={() => window.location = "/"}
+                    className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
                                 mw-xs:text-3xl mh-xs:text-3xl"/>
-                    <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
-                </div>
-                <form
-                    className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
-                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
-                    onSubmit={handleSubmit}>
-                    <div className="flex">
-                        <SwapToRegisterButton isOn={true} />
-                        <SwapToLoginButton />
-                    </div>
-                    {inputs.map((input) => (
-                        <React.Fragment key={input.id}>
-                            <Input
-                                key={input.id}
-                                {...input}
-                                value={newUserData[input.name]}
-                                onChange={handleInputChange}
-                            />
-                            <span
-                                className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>{errors[input.name + "Error"]}</span>
-                        </React.Fragment>
-                    ))}
-                    <div className="flex space-x-4 mt-5">
-                        <SubmitButton />
-                    </div>
-                </form>
+                <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
-            <Footer/>
+            <form
+                className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
+                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
+                onSubmit={handleSubmit}>
+                <div className="flex">
+                    <SwapToRegisterButton isOn={true} />
+                    <SwapToLoginButton />
+                </div>
+                {inputs.map((input) => (
+                    <React.Fragment key={input.id}>
+                        <Input
+                            key={input.id}
+                            {...input}
+                            value={newUserData[input.name]}
+                            onChange={handleInputChange}
+                        />
+                        <span
+                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>{errors[input.name + "Error"]}</span>
+                    </React.Fragment>
+                ))}
+                <div className="flex space-x-4 mt-5">
+                    <SubmitButton />
+                </div>
+            </form>
         </div>
     )
 }
