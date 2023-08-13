@@ -1,4 +1,4 @@
-import Login from "../components/authorization/Login"
+import Login from "../components/Authorization/Login"
 
 export function LoginPage() {
     return (

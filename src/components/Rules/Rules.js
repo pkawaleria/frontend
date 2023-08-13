@@ -17,7 +17,7 @@ export default function Regulamin() {
 
     return (
         <div
-            className="flex bg-cover mt-2 h-[800px]"
+            className="flex bg-cover mt-2 min-h-[800px]"
             style={{ backgroundImage: `url(${Backimg})` }}>
             <div className="mx-auto mt-[2%] my-[10%] w-3/4">
                 <h1 className="pt-4 text-center text-black text-3xl font-bold mb-4">Regulamin Serwisu Ogłoszeniowego</h1>

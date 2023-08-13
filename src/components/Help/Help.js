@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
-import Input from '../authorization/form/Input'
+import Input from '../Authorization/Form/Input'
 import { SupportMessageButton } from "./utlis/SupportMessageButton";
 
 export default function Help() {
