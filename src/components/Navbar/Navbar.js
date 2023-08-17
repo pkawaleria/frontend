@@ -23,8 +23,8 @@ export default function Navbar() {
     }, [prevScrollPos, visible]);
 
     return (
-        <nav className={`navbar navbar-expand-md navbar-dark bg-custom-blue sticky-top${visible ? ' navbar-show' : ' navbar-hidden'}`}>
-            <div className="border-2 border-white border-opacity-70 rounded-md shadow-3xl w-2/3 mx-auto flex justify-between items-center ">
+        <nav className={`navbar navbar-expand-md navbar-dark bg-custom-blue sticky top-0 ${visible ? ' navbar-show' : ' navbar-hidden'} py-2`} style={{zIndex: 1000}}>
+            <div className="border-2 border-spacing-1 border-white border-opacity-70 rounded-md shadow-3xl w-2/3 mx-auto flex justify-between items-center">
                 <Link className="navbar-logo" to="/" data-tooltip-id='home' data-tooltip-content="Strona Głowna">
                     <img src={Logo} alt="..." className='object-hover w-16' />
                     <Tooltip id="home" type="dark" effect="solid" delayShow={200} delayHide={50}/>
