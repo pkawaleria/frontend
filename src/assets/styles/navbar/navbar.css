@@ -1,0 +1,13 @@
+.bg-custom-blue {
+    background-color: rgb(25, 71, 114);
+}
+
+.navbar-hidden {
+    transform: translateY(-100%);
+    transition: transform 1s ease-in-out;
+}
+
+.navbar-show {
+    transform: translateY(0);
+    transition: transform 1s ease-in-out;
+}
