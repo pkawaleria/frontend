@@ -5,6 +5,7 @@ import { HelpPage } from "./pages/HelpPage"
 import { RulesPage } from "./pages/RulesPage"
 import { HomePage } from "./pages/HomePage"
 import { ProfilePage } from "./pages/ProfilePage"
+import { AdvertPage } from "./pages/AdvertPage"
 
 function App() {
   //const accessToken = localStorage.getItem("accessToken")
@@ -18,6 +19,8 @@ function App() {
       <Route path="/rejestracja" element={ <RegisterPage/> } />
       {/*Tymczasowo na sztywno profil */}
       <Route path="/profil" element={ <ProfilePage/> } />
+      {/*Tymczasowo na sztywno ogłoszenie */}
+      <Route path="/ogloszenie" element={ <AdvertPage/> } />
 
     </Routes>
   );
