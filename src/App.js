@@ -6,6 +6,7 @@ import { RulesPage } from "./pages/RulesPage"
 import { HomePage } from "./pages/HomePage"
 import { ProfilePage } from "./pages/ProfilePage"
 import { AdvertPage } from "./pages/AdvertPage"
+import { UsersAuctionsPage } from "./pages/UsersAuctionsPage"
 
 function App() {
   //const accessToken = localStorage.getItem("accessToken")
@@ -21,6 +22,8 @@ function App() {
       <Route path="/profil" element={ <ProfilePage/> } />
       {/*Tymczasowo na sztywno ogłoszenie */}
       <Route path="/ogloszenie" element={ <AdvertPage/> } />
+      {/*Tymczasowo na sztywno ogłoszenia użytkownika */}
+      <Route path="/ogloszenia_uzytkownika" element={ <UsersAuctionsPage/> } />
 
     </Routes>
   );

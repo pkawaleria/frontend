@@ -1,0 +1,32 @@
+export const adsData = [
+    {
+        id: 1,
+        title: "Przykładowe ogłoszenie 1",
+        price: "100 zł",
+        category: "Elektronika",
+        province: "Mazowieckie",
+        startDate: "01.08.2023",
+        endDate: "15.08.2023",
+        image: "https://placekitten.com/202/202",
+    },
+    {
+        id: 2,
+        title: "Przykładowe ogłoszenie 2",
+        price: "50 zł",
+        category: "Motoryzacja",
+        province: "Wielkopolskie",
+        startDate: "05.08.2023",
+        endDate: "20.08.2023",
+        image: "https://placekitten.com/204/204",
+    },
+    {
+        id: 3,
+        title: "Przykładowe ogłoszenie 3",
+        price: "540 zł",
+        category: "Ogród",
+        province: "Wielkopolskie",
+        startDate: "16.08.2023",
+        endDate: "20.08.2023",
+        image: "https://placekitten.com/205/205",
+    },
+];

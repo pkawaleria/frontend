@@ -23,7 +23,7 @@ export default function Navbar() {
     }, [prevScrollPos, visible]);
 
     return (
-        <nav className={`h-[10%] navbar navbar-expand-md navbar-dark sticky top-0 ${visible ? ' navbar-show' : ' navbar-hidden'}`} style={{zIndex: 1000}}>
+        <nav className={`h-[10%] navbar navbar-expand-md navbar-dark sticky top-0 ${visible ? ' navbar-show' : ' navbar-hidden'}`} style={{zIndex: 2}}>
             
             <div className=" border-2 border-white rounded-md bg-custom-blue shadow-3xl w-2/3 mx-auto my-5 flex  items-center">
                 <Link className="w-[10%] text-center" to="/" data-tooltip-id='home' data-tooltip-content="Strona Głowna">
