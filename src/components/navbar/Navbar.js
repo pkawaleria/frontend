@@ -11,7 +11,7 @@ export default function Navbar() {
 
     const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
-        setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+        setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50);
         setPrevScrollPos(currentScrollPos);
     };
 
@@ -23,18 +23,23 @@ export default function Navbar() {
     }, [prevScrollPos, visible]);
 
     return (
-        <nav className={`navbar navbar-expand-md navbar-dark bg-custom-blue sticky top-0 ${visible ? ' navbar-show' : ' navbar-hidden'} py-2`} style={{zIndex: 1000}}>
-            <div className="border-2 border-spacing-1 border-white border-opacity-70 rounded-md shadow-3xl w-2/3 mx-auto flex justify-between items-center">
-                <Link className="navbar-logo" to="/" data-tooltip-id='home' data-tooltip-content="Strona Głowna">
-                    <img src={Logo} alt="..." className='object-hover w-16' />
+        <nav className={`h-[10%] navbar navbar-expand-md navbar-dark sticky top-0 ${visible ? ' navbar-show' : ' navbar-hidden'}`} style={{zIndex: 1000}}>
+            
+            <div className=" border-2 border-white rounded-md bg-custom-blue shadow-3xl w-2/3 mx-auto my-5 flex  items-center">
+                <Link className="w-[10%] text-center" to="/" data-tooltip-id='home' data-tooltip-content="Strona Głowna">
+                    <img src={Logo} alt="..." className='navbar-logo' />
                     <Tooltip id="home" type="dark" effect="solid" delayShow={200} delayHide={50}/>
                 </Link>
-                <div className="flex items-center space-x-4 mr-2">
-                    <Link className="nav-link" to="/logowanie" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
-                        <BiUser className="m-auto icon-hover text-white text-4xl hover:text-[44px] ease-linear duration-200" />
+
+                <h1 className='text-white font-bold text-[2.5vw] w-[80%] text-center'>Ogłoszeniowo</h1>
+
+                <div className="w-[10%] flex items-center">
+                    <Link className="nav-link w-full" to="/logowanie" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
+                        <BiUser className="m-auto icon-hover text-white text-[2.5vw] hover:text-[3vw] ease-linear duration-200" />
                         <Tooltip id="accountTooltip" type="dark" effect="solid" delayShow={200} delayHide={100}/>
                     </Link>
                 </div>
+
             </div>
         </nav>
     );

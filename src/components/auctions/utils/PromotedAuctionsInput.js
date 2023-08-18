@@ -1,17 +1,17 @@
 export const PromotedAuctionsInputs = [
-    {
-        id: 1,
-        title: 'Sprzedam rower miejski',
-        date: '2023-08-13',
-        image: 'https://placekitten.com/200/200', 
-    },
-    {
-        id: 2,
-        title: 'Mieszkanie na wynajem',
-        date: '2023-08-12',
-        image: 'https://placekitten.com/201/201', 
-    },
-    {
+  {
+    id: 1,
+    title: 'Sprzedam rower miejski',
+    date: '2023-08-13',
+    image: 'https://placekitten.com/200/200',
+  },
+  {
+    id: 2,
+    title: 'Mieszkanie na wynajem',
+    date: '2023-08-12',
+    image: 'https://placekitten.com/201/201',
+  },
+  {
     id: 3,
     title: 'Nowy iPhone 13 Pro 256GB',
     date: '2023-08-15',

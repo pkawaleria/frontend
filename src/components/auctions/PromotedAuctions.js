@@ -4,13 +4,13 @@ import { PromotedAuctionsInputs } from './utils/PromotedAuctionsInput'
 export default function PromotedAuctions() {
 
     return (
-        <div className="flex items-center justify-center flex-col min-h-screen gradient-bg-color-only">
-            <div className="flex-grow border-2 rounded mt-2 mb-2" style={{backgroundColor: 'rgb(25, 71, 114)'}}>
+        <div className="h-[70%] py-6 px-6 flex flex-col items-center justify-center bg-linear-top-bottom">
+            <div className="flex-grow rounded bg-transparent">
                 <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto px-6 mt-5 mb-5">
                     {PromotedAuctionsInputs.map((ad) => (
                         <div
                             key={ad.id}
-                            className="bg-white border-2 border-blue-600 p-4 rounded-lg shadow-md transition-transform duration-300 hover:scale-110 hover:shadow-2xl hover:cursor-pointer"
+                            className="bg-white border-2 border-white p-4 rounded-lg shadow-md transition-transform duration-500 hover:scale-[1.02] hover:shadow-2xl hover:cursor-pointer"
                         >
                             <div className="relative">
                                 <div className="absolute top-0 right-0 bg-blue-500 text-white py-1 px-1 rounded-bl">

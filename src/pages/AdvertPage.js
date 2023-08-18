@@ -4,10 +4,10 @@ import FullAuctionInfo from "../components/auctions/FullAuctionInfo"
 
 export function AdvertPage() {
     return (
-        <>
+        <div className="h-screen flex flex-col">
            <Navbar/>
            <FullAuctionInfo/>
            <Footer/>
-        </>
+        </div>
     )
 }

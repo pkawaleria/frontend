@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BiSearch } from 'react-icons/bi';
+import { BiSearchAlt2 } from 'react-icons/bi';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function SearchBar() {
@@ -21,34 +21,36 @@ export default function SearchBar() {
     };
 
     return (
-        <div className="w-2/3 border-2 border-spacing-1 border-white border-opacity-70 rounded-md shadow-3xl mx-auto flex justify-between items-center">
-            <form className="w-full flex items-center">
-                <input
-                    type="text"
-                    className="mt-2 ml-2 mb-2 py-2 px-4 border-[1px] border-blue-600 rounded-2 focus:outline-none focus:border-blue-400 w-[70%] hover:scale-[1.02]"
-                    placeholder="Wyszukaj..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                />
-                <div className="relative flex items-center hover:scale-[1.02]">
-                    <FaMapMarkerAlt className="absolute left-3 text-gray-500" />
+        <div className="h-[10%] pt-5 pb-[30px] w-full mx-auto flex justify-between items-cente bg-blue-500/20">
+            <form className="w-2/3 flex flex-row items-center border-white border-2 rounded-md shadow-3xl mx-auto">
+                <div className='w-[75%] mx-3 my-[10px]'>
+                    <input
+                        type="text"
+                        className="px-4 py-3 outline-none border-white hover:placeholder:font-semibold rounded w-full font-semibold placeholder:font-normal text-gray-700"
+                        placeholder="Wyszukaj..."
+                        value={searchTerm}
+                        onChange={handleSearchChange} />
+                </div>
+                <div className="w-[20%] my-[10px] relative flex items-center">
+                    <FaMapMarkerAlt className="absolute left-2 text-gray-500" />
                     <select
-                        className="py-2 pl-8 pr-4 border-[1px] border-blue-600 focus:outline-none focus:border-blue-400 hover:cursor-pointer"
+                        className="px-6 py-2 outline-none rounded w-[100%] text-gray-700 hover:cursor-pointer hover:font-semibold"
                         value={selectedProvince}
-                        onChange={handleProvinceChange}
-                    >
-                        <option value="">Wybierz województwo</option>
-                        <option value="dolnośląskie">Dolnośląskie</option>
-                        <option value="kujawsko-pomorskie">Kujawsko-Pomorskie</option>
+                        onChange={handleProvinceChange}>
+                        <option value="" className='bg-gray-300'>Wybierz województwo</option>
+                        <option value="dolnośląskie" className='bg-gray-300'>Dolnośląskie</option>
+                        <option value="kujawsko-pomorskie" className='bg-gray-300'>Kujawsko-Pomorskie</option>
                     </select>
                 </div>
-                <button
-                    type="submit"
-                    className=" mr-2 bg-blue-500 text-white py-2 px-4 rounded-r-md hover:bg-blue-600 focus:outline-none w-[10%] flex items-center justify-center hover:scale-[1.02]"
-                    onClick={handleSearchSubmit}
-                >
-                    <BiSearch size={31} />
-                </button>
+                <div className='w-[5%] text-center mx-2'>
+                    <button
+                        type="submit"
+                        className="p-1 rounded-full bg-blue-500 text-white hover:bg-blue-500/40 ease-linear duration-200"
+                        onClick={handleSearchSubmit}>
+                        <BiSearchAlt2 className='text-[2vw]' />
+                    </button>
+                </div>
+
             </form>
         </div>
     );

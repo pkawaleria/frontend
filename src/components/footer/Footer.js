@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
     return (
-        <div className="flex flex-col py-4">
-            <div className="justify-center mx-auto">
+        <div className="flex flex-col py-4 h-[10%] justify-center bg-blue-500/10">
+            <div className="justify-center mx-auto mt-1">
                 <ul className="flex space-x-6">
                     <li>
                         <Link to="/pomoc" data-tooltip-id='helpTooltip' data-tooltip-content="Pomoc">
@@ -24,7 +24,7 @@ export default function Footer() {
                     </li>
                 </ul>
             </div>
-            <div className="text-center text-white mt-4">
+            <div className="text-center text-white mt-2">
                 Copyright © 2023 - All rights reserved
             </div>
         </div>

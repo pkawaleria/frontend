@@ -24,12 +24,16 @@
     }
 
     .navbar-logo {
-        @apply bg-white p-1 rounded-[50px] ml-2 my-2 hover:rounded-[30px] transition-all ease-linear duration-200 
+        @apply bg-white p-1 rounded-[2vw] mx-2 my-2 hover:rounded-[1.3vw] transition-all ease-linear duration-200 w-[4vw]
     }
 }
 
+/* .bg-default {
+    background-color: #194772;
+} */
+
 body {
-    background-color: rgb(25, 71, 114);
+    background-color: #194772;
     margin: 0;
     font-family: 'Cairo', sans-serif;
 }
@@ -43,4 +47,16 @@ body {
 .gradient-bg-color-only {
     background: linear-gradient(0deg, rgb(131, 165, 219), rgb(25, 71, 114));
     width: 100vw;
+}
+
+.bg-original {
+    background-color: #194772;
+}
+
+.bg-linear-top-bottom {
+    background: linear-gradient(180deg, rgb(59 130 246 / 0.2), rgb(25, 71, 114));
+}
+
+option:hover {
+    color: red;
 }

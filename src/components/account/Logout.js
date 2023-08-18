@@ -1,5 +1,4 @@
-export const Logout = () => {
+export default function Logout() {
     localStorage.removeItem('accessToken')
     window.location = "/"
 }
-

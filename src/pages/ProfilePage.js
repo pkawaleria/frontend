@@ -4,10 +4,10 @@ import Profile from "../components/account/Profile"
 
 export function ProfilePage() {
     return (
-        <>
+        <div className="h-screen flex flex-col">
            <Navbar/>
            <Profile/>
            <Footer/>
-        </>
+        </div>
     )
 }

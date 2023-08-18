@@ -5,11 +5,11 @@ import SearchBar from "../components/searchBar/SearchBar"
 
 export function HomePage() {
     return (
-        <>
+        <div className="h-full flex flex-col">
            <Navbar/>
            <SearchBar/>
            <PromotedAuctions/>
            <Footer/>
-        </>
+        </div>
     )
 }
