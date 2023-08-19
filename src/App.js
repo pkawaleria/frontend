@@ -23,7 +23,7 @@ function App() {
       {/*Tymczasowo na sztywno ogłoszenie */}
       <Route path="/ogloszenie" element={ <AdvertPage/> } />
       {/*Tymczasowo na sztywno ogłoszenia użytkownika */}
-      <Route path="/ogloszenia_uzytkownika" element={ <UsersAuctionsPage/> } />
+      <Route path="/ogloszenia-uzytkownika" element={ <UsersAuctionsPage/> } />
 
     </Routes>
   );

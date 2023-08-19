@@ -28,7 +28,7 @@ export default function FullAuctionInfo() {
 
     return (
         <div className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 h-[80%] w-full">
-            <div className="flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
+            <div className="mt-3 flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
                 {/* COLUMN 1 */}
                 <div className="bg-white rounded-lg shadow-md md:w-2/3 mb-10">
                     <div className="flex">
@@ -69,7 +69,7 @@ export default function FullAuctionInfo() {
                 </div>
             </div>
             {/* COLUMN 2 */}
-            <div className="flex flex-col w-[20%] max-w-screen-md bg-white rounded-lg shadow-md p-4 space-y-4 self-start">
+            <div className="mt-3 flex flex-col w-[20%] max-w-screen-md bg-white rounded-lg shadow-md p-4 space-y-4 self-start">
                 <div className="bg-white rounded-lg shadow-md p-[1vw]">
                     <h3 className="text-[1.2vw] font-semibold mb-2">Dane użytkownika</h3>
                     <p className="mb-1 text-[1vw]">Nazwa użytkownika: {exampleAd.user.name}</p>

@@ -30,7 +30,7 @@ export default function UsersAuctions() {
         <div className="flex items-center justify-center gradient-bg-color-only p-6 mt-5">
             <div className="grid grid-cols-1 gap-6 w-2/3">
                 {adsData.map((ad) => (
-                    <div className="hover:scale-110">
+                    <div className="hover:scale-[1.01] ease-linear duration-100">
                         <div
                             key={ad.id}
                             className="bg-white border rounded-lg shadow-md p-4 flex justify-between"
@@ -57,11 +57,11 @@ export default function UsersAuctions() {
                             <div className="flex flex-col justify-between">
                                 <span className="text-gray-600">ID: {ad.id}</span>
                                 <div className="flex space-x-2 mt-4">
-                                    <Link className="text-blue-500 hover:text-blue-700" to="/edytuj-ogloszenie" data-tooltip-id='editAdTooltip' data-tooltip-content="Edytuj ogłoszenie">
+                                    <Link className="text-blue-400 hover:text-blue-700" to="/edytuj-ogloszenie" data-tooltip-id='editAdTooltip' data-tooltip-content="Edytuj ogłoszenie">
                                         <BsPencilSquare size={20} />
                                         <Tooltip id="editAdTooltip" type="dark" effect="solid" delayShow={200} delayHide={100} />
                                     </Link>
-                                    <Link onClick={() => openDeleteModal(ad.id)} className="text-red-500 hover:text-red-700" data-tooltip-id='deleteAdTooltip' data-tooltip-content="Usuń ogłoszenie">
+                                    <Link onClick={() => openDeleteModal(ad.id)} className="text-red-300 hover:text-red-700" data-tooltip-id='deleteAdTooltip' data-tooltip-content="Usuń ogłoszenie">
                                         <BsXCircle size={20} />
                                         <Tooltip id="deleteAdTooltip" type="dark" effect="solid" delayShow={200} delayHide={100} />
                                     </Link>
