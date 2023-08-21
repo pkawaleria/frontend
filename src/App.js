@@ -8,6 +8,7 @@ import { ProfilePage } from "./pages/ProfilePage"
 import { AdvertPage } from "./pages/AdvertPage"
 import { UsersAuctionsPage } from "./pages/UsersAuctionsPage"
 import { NewAuctionPage } from './pages/NewAuctionPage'
+import { AboutPage } from './pages/AboutPage'
 
 function App() {
   //const accessToken = localStorage.getItem("accessToken")
@@ -19,6 +20,7 @@ function App() {
       <Route path="/pomoc" element={ <HelpPage/> } />
       <Route path="/regulamin" element={ <RulesPage/> } />
       <Route path="/rejestracja" element={ <RegisterPage/> } />
+      <Route path="/o-stronie" element={ <AboutPage/> } />
       {/*Tymczasowo na sztywno profil */}
       <Route path="/profil" element={ <ProfilePage/> } />
       {/*Tymczasowo na sztywno ogłoszenie */}

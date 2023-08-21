@@ -1,16 +1,16 @@
 import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
-import NewAuction from "../components/auctions/NewAuction"
+import About from "../components/about/About"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 
-export function NewAuctionPage() {
+export function AboutPage() {
     return (
         <div className="h-full flex flex-col">
            <Navbar/>
            <ScrollToTop/>
            <ScrollToTopButton/>
-           <NewAuction/>
+           <About/>
            <Footer/>
         </div>
     )

@@ -135,7 +135,7 @@ export default function NewAuction() {
                                         />
                                     ) : (
                                         <div className="w-[100px] h-[100px] border border-blue-500 flex items-center justify-center text-gray-400">
-                                            Placeholder {index + 1}
+                                            Zdjęcie {index + 1}
                                         </div>
                                     )}
                                 </div>

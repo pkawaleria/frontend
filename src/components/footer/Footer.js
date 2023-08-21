@@ -1,7 +1,7 @@
 import '../../assets/styles/footer/footer.css';
 import React from 'react';
 import { BiHelpCircle } from 'react-icons/bi';
-import { FcRules } from 'react-icons/fc';
+import { FcRules, FcAbout } from 'react-icons/fc';
 import { Tooltip } from 'react-tooltip';
 import { Link } from 'react-router-dom';
 
@@ -21,6 +21,12 @@ export default function Footer() {
                             <FcRules size={40} className="text-white hover:cursor-pointer" />
                         </Link>
                         <Tooltip id="rulesTooltip" type="dark" effect="solid" />
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/o-stronie" data-tooltip-id='aboutTooltip' data-tooltip-content="O stronie">
+                            <FcAbout size={40} className="text-white hover:cursor-pointer" />
+                        </Link>
+                        <Tooltip id="aboutTooltip" type="dark" effect="solid" />
                     </li>
                 </ul>
             </div>
