@@ -1,14 +1,22 @@
 import Register from "../components/authorization/Register"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
+import { useFontSize } from "../components/themes/FontSizeContext"
 
 export function RegisterPage() {
+
+    const { fontSize } = useFontSize();
+
+    const style = {
+        fontSize: fontSize === 'small' ? '16px' : fontSize === 'medium' ? '24px' : '24px',
+    };
+
     return (
-        <>
-        <ScrollToTop/>
-        <ScrollToTopButton/>
-        <Register />
-        </>
+        <div className="h-full flex flex-col" style={style}>
+            <ScrollToTop />
+            <ScrollToTopButton />
+            <Register />
+        </div>
 
     )
 }
