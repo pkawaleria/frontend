@@ -1,12 +1,12 @@
 import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
-import PromotedAuctions from "../components/auctions/PromotedAuctions"
-import SearchBar from "../components/searchBar/SearchBar"
+import NewAuction from "../components/auctions/NewAuction"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 
-export function HomePage() {
+export function NewAuctionPage() {
+
     const { fontSize } = useFontSize();
 
     const style = {
@@ -18,8 +18,7 @@ export function HomePage() {
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
-            <SearchBar />
-            <PromotedAuctions />
+            <NewAuction />
             <Footer />
         </div>
     )

@@ -1,12 +1,12 @@
 import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
-import PromotedAuctions from "../components/auctions/PromotedAuctions"
-import SearchBar from "../components/searchBar/SearchBar"
+import About from "../components/about/About"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 
-export function HomePage() {
+export function AboutPage() {
+
     const { fontSize } = useFontSize();
 
     const style = {
@@ -15,12 +15,11 @@ export function HomePage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
-            <Navbar />
-            <ScrollToTop />
-            <ScrollToTopButton />
-            <SearchBar />
-            <PromotedAuctions />
-            <Footer />
+           <Navbar/>
+           <ScrollToTop/>
+           <ScrollToTopButton/>
+           <About/>
+           <Footer/>
         </div>
     )
 }
