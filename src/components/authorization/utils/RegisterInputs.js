@@ -26,5 +26,26 @@ export const inputs = [
         type: "password",
         placeholder: "Podaj ponownie hasło",
         label: "Powtórz hasło",
+    },
+    {
+        id: 5,
+        name: "firstname",
+        type: "text",
+        placeholder: "Podaj imię",
+        label: "Imię",
+    },
+    {
+        id: 6,
+        name: "lastname",
+        type: "text",
+        placeholder: "Podaj nazwisko",
+        label: "Nazwisko",
+    },
+    {
+        id: 7,
+        name: "phone_number",
+        type: "text",
+        placeholder: "Podaj numer telefonu",
+        label: "Numer telefonu",
     }
 ]

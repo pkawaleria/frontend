@@ -12,7 +12,7 @@ import { AboutPage } from './pages/AboutPage'
 import { FontSizeProvider } from "./components/themes/FontSizeContext";
 
 function App() {
-  //const accessToken = localStorage.getItem("accessToken")
+  const accessToken = localStorage.getItem("accessToken")
 
   return (
     <FontSizeProvider>
