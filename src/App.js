@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router";
+import Logout from './components/account/Logout'
 import { LoginPage } from "./pages/LoginPage"
 import { RegisterPage } from "./pages/RegisterPage"
 import { HelpPage } from "./pages/HelpPage"
@@ -9,10 +10,11 @@ import { AdvertPage } from "./pages/AdvertPage"
 import { UsersAuctionsPage } from "./pages/UsersAuctionsPage"
 import { NewAuctionPage } from './pages/NewAuctionPage'
 import { AboutPage } from './pages/AboutPage'
+import { EditProfilePage } from './pages/EditProfilePage'
 import { FontSizeProvider } from "./components/themes/FontSizeContext";
 
 function App() {
-  //const accessToken = localStorage.getItem("accessToken")
+  const accessToken = localStorage.getItem("accessToken")
 
   return (
     <FontSizeProvider>
@@ -23,7 +25,8 @@ function App() {
         <Route path="/regulamin" element={<RulesPage />} />
         <Route path="/rejestracja" element={<RegisterPage />} />
         <Route path="/o-stronie" element={<AboutPage />} />
-        {/*Tymczasowo na sztywno profil */}
+        <Route path="/wyloguj" element={<Logout />} />
+        <Route path="/edytuj-profil" element={<EditProfilePage />} />
         <Route path="/profil" element={<ProfilePage />} />
         {/*Tymczasowo na sztywno ogłoszenie */}
         <Route path="/ogloszenie" element={<AdvertPage />} />

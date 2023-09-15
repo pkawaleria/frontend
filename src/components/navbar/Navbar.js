@@ -16,6 +16,10 @@ export default function Navbar() {
         fontSize: fontSize === 'small' ? '16px' : fontSize === 'medium' ? '24px' : '24px',
     };
 
+
+    const accessToken = localStorage.getItem('accessToken');
+    const isLoggedIn = accessToken !== null;
+
     const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
         setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50);
@@ -48,10 +52,17 @@ export default function Navbar() {
                 </div>
 
                 <div className="w-[10%] flex items-center">
-                    <Link className="nav-link w-full" to="/logowanie" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
-                        <BiUser className="m-auto icon-hover text-white text-[2.5vw] hover:text-[3vw] ease-linear duration-200" />
-                        <Tooltip id="accountTooltip" type="dark" effect="solid" delayShow={200} delayHide={100} />
-                    </Link>
+                    {isLoggedIn ? (
+                        <Link className="nav-link w-full" to="/profil" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
+                            <BiUser className="m-auto icon-hover text-white text-[2.5vw] hover:text-[3vw] ease-linear duration-200" />
+                            <Tooltip id="accountTooltip" type="dark" effect="solid" delayShow={200} delayHide={100} />
+                        </Link>
+                    ) : (
+                        <Link className="nav-link w-full" to="/logowanie" data-tooltip-id='accountTooltip' data-tooltip-content="Moje konto">
+                            <BiUser className="m-auto icon-hover text-white text-[2.5vw] hover:text-[3vw] ease-linear duration-200" />
+                            <Tooltip id="accountTooltip" type="dark" effect="solid" delayShow={200} delayHide={100} />
+                        </Link>
+                    )}
                 </div>
 
             </div>

@@ -47,3 +47,43 @@ export const arePasswordsIdentical = (password, confirmPassword) => {
 
     return error
 }
+
+export const validateFirstname = (firstname) => {
+    const nameRegex = new RegExp(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]{1,29}$/);
+    let error = "";
+
+    if (firstname === "") {
+        error = "Imię nie może być puste";
+    } else if (!nameRegex.test(firstname)) {
+        error = "Imię może składać się jedynie z liter oraz nie może przekroczyć 29 znaków";
+    }
+
+    return error
+}
+
+export const validateLastname = (lastname) => {
+    const surnameRegex = new RegExp(/^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s]{1,29}$/);
+    let error = "";
+
+    if (lastname === "") {
+        error = "Nazwisko nie może być puste";
+    } else if (!surnameRegex.test(lastname)) {
+        error = "Nazwisko może składać się jedynie z liter oraz nie może przekroczyć 29 znaków";
+    }
+
+
+    return error
+}
+
+export const validatePhoneNumber = (phone) => {
+    const phoneRegex = new RegExp(/^\d{9}$/);
+    let error = "";
+
+    if (phone === "") {
+        error = "Telefon nie może być puste";
+    } else if (!phoneRegex.test(phone)) {
+        error = "Numer telefonu może się składać jedynie z 9 cyfr";
+    }
+
+    return error
+}
