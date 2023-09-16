@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { Tooltip } from 'react-tooltip';
 import { Link } from 'react-router-dom';
+import { BiLogOut } from 'react-icons/bi';
 import axios from 'axios';
 
 export default function Profile() {
@@ -30,7 +31,7 @@ export default function Profile() {
 
     return (
         <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
-            <div className="w-[50%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
+            <div className="w-[60%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
                 <div className="flex-shrink-0">
                     <img
                         src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
@@ -50,8 +51,11 @@ export default function Profile() {
                     <Tooltip id="editProfileTooltip" type="dark" effect="solid" delayShow={50} delayHide={100} />
                 </Link>
                 <Link className="nav-link absolute bottom-1 right-1 bg-red-500 text-white py-3 px-3 rounded-full hover:bg-red-600 easy-linear duration-200 focus:outline-none" to="/wyloguj" data-tooltip-id='logoutTooltip' data-tooltip-content="Wyloguj">
-                    Wyloguj
+                    <BiLogOut size={23} />
                     <Tooltip id="logoutTooltip" type="dark" effect="solid" delayShow={50} delayHide={100} />
+                </Link>
+                <Link className="nav-link absolute bottom-1 right-14 bg-yellow-500 text-white py-3 px-3 rounded-full hover:bg-yellow-600 easy-linear duration-200 focus:outline-none" to="/zmien-haslo">
+                    Zmień hasło
                 </Link>
             </div>
         </div>

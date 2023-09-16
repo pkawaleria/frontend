@@ -10,6 +10,7 @@ import { AdvertPage } from "./pages/AdvertPage"
 import { UsersAuctionsPage } from "./pages/UsersAuctionsPage"
 import { NewAuctionPage } from './pages/NewAuctionPage'
 import { AboutPage } from './pages/AboutPage'
+import { ChangePasswordPage } from './pages/ChangePasswordPage'
 import { EditProfilePage } from './pages/EditProfilePage'
 import { FontSizeProvider } from "./components/themes/FontSizeContext";
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/wyloguj" element={<Logout />} />
         <Route path="/edytuj-profil" element={<EditProfilePage />} />
         <Route path="/profil" element={<ProfilePage />} />
+        <Route path="/zmien-haslo" element={<ChangePasswordPage />} />
         {/*Tymczasowo na sztywno ogłoszenie */}
         <Route path="/ogloszenie" element={<AdvertPage />} />
         {/*Tymczasowo na sztywno ogłoszenia użytkownika */}
