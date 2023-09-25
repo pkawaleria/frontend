@@ -1,9 +1,11 @@
-import Register from "../components/authorization/Register"
+import ChangePassword from '../components/account/ChangePassword'
+import Navbar from '../components/navbar/Navbar'
+import Footer from '../components/footer/Footer'
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 
-export function RegisterPage() {
+export function ChangePasswordPage() {
 
     const { fontSize } = useFontSize();
 
@@ -13,10 +15,11 @@ export function RegisterPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
+            <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
-            <Register />
+            <ChangePassword />
+            <Footer />
         </div>
-
     )
 }

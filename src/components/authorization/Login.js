@@ -1,5 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
+import { AiFillHome } from "react-icons/ai"
 
 import LoginButton from "./form/LoginButton"
 import SwapToRegisterButton from "./form/SwapToRegisterButton"
@@ -69,14 +71,14 @@ export default function Login() {
 
     return (
         <div className="flex items-center justify-center h-screen linear gradient-bg">
-            {/* <div className="group">
+            <div className="group">
                 <Link to="/">
                     <AiFillHome
                         className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
                                 mw-xs:text-3xl mh-xs:text-3xl"/>
                 </Link>
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
-            </div> */}
+            </div>
             <form
                 className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
                     mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
