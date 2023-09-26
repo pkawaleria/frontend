@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { exampleAd } from './utils/FullAuctionInfoInput';
+import { Link } from "react-router-dom";
 
 export default function FullAuctionInfo() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -28,7 +29,7 @@ export default function FullAuctionInfo() {
 
     return (
         <div className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 h-[80%] w-full">
-            <div className="mt-3 flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
+            <div className="mt-3 mb-5 flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
                 {/* COLUMN 1 */}
                 <div className="bg-white rounded-lg shadow-md md:w-2/3 mb-10">
                     <div className="flex">
@@ -72,13 +73,17 @@ export default function FullAuctionInfo() {
             <div className="mt-3 flex flex-col w-[20%] max-w-screen-md bg-white rounded-lg shadow-md p-4 space-y-4 self-start">
                 <div className="bg-white rounded-lg shadow-md p-[1vw]">
                     <h3 className="text-[1.2vw] font-semibold mb-2">Dane użytkownika</h3>
-                    <p className="mb-1 text-[1vw]">Nazwa użytkownika: {exampleAd.user.name}</p>
+                    <Link
+                        to={``}
+                        className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw]"
+                    >Sprzedający: {exampleAd.user.name}
+                    </Link>
                     {showPhoneNumber ? (
-                        <p className="mb-1 text-[1vw]">Numer telefonu: {exampleAd.user.phoneNumber}</p>
+                        <p className="mb-1 text-[1vw] mt-6">Numer telefonu: {exampleAd.user.phoneNumber}</p>
                     ) : (
                         <button
                             onClick={togglePhoneNumber}
-                            className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] mr-1"
+                            className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-6 hover:bg-blue-600 text-[1vw] mr-1"
                         >
                             Pokaż numer
                         </button>

@@ -19,6 +19,8 @@ export default function EditProfile() {
         phone_number: '',
     });
 
+    const [originalUserData, setOriginalUserData] = useState({});
+
     const [errors, setErrors] = useState({
         usernameError: "",
         emailError: "",
@@ -40,6 +42,7 @@ export default function EditProfile() {
                 const data = response.data;
                 setUserData(data);
                 setUpdatedUserData(data);
+                setOriginalUserData(data);
             })
             .catch((error) => {
                 console.error('Błąd pobierania danych:', error);
@@ -83,23 +86,28 @@ export default function EditProfile() {
 
     const handleUpdateProfile = () => {
 
-        if (hasErrors()) {
-            return;
-        }
-        const accessToken = localStorage.getItem('accessToken');
-        const headers = {
-            Authorization: `Bearer ${accessToken}`,
-        };
+        if (originalUserData !== updatedUserData) {
 
-        axios.post('http://localhost:5000/users/account_info', updatedUserData, { headers })
-            .then((response) => {
-                console.log('Dane zaktualizowane pomyślnie:', response.data);
-                setUserData(updatedUserData);
-                window.location = "/profil"
-            })
-            .catch((error) => {
-                console.error('Błąd aktualizacji danych:', error);
-            });
+            if (hasErrors()) {
+                return;
+            }
+            const accessToken = localStorage.getItem('accessToken');
+            const headers = {
+                Authorization: `Bearer ${accessToken}`,
+            };
+
+            axios.post('http://localhost:5000/users/account_info', updatedUserData, { headers })
+                .then((response) => {
+                    console.log('Dane zaktualizowane pomyślnie:', response.data);
+                    setUserData(updatedUserData);
+                    window.location = "/profil"
+                })
+                .catch((error) => {
+                    console.error('Błąd aktualizacji danych:', error);
+                });
+        } else {
+            window.location = "/profil"
+        }
     };
 
     return (

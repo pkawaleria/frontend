@@ -8,6 +8,7 @@ import { HomePage } from "./pages/HomePage"
 import { ProfilePage } from "./pages/ProfilePage"
 import { AdvertPage } from "./pages/AdvertPage"
 import { UsersAuctionsPage } from "./pages/UsersAuctionsPage"
+import { OtherUsersAuctionPage } from "./pages/OtherUsersAuctionPage"
 import { NewAuctionPage } from './pages/NewAuctionPage'
 import { AboutPage } from './pages/AboutPage'
 import { ChangePasswordPage } from './pages/ChangePasswordPage'
@@ -32,9 +33,9 @@ function App() {
         <Route path="/zmien-haslo" element={<ChangePasswordPage />} />
         {/*Tymczasowo na sztywno ogłoszenie */}
         <Route path="/ogloszenie" element={<AdvertPage />} />
-        {/*Tymczasowo na sztywno ogłoszenia użytkownika */}
-        <Route path="/ogloszenia-uzytkownika" element={<UsersAuctionsPage />} />
-        {/*Tymczasowo na sztywno nowe ogloszenie */}
+        <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage />} />
+        {/*Tymczasowo na sztywno ogloszenia-uzytkownika */}
+        <Route path="/ogloszenia-uzytkownika" element={<OtherUsersAuctionPage />} />
         <Route path="/nowe-ogloszenie" element={<NewAuctionPage />} />
 
       </Routes>
