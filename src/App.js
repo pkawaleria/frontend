@@ -15,6 +15,8 @@ import { ChangePasswordPage } from './pages/ChangePasswordPage'
 import { EditProfilePage } from './pages/EditProfilePage'
 import { FontSizeProvider } from "./components/themes/FontSizeContext";
 
+
+
 function App() {
   const accessToken = localStorage.getItem("accessToken")
 

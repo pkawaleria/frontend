@@ -20,7 +20,7 @@ export default function Profile() {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        axios.get('http://localhost:5000/users/account_info', { headers })
+        axios.get(process.env.REACT_APP_ACCOUNTING_MS_USERS_ACCOUNT, { headers })
             .then((response) => {
                 const data = response.data;
                 const formattedPhoneNumber = formatPhoneNumber(data.phone_number);

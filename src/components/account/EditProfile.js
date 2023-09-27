@@ -37,7 +37,7 @@ export default function EditProfile() {
             Authorization: `Bearer ${accessToken}`,
         };
 
-        axios.get('http://localhost:5000/users/account_info', { headers })
+        axios.get(process.env.REACT_APP_ACCOUNTING_MS_USERS_ACCOUNT, { headers })
             .then((response) => {
                 const data = response.data;
                 setUserData(data);
@@ -96,7 +96,7 @@ export default function EditProfile() {
                 Authorization: `Bearer ${accessToken}`,
             };
 
-            axios.post('http://localhost:5000/users/account_info', updatedUserData, { headers })
+            axios.post(process.env.REACT_APP_ACCOUNTING_MS_USERS_ACCOUNT, updatedUserData, { headers })
                 .then((response) => {
                     console.log('Dane zaktualizowane pomyślnie:', response.data);
                     setUserData(updatedUserData);
