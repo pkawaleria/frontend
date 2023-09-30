@@ -3,19 +3,28 @@ import { BiCategoryAlt, BiPhotoAlbum } from 'react-icons/bi';
 import { MdOutlineDescription, MdTitle } from 'react-icons/md';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { AiOutlinePhone } from 'react-icons/ai';
+import { GrMoney } from 'react-icons/gr';
+
+import axios from "axios";
 
 export default function NewAuction() {
+
+    const token = localStorage.getItem("accessToken");
+
     const [title, setTitle] = useState("");
     const [category, setCategory] = useState("");
     const [images, setImages] = useState([]);
     const [description, setDescription] = useState("");
     const [province, setProvince] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const defaultImagePreviews = new Array(10).fill(null); 
+    const [price, setPrice] = useState(0);
+    const defaultImagePreviews = new Array(10).fill(null);
     const [imagePreviews, setImagePreviews] = useState(defaultImagePreviews);
+
     const [titleError, setTitleError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
     const [phoneNumberError, setPhoneNumberError] = useState("");
+    const [priceError, setPriceError] = useState("");
 
     const handleImageUpload = (e) => {
         const selectedImages = Array.from(e.target.files);
@@ -23,7 +32,7 @@ export default function NewAuction() {
 
         selectedImages.forEach((image, index) => {
             if (image.type.includes("image") && index < defaultImagePreviews.length) {
-                selectedImagePreviews[index] = URL.createObjectURL(image); 
+                selectedImagePreviews[index] = URL.createObjectURL(image);
             }
         });
 
@@ -63,10 +72,80 @@ export default function NewAuction() {
             description !== "" &&
             province !== "" &&
             phoneNumber !== "" &&
+            price !== "" &&
             title.length >= 10 &&
             description.length >= 60 &&
-            phoneNumber.match(/^\d{9}$/)
+            phoneNumber.match(/^\d{9}$/) &&
+            priceError === ""
         );
+    };
+
+    const validatePrice = (value) => {
+        if (value === "") {
+            setPriceError("Cena jest wymagana.");
+        } else if (parseFloat(value) <= 0) {
+            setPriceError("Cena musi być większa od zera.");
+        } else {
+            setPriceError("");
+        }
+    }
+
+    const handleAddAuction = async () => {
+        if (!isFormValid()) { return; }
+        try {
+
+            const response = await axios.post(
+                process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL,
+                {
+                    name: title,
+                    description: description,
+                    price: price,
+                    categoryId: "6517dfe87ba8b117937ed4ed", //tymczasowo TODO
+                    productCondition: "NEW", //tymczasowo TODO
+                    cityId: "65180c2ab1189b3e5e7e1660", //tymczasowo TODO
+
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+
+            if (response.status === 200) {
+                const auctionId = response.data.id;
+
+                const formData = new FormData();
+                images.forEach((image, index) => {
+                    formData.append(`files`, image);
+                });
+
+                const imageResponse = await axios.post(
+                    `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${auctionId}/images`,
+                    formData,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "multipart/form-data",
+                        },
+                    }
+                );
+
+                if (imageResponse.status === 200) {
+                    window.location = "/twoje-ogloszenia";
+                    alert("Ogłoszenie zostało dodane.");
+                } else {
+                    alert("Wystąpił błąd podczas dodawania obrazów aukcji.");
+                }
+            } else {
+                alert("Wystąpił błąd podczas dodawania aukcji.");
+            }
+        } catch (error) {
+            console.error("Wystąpił błąd:", error);
+            alert("Wystąpił błąd podczas dodawania ogłoszenia.");
+        }
     };
 
     return (
@@ -106,8 +185,9 @@ export default function NewAuction() {
                             required
                         >
                             <option value="" className='bg-gray-300'>Wybierz kategorię</option>
-                            <option value="Elektronika" className='bg-gray-300'>Elektronika</option>
+                            <option value="Electronics" className='bg-gray-300'>Elektronika</option>
                             <option value="Ogród" className='bg-gray-300'>Ogród</option>
+                            <option value="Motoryzacja" className='bg-gray-300'>Motoryzacja</option>
                         </select>
                     </div>
                     <div className="mb-4">
@@ -173,10 +253,10 @@ export default function NewAuction() {
                             required
                         >
                             <option value="" className='bg-gray-300'>Wybierz województwo</option>
-                            <option value="dolnośląskie" className='bg-gray-300'>Dolnośląskie</option>
+                            <option value="adwadawd31132" className='bg-gray-300'>Lublin</option>
                             <option value="kujawsko-pomorskie" className='bg-gray-300'>Kujawsko-Pomorskie</option>
                         </select>
-                        
+
                     </div>
                     <div className="mb-4">
                         <label htmlFor="phoneNumber" className="block text-gray-600 font-medium mb-2">Numer telefonu:</label>
@@ -196,8 +276,27 @@ export default function NewAuction() {
                         />
                         {phoneNumberError && <p className="text-red-500">{phoneNumberError}</p>}
                     </div>
+                    <div className="mb-4">
+                        <label htmlFor="price" className="block text-gray-600 font-medium mb-2">Cena:</label>
+                        <GrMoney size={25} className="inline-block mr-2" />
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            value={price}
+                            onChange={(e) => {
+                                setPrice(e.target.value);
+                                validatePrice(e.target.value);
+                            }}
+                            onBlur={() => validatePrice(price)}
+                            className={`w-[50%] p-2 border border-blue-500 rounded-md focus:outline-none ${priceError ? 'border-red-500' : 'focus:border-blue-500'}`}
+                            required
+                        />
+                        {priceError && <p className="text-red-500">{priceError}</p>}
+                    </div>
                     <button
-                        type="submit"
+                        type="button"
+                        onClick={handleAddAuction}
                         className={`absolute bottom-5 right-5 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${isFormValid() ? '' : 'opacity-50 cursor-not-allowed'}`}
                         disabled={!isFormValid()}
                     >
