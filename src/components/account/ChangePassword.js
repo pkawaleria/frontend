@@ -52,7 +52,7 @@ export default function ChangePassword() {
             Authorization: `Bearer ${accessToken}`,
         };
 
-        axios.post('http://localhost:5000/users/changepasswd', passwordData, { headers })
+        axios.post(process.env.REACT_APP_ACCOUNTING_MS_USERS_CHANGE_PASSWORD, passwordData, { headers })
             .then((response) => {
                 console.log('Hasło zaktualizowane pomyślnie:', response.data);
                 localStorage.removeItem('accessToken');

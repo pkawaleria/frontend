@@ -89,18 +89,8 @@ export default function Register() {
         }
 
         try {
-            // const response = await axios.post('http://192.168.100.131:5000/users/register', {
-            //     username: newUserData.username,
-            //     email: newUserData.email,
-            //     password: newUserData.password,
-            //     confirmPassword: newUserData.confirmPassword,
-            //     firstname: newUserData.firstname,
-            //     lastname: newUserData.lastname,
-            //     phone_number: newUserData.phone_number,
-            // });
-
             const response = await axios.post(
-                'http://localhost:5000/users/register', 
+                process.env.REACT_APP_ACCOUNTING_MS_USERS_REGISTER, 
                 requestData
             );
 
