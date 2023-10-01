@@ -33,11 +33,10 @@ function App() {
         <Route path="/edytuj-profil" element={<EditProfilePage />} />
         <Route path="/profil" element={<ProfilePage />} />
         <Route path="/zmien-haslo" element={<ChangePasswordPage />} />
-        {/*Tymczasowo na sztywno ogłoszenie */}
-        <Route path="/ogloszenie" element={<AdvertPage />} />
+        <Route path="/ogloszenie/:id" element={<AdvertPage />} />
         <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage />} />
         {/*Tymczasowo na sztywno ogloszenia-uzytkownika */}
-        <Route path="/ogloszenia-uzytkownika" element={<OtherUsersAuctionPage />} />
+        <Route path="/ogloszenia-uzytkownika/:id" element={<OtherUsersAuctionPage />} />
         <Route path="/nowe-ogloszenie" element={<NewAuctionPage />} />
 
       </Routes>

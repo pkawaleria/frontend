@@ -17,7 +17,7 @@ export default function NewAuction() {
     const [description, setDescription] = useState("");
     const [province, setProvince] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState();
     const defaultImagePreviews = new Array(10).fill(null);
     const [imagePreviews, setImagePreviews] = useState(defaultImagePreviews);
 
@@ -64,6 +64,16 @@ export default function NewAuction() {
         }
     };
 
+    const validatePrice = (value) => {
+        if (value === "") {
+            setPriceError("Cena jest wymagana.");
+        } else if (parseFloat(value) <= 0) {
+            setPriceError("Cena musi być większa od zera.");
+        } else {
+            setPriceError("");
+        }
+    };
+
     const isFormValid = () => {
         return (
             title !== "" &&
@@ -80,16 +90,6 @@ export default function NewAuction() {
         );
     };
 
-    const validatePrice = (value) => {
-        if (value === "") {
-            setPriceError("Cena jest wymagana.");
-        } else if (parseFloat(value) <= 0) {
-            setPriceError("Cena musi być większa od zera.");
-        } else {
-            setPriceError("");
-        }
-    }
-
     const handleAddAuction = async () => {
         if (!isFormValid()) { return; }
         try {
@@ -100,9 +100,9 @@ export default function NewAuction() {
                     name: title,
                     description: description,
                     price: price,
-                    categoryId: "6517dfe87ba8b117937ed4ed", //tymczasowo TODO
+                    categoryId: "6519380366f3c27c5697d61b", //tymczasowo TODO
                     productCondition: "NEW", //tymczasowo TODO
-                    cityId: "65180c2ab1189b3e5e7e1660", //tymczasowo TODO
+                    cityId: "6519388f66f3c27c5697d623", //tymczasowo TODO
 
                 },
                 {
@@ -117,7 +117,7 @@ export default function NewAuction() {
             if (response.status === 200) {
                 const auctionId = response.data.id;
 
-                const formData = new FormData();
+                const formData = new Array();
                 images.forEach((image, index) => {
                     formData.append(`files`, image);
                 });
