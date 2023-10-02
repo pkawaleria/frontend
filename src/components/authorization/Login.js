@@ -46,12 +46,8 @@ export default function Login() {
         };
 
         try {
-            // const response = await axios.post(
-            //     "http://192.168.100.131:5000/users/login",
-            //     requestData
-            // );
             const response = await axios.post(
-                "http://localhost:5000/users/login",
+                process.env.REACT_APP_ACCOUNTING_MS_USERS_LOGIN,
                 requestData
             );
 

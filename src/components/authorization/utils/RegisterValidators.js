@@ -28,16 +28,19 @@ export const validateEmail = (email) => {
 }
 
 export const validatePassword = (password) => {
-    let error = ""
+    let error = '';
 
-    if (password === "") {
-        error = "Hasło nie może być puste"
+    if (password === '') {
+        error = 'Hasło nie może być puste';
     } else if (password.length < 8) {
-        error = "Hasło musi się składać z minimum 8 znaków"
+        error = 'Hasło musi się składać z minimum 8 znaków';
+    } else if (!/[A-Z]/.test(password)) {
+        error = 'Hasło musi zawierać przynajmniej jedną dużą literę';
     }
 
-    return error
-}
+    return error;
+};
+
 
 export const arePasswordsIdentical = (password, confirmPassword) => {
     let error = ""
