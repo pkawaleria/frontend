@@ -198,6 +198,11 @@ export default function UsersAuctions() {
                     </div>
                 )}
             </div>
+            {auctionsData.length > 5 && (
+                    <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
+                        Dodaj ogłoszenie
+                    </Link>
+                )}
         </div>
     );
 }
