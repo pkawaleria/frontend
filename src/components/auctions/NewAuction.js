@@ -328,17 +328,17 @@ export default function NewAuction() {
                             list="cities"
                         />
                         {isCityListVisible && (
-                            <ul className="absolute left-0 mt-2 bg-white border border-gray-300 rounded-md shadow-md w-[50%] z-10">
+                            <datalist className="absolute left-0 mt-2 bg-white border border-gray-300 rounded-md shadow-md w-[50%] z-10" id="cities">
                                 {dataList.map((city) => (
-                                    <li
+                                    <option
                                         key={city.id}
                                         className="py-1 px-2 hover:bg-blue-100 cursor-pointer"
                                         onClick={() => handleCitySelect(city.id)}
                                     >
                                         {city.name}
-                                    </li>
+                                    </option>
                                 ))}
-                            </ul>
+                            </datalist>
                         )}
                     </div>
 
