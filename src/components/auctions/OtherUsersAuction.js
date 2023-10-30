@@ -18,7 +18,6 @@ export default function OtherUsersAuction() {
                 `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_USERS}/${id}/auctions`,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
                 }

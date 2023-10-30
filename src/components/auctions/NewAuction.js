@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { BiCategoryAlt, BiPhotoAlbum } from 'react-icons/bi';
 import { MdOutlineDescription, MdTitle } from 'react-icons/md';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { AiOutlinePhone } from 'react-icons/ai';
 import { GrMoney } from 'react-icons/gr';
+import { GiMatterStates } from 'react-icons/gi';
 
 import axios from "axios";
 
@@ -15,9 +16,13 @@ export default function NewAuction() {
     const [category, setCategory] = useState("");
     const [images, setImages] = useState([]);
     const [description, setDescription] = useState("");
-    const [province, setProvince] = useState("");
+    const [name, setName] = useState("");
+    const [cityId, setCityId] = useState();
     const [phoneNumber, setPhoneNumber] = useState("");
     const [price, setPrice] = useState();
+    const [condition, setCondition] = useState("");
+    const [dataList, setDataList] = useState([]);
+    const [isCityListVisible, setCityListVisible] = useState(false);
     const defaultImagePreviews = new Array(10).fill(null);
     const [imagePreviews, setImagePreviews] = useState(defaultImagePreviews);
 
@@ -25,6 +30,9 @@ export default function NewAuction() {
     const [descriptionError, setDescriptionError] = useState("");
     const [phoneNumberError, setPhoneNumberError] = useState("");
     const [priceError, setPriceError] = useState("");
+    const [conditionError, setConditionError] = useState("");
+
+    const nameRef = useRef(null);
 
     const handleImageUpload = (e) => {
         const selectedImages = Array.from(e.target.files);
@@ -74,19 +82,28 @@ export default function NewAuction() {
         }
     };
 
+    const validateCondition = () => {
+        if (condition === "") {
+            setConditionError("Stan jest wymagany.");
+        } else {
+            setConditionError("");
+        }
+    };
+
     const isFormValid = () => {
         return (
             title !== "" &&
             category !== "" &&
             images.length > 0 &&
             description !== "" &&
-            province !== "" &&
+            name !== "" &&
             phoneNumber !== "" &&
             price !== "" &&
             title.length >= 10 &&
             description.length >= 60 &&
             phoneNumber.match(/^\d{9}$/) &&
-            priceError === ""
+            priceError === "" &&
+            condition !== ""
         );
     };
 
@@ -101,8 +118,8 @@ export default function NewAuction() {
                     description: description,
                     price: price,
                     categoryId: "6519380366f3c27c5697d61b", //tymczasowo TODO
-                    productCondition: "NEW", //tymczasowo TODO
-                    cityId: "6519388f66f3c27c5697d623", //tymczasowo TODO
+                    productCondition: condition,
+                    cityId: cityId
 
                 },
                 {
@@ -117,7 +134,7 @@ export default function NewAuction() {
             if (response.status === 200) {
                 const auctionId = response.data.id;
 
-                const formData = new Array();
+                const formData = new FormData();
                 images.forEach((image, index) => {
                     formData.append(`files`, image);
                 });
@@ -146,6 +163,30 @@ export default function NewAuction() {
             console.error("Wystąpił błąd:", error);
             alert("Wystąpił błąd podczas dodawania ogłoszenia.");
         }
+    };
+
+    const fetchCities = async () => {
+        try {
+            const response = await axios.get(
+                `${process.env.REACT_APP_AUCTIONS_MS_CITIES_SEARCH_URL}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    params: {
+                        searchCityName: nameRef.current.value
+                    }
+                }
+            );
+            setDataList(response.data.cities);
+            setCityListVisible(true);
+        } catch (error) {
+            console.error("Wystąpił błąd podczas pobierania sugestii miast:", error);
+        }
+    };
+
+    const handleCitySelect = (selectedCityId) => {
+        setCityListVisible(false);
     };
 
     return (
@@ -189,6 +230,29 @@ export default function NewAuction() {
                             <option value="Ogród" className='bg-gray-300'>Ogród</option>
                             <option value="Motoryzacja" className='bg-gray-300'>Motoryzacja</option>
                         </select>
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="condition" className="block text-gray-600 font-medium mb-2">Stan:</label>
+                        <GiMatterStates size={25} className="inline-block mr-2" />
+                        <select
+                            id="condition"
+                            name="condition"
+                            value={condition}
+                            onChange={(e) => {
+                                setCondition(e.target.value);
+                                validateCondition();
+                            }}
+                            onBlur={validateCondition}
+                            className={`w-[50%] p-2 border border-blue-500 rounded-md focus:outline-none `}
+                            required
+                        >
+                            <option value="" className='bg-gray-300'>Wybierz stan</option>
+                            <option value="NEW" className='bg-gray-300'>Nowy</option>
+                            <option value="USED" className='bg-gray-300'>Używany</option>
+                            <option value="DAMAGED" className='bg-gray-300'>Uszkodzony</option>
+                            <option value="NOT_APPLIED" className='bg-gray-300'>Nie dotyczy</option>
+                        </select>
+                        {conditionError && <p className="text-red-500">{conditionError}</p>}
                     </div>
                     <div className="mb-4">
                         <label htmlFor="images" className="block text-gray-600 font-medium mb-2">Zdjęcia:</label>
@@ -241,23 +305,43 @@ export default function NewAuction() {
                         ></textarea>
                         {descriptionError && <p className="text-red-500">{descriptionError}</p>}
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="province" className="block text-gray-600 font-medium mb-2">Województwo:</label>
+                    <div className="mb-4 relative">
+                        <label htmlFor="city" className="block text-gray-600 font-medium mb-2">
+                            Miasto:
+                        </label>
                         <FaMapMarkerAlt size={25} className="inline-block mr-2" />
-                        <select
-                            id="province"
-                            name="province"
-                            value={province}
-                            onChange={(e) => setProvince(e.target.value)}
-                            className={`w-[50%] p-2 border border-blue-500 rounded-md focus:outline-none `}
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            value={name}
+                            onChange={(e) => {
+                                setName(e.target.value);
+                                fetchCities();
+                            }}
+                            onBlur={() => {
+                                setCityListVisible(false);
+                            }}
+                            ref={nameRef}
+                            className={`w-[50%] p-2 border border-blue-500 rounded-md focus:outline-none`}
                             required
-                        >
-                            <option value="" className='bg-gray-300'>Wybierz województwo</option>
-                            <option value="adwadawd31132" className='bg-gray-300'>Lublin</option>
-                            <option value="kujawsko-pomorskie" className='bg-gray-300'>Kujawsko-Pomorskie</option>
-                        </select>
-
+                            list="cities"
+                        />
+                        {isCityListVisible && (
+                            <datalist className="absolute left-0 mt-2 bg-white border border-gray-300 rounded-md shadow-md w-[50%] z-10" id="cities">
+                                {dataList.map((city) => (
+                                    <option
+                                        key={city.id}
+                                        className="py-1 px-2 hover:bg-blue-100 cursor-pointer"
+                                        onClick={() => handleCitySelect(city.id)}
+                                    >
+                                        {city.name}
+                                    </option>
+                                ))}
+                            </datalist>
+                        )}
                     </div>
+
                     <div className="mb-4">
                         <label htmlFor="phoneNumber" className="block text-gray-600 font-medium mb-2">Numer telefonu:</label>
                         <AiOutlinePhone size={25} className="inline-block mr-2" />

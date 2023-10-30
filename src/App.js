@@ -35,7 +35,6 @@ function App() {
                 <Route path="/zmien-haslo" element={<ChangePasswordPage/>}/>
                 <Route path="/ogloszenie/:id" element={<AdvertPage/>}/>
                 <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage/>}/>
-                {/*Tymczasowo na sztywno ogloszenia-uzytkownika */}
                 <Route path="/ogloszenia-uzytkownika/:id" element={<OtherUsersAuctionPage/>}/>
                 <Route path="/nowe-ogloszenie" element={<NewAuctionPage/>}/>
                 <Route path="/kategorie" element={<GeneralCategoriesPage/>}/>

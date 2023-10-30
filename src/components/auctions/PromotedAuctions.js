@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Tooltip } from 'react-tooltip';
-import { PromotedAuctionsInputs } from './utils/PromotedAuctionsInput'
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function PromotedAuctions() {
@@ -46,7 +46,7 @@ export default function PromotedAuctions() {
         <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-screen-xl mx-auto px-6 mt-5 mb-5">
           {all12Auctions.auctions.map((auction) => {
             return (
-              <div key={auction.id} className="bg-white border-2 border-white p-4 
+              <Link to={`/ogloszenie/${auction.id}`} key={auction.id} className="bg-white border-2 border-white p-4 
               rounded-lg shadow-md transition-transform duration-500 
               hover:scale-[1.02] hover:shadow-2xl hover:cursor-pointer">
                 <div className="relative">
@@ -58,7 +58,7 @@ export default function PromotedAuctions() {
                 <Tooltip id={`tooltip-${auction.id}`} place="top" effect="solid" className="custom-tooltip-style">
                   {auction.name}
                 </Tooltip>
-              </div>
+              </Link>
             )
           })}
 
