@@ -70,6 +70,17 @@ export default function SearchBar() {
     setProvinceListVisible(false);
   };
 
+  const changeListDisplay = (state) => {
+    let timeout;
+
+    if (!state) {
+        timeout = setTimeout(() => setCityListVisible(state), 100);
+    } else {
+        clearTimeout(timeout);
+        setCityListVisible(state);
+    }
+}
+
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     if (cityId) {
@@ -105,6 +116,7 @@ export default function SearchBar() {
               setCityName(e.target.value);
               fetchCities();
             }}
+            onBlur={() => changeListDisplay(false)}
             ref={nameRef}
             className="w-[75%] px-2 py-3 outline-none border-white hover:placeholder:font-semibold rounded font-semibold placeholder:font-normal text-gray-700 mt-4"
           />
