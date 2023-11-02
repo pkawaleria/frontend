@@ -17,6 +17,14 @@ import {FontSizeProvider} from "./components/themes/FontSizeContext";
 import {GeneralCategoriesPage} from "./pages/GeneralCategoriesPage";
 import {CategoryWithSubcategoriesPage} from "./pages/CategoryWithSubcategoriesPage";
 
+import {AdminRegisterPage} from "./pages/AdminRegisterPage";
+import {AdminLoginPage} from './pages/AdminLoginPage'
+import {AdminProfilePage} from './pages/AdminProfilePage'
+import {AdminChangePasswordPage} from './pages/AdminChangePasswordPage'
+import {AdminEditProfilePage} from './pages/AdminEditProfilePage'
+import {AdminAddingPermissionsPage} from "./pages/AdminAddingPermissionsPage";
+import {AdminDeletingPermissionsPage} from './pages/AdminDeletingPermissions'
+
 function App() {
     const accessToken = localStorage.getItem("accessToken")
 
@@ -39,6 +47,16 @@ function App() {
                 <Route path="/nowe-ogloszenie" element={<NewAuctionPage/>}/>
                 <Route path="/kategorie" element={<GeneralCategoriesPage/>}/>
                 <Route path="/subcategories/:id" element={<CategoryWithSubcategoriesPage/>}/>
+
+                {/* ADMIN SECTION */}
+                <Route path="/rejestracja/admin" element={<AdminRegisterPage/>}/>
+                <Route path="/logowanie/admin" element={<AdminLoginPage/>}/>
+                <Route path="/profil/admin" element={<AdminProfilePage/>}/>
+                <Route path="/edytuj-profil/admin" element={<AdminEditProfilePage/>}/>
+                <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage/>}/>
+                <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage/>}/>
+                <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage/>}/>
+
 
             </Routes>
         </FontSizeProvider>

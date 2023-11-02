@@ -1,11 +1,9 @@
-import Navbar from "../components/navbar/Navbar"
-import Footer from "../components/footer/Footer"
-import OtherUsersAuction from "../components/auctions/OtherUsersAuction"
+import Register from "../components/admins/authorization/Register"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 
-export function OtherUsersAuctionPage() {
+export function AdminRegisterPage() {
 
     const { fontSize } = useFontSize();
 
@@ -15,11 +13,10 @@ export function OtherUsersAuctionPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
-           <Navbar/>
-           <ScrollToTop/>
-           <ScrollToTopButton/>
-           <OtherUsersAuction/>
-           <Footer/>
+            <ScrollToTop />
+            <ScrollToTopButton />
+            <Register />
         </div>
+
     )
 }
