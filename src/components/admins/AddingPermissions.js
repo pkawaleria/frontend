@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {isSuperAdmin, canAddPerms} from './utils/PermissionsCheck'
 
 export default function AdminPermissionsForm() {
   const [admins, setAdmins] = useState([]);
@@ -57,7 +58,14 @@ export default function AdminPermissionsForm() {
     }
   };
 
+  if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+    return (
+      <div></div>
+    )
+  }
+
   return (
+
     <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
       <div className="w-[50%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
         <div className="flex-shrink-0">

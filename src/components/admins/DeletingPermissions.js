@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import {isSuperAdmin, canAddPerms} from './utils/PermissionsCheck'
 
 export default function DeletingPermissions() {
   const [admins, setAdmins] = useState([]);
@@ -66,6 +67,12 @@ export default function DeletingPermissions() {
         });
     }
   };
+
+  if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+    return (
+      <div></div>
+    )
+  }
 
   return (
     <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">

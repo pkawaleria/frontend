@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import CategoryDetails from "./CategoryDetails";
 import {fetchCategoryDetails, fetchSubcategories} from "../../services/categoryService";
+import { isSuperAdmin, canAddCateogires } from '../admins/utils/PermissionsCheck';
 
 const CategoryWithSubcategories = () => {
     const {id} = useParams();
     const [subcategoriesData, setSubcategoriesData] = useState([]);
     const [currentCategory, setCurrentCategory] = useState(null);
-    const isAdmin = true; //TODO: dodać logikę do sprawdzenia czy to admin
+    const [isAdmin, setisAdmin] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,6 +26,13 @@ const CategoryWithSubcategories = () => {
         };
 
         fetchData();
+        try {
+            if(isSuperAdmin(localStorage.getItem("accessToken")) || canAddCateogires(localStorage.getItem("accessToken"))){
+                setisAdmin(true);
+            }
+        } catch (error) {
+            
+        }{}
     }, [id]);
 
     if (!currentCategory) return null;

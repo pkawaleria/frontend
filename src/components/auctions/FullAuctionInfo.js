@@ -4,7 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import { BsXCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+
+import {canDeleteAuctions, isSuperAdmin} from '../admins/utils/PermissionsCheck'
 
 export default function FullAuctionInfo() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -110,13 +111,7 @@ export default function FullAuctionInfo() {
     }
 
     try {
-      const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
-
-      if (
-        decodedToken.roles === "ADMIN" &&
-        Array.isArray(decodedToken.permissions) &&
-        decodedToken.permissions.includes("ADM001")
-      ) {
+      if (canDeleteAuctions(localStorage.getItem("accessToken")) || isSuperAdmin(localStorage.getItem("accessToken"))) {
         setisAdmin(true);
       }
     } catch {}
