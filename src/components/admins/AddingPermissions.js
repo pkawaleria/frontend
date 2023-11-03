@@ -8,7 +8,6 @@ export default function AdminPermissionsForm() {
   const [selectedPermissionId, setSelectedPermissionId] = useState("");
 
   useEffect(() => {
-    // Pobieranie listy adminów
     axios
       .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_ADMINS)
       .then((response) => {
@@ -18,7 +17,6 @@ export default function AdminPermissionsForm() {
         console.error("Błąd podczas pobierania adminów:", error);
       });
 
-    // Pobieranie listy uprawnień
     axios
       .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_PERMISSIONS)
       .then((response) => {
@@ -47,7 +45,11 @@ export default function AdminPermissionsForm() {
         )
         .then((response) => {
           console.log("Sukces! Uprawnienie zostało przypisane do admina.");
-          window.location = "/profil/admin"
+          localStorage.removeItem("accessToken");
+          if (response.data.access_token) {
+            localStorage.setItem("accessToken", response.data.access_token);
+          }
+          window.location = "/profil/admin";
         })
         .catch((error) => {
           console.error("Błąd podczas przypisywania uprawnienia:", error);

@@ -6,7 +6,7 @@ export default function DeletingPermissions() {
   const [permissions, setPermissions] = useState([]);
   const [selectedPermissionId, setSelectedPermissionId] = useState("");
 
-  const selectedAdminIdRef = useRef(""); // Utwórz ref dla selectedAdminId
+  const selectedAdminIdRef = useRef("");
 
   useEffect(() => {
     axios
@@ -20,7 +20,7 @@ export default function DeletingPermissions() {
   }, []);
 
   const handleAdminChange = (event) => {
-    selectedAdminIdRef.current = event.target.value; // Zaktualizuj ref
+    selectedAdminIdRef.current = event.target.value;
 
     if (event.target.value) {
       axios
@@ -46,7 +46,7 @@ export default function DeletingPermissions() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const adminId = selectedAdminIdRef.current; // Pobierz wartość ref
+    const adminId = selectedAdminIdRef.current;
 
     if (adminId && selectedPermissionId) {
       axios
@@ -55,6 +55,10 @@ export default function DeletingPermissions() {
         )
         .then((response) => {
           console.log("Uprawnienie zostało usunięte");
+          if (response.data.access_token) {
+            localStorage.removeItem("accessToken");
+            localStorage.setItem("accessToken", response.data.access_token);
+          }
           window.location = "/profil/admin";
         })
         .catch((error) => {

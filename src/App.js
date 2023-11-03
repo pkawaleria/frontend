@@ -56,8 +56,6 @@ function App() {
                 <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage/>}/>
                 <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage/>}/>
                 <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage/>}/>
-
-
             </Routes>
         </FontSizeProvider>
     );
