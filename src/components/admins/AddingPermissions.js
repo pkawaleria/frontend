@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {isSuperAdmin, canAddPerms} from './utils/PermissionsCheck'
 
 export default function AdminPermissionsForm() {
   const [admins, setAdmins] = useState([]);
@@ -8,7 +9,6 @@ export default function AdminPermissionsForm() {
   const [selectedPermissionId, setSelectedPermissionId] = useState("");
 
   useEffect(() => {
-    // Pobieranie listy adminów
     axios
       .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_ADMINS)
       .then((response) => {
@@ -18,7 +18,6 @@ export default function AdminPermissionsForm() {
         console.error("Błąd podczas pobierania adminów:", error);
       });
 
-    // Pobieranie listy uprawnień
     axios
       .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_PERMISSIONS)
       .then((response) => {
@@ -47,7 +46,11 @@ export default function AdminPermissionsForm() {
         )
         .then((response) => {
           console.log("Sukces! Uprawnienie zostało przypisane do admina.");
-          window.location = "/profil/admin"
+          localStorage.removeItem("accessToken");
+          if (response.data.access_token) {
+            localStorage.setItem("accessToken", response.data.access_token);
+          }
+          window.location = "/profil/admin";
         })
         .catch((error) => {
           console.error("Błąd podczas przypisywania uprawnienia:", error);
@@ -55,7 +58,14 @@ export default function AdminPermissionsForm() {
     }
   };
 
+  if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+    return (
+      <div></div>
+    )
+  }
+
   return (
+
     <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
       <div className="w-[50%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
         <div className="flex-shrink-0">
