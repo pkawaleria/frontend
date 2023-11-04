@@ -3,13 +3,13 @@ import { Link } from "react-router-dom"
 import { AiFillHome } from "react-icons/ai"
 
 import SubmitButton from "./form/SubmitButton"
-import SwapToRegisterButton from "./form/SwapToRegisterButton"
-import SwapToLoginButton from "./form/SwapToLoginButton"
 import Input from "./form/Input"
 import axios from "axios"
 
 import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical, validateFirstname, validateLastname, validatePhoneNumber } from "./utils/RegisterValidators"
 import { inputs } from "./utils/RegisterInputs"
+import { isSuperAdmin, canCreateAdminAccount } from "../utils/PermissionsCheck"
+import { noPermission } from "../../errors/noPermission"
 
 export default function Register() {
     const [newUserData, setNewUserData] = useState({
@@ -103,6 +103,18 @@ export default function Register() {
         }
     };
 
+    try {
+        if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canCreateAdminAccount(localStorage.getItem("accessToken")))) {
+          return (
+            noPermission()
+          )
+        }
+      } catch (error) {
+        return (
+          noPermission()
+        )
+      }
+
 
     return (
         <div className="flex items-center mt-10 pb-3 justify-center gradient-bg-color-only">
@@ -118,10 +130,7 @@ export default function Register() {
                 className="bg-white py-5 px-8 rounded-md border-0 w-96 
                     mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3"
                 onSubmit={handleSubmit}>
-                <div className="flex">
-                    <SwapToRegisterButton isOn={true} />
-                    <SwapToLoginButton />
-                </div>
+                
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input

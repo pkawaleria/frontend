@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {isSuperAdmin, canAddPerms} from './utils/PermissionsCheck'
+import {noPermission} from '../errors/noPermission'
+import jwtDecode from "jwt-decode";
 
 export default function AdminPermissionsForm() {
   const [admins, setAdmins] = useState([]);
@@ -46,10 +48,19 @@ export default function AdminPermissionsForm() {
         )
         .then((response) => {
           console.log("Sukces! Uprawnienie zostało przypisane do admina.");
-          localStorage.removeItem("accessToken");
+          const currentToken = localStorage.getItem("accessToken");
           if (response.data.access_token) {
-            localStorage.setItem("accessToken", response.data.access_token);
+            const newToken = response.data.access_token;
+        
+            const currentTokenData = jwtDecode(currentToken);
+            const newTokenData = jwtDecode(newToken);
+        
+            if (currentTokenData.email === newTokenData.email) {
+              localStorage.removeItem("accessToken");
+              localStorage.setItem("accessToken", newToken);
+            }
           }
+        
           window.location = "/profil/admin";
         })
         .catch((error) => {
@@ -58,9 +69,15 @@ export default function AdminPermissionsForm() {
     }
   };
 
-  if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+  try {
+    if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+      return (
+        noPermission()
+      )
+    }
+  } catch (error) {
     return (
-      <div></div>
+      noPermission()
     )
   }
 

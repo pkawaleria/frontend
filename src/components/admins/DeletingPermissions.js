@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import {isSuperAdmin, canAddPerms} from './utils/PermissionsCheck'
+import {noPermission} from '../errors/noPermission'
+import jwtDecode from "jwt-decode";
 
 export default function DeletingPermissions() {
   const [admins, setAdmins] = useState([]);
@@ -55,11 +57,20 @@ export default function DeletingPermissions() {
           `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS}/${adminId}/permissions/${selectedPermissionId}`
         )
         .then((response) => {
-          console.log("Uprawnienie zostało usunięte");
+          console.log("Sukces! Uprawnienie zostało przypisane do admina.");
+          const currentToken = localStorage.getItem("accessToken");
           if (response.data.access_token) {
-            localStorage.removeItem("accessToken");
-            localStorage.setItem("accessToken", response.data.access_token);
+            const newToken = response.data.access_token;
+        
+            const currentTokenData = jwtDecode(currentToken);
+            const newTokenData = jwtDecode(newToken);
+        
+            if (currentTokenData.email === newTokenData.email) {
+              localStorage.removeItem("accessToken");
+              localStorage.setItem("accessToken", newToken);
+            }
           }
+        
           window.location = "/profil/admin";
         })
         .catch((error) => {
@@ -68,9 +79,15 @@ export default function DeletingPermissions() {
     }
   };
 
-  if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+  try {
+    if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+      return (
+        noPermission()
+      )
+    }
+  } catch (error) {
     return (
-      <div></div>
+      noPermission()
     )
   }
 

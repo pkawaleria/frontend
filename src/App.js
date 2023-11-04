@@ -22,8 +22,9 @@ import {AdminLoginPage} from './pages/AdminLoginPage'
 import {AdminProfilePage} from './pages/AdminProfilePage'
 import {AdminChangePasswordPage} from './pages/AdminChangePasswordPage'
 import {AdminEditProfilePage} from './pages/AdminEditProfilePage'
-import {AdminAddingPermissionsPage} from "./pages/AdminAddingPermissionsPage";
+import {AdminAddingPermissionsPage} from "./pages/AdminAddingPermissionsPage"
 import {AdminDeletingPermissionsPage} from './pages/AdminDeletingPermissions'
+import { AdminStatisticsPage } from "./pages/AdminStatisticsPage";
 
 function App() {
     const accessToken = localStorage.getItem("accessToken")
@@ -56,6 +57,7 @@ function App() {
                 <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage/>}/>
                 <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage/>}/>
                 <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage/>}/>
+                <Route path="/statystyki-serwisu" element={<AdminStatisticsPage/>}/>
             </Routes>
         </FontSizeProvider>
     );

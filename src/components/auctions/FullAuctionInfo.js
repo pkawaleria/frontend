@@ -5,7 +5,11 @@ import { BsXCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
 import axios from "axios";
 
-import {canDeleteAuctions, isSuperAdmin} from '../admins/utils/PermissionsCheck'
+import {
+  canDeleteAuctions,
+  isSuperAdmin,
+  isAdmin,
+} from "../admins/utils/PermissionsCheck";
 
 export default function FullAuctionInfo() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -38,17 +42,17 @@ export default function FullAuctionInfo() {
   };
 
   const deleteAuction = async () => {
-    const token = localStorage.getItem("accessToken")
+    const token = localStorage.getItem("accessToken");
     const resp = await axios.delete(
       `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${auctionInfo.id}`,
       {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
-    window.location="/"
+    window.location = "/";
   };
 
   useEffect(() => {
@@ -63,6 +67,7 @@ export default function FullAuctionInfo() {
           }
         );
         setAuctionInfo(response.data);
+        console.log(response.data);
 
         const auctioneerId = response.data.auctioneerId;
 
@@ -111,7 +116,7 @@ export default function FullAuctionInfo() {
     }
 
     try {
-      if (canDeleteAuctions(localStorage.getItem("accessToken")) || isSuperAdmin(localStorage.getItem("accessToken"))) {
+      if (isAdmin(localStorage.getItem("accessToken"))) {
         setisAdmin(true);
       }
     } catch {}
@@ -184,23 +189,6 @@ export default function FullAuctionInfo() {
       {/* COLUMN 2 */}
       <div className="mt-3 flex flex-col w-[20%] max-w-screen-md bg-white rounded-lg shadow-md p-4 space-y-4 self-start">
         <div className="bg-white rounded-lg shadow-md p-[1vw]">
-          {isAdmin && (
-            <Link
-              className="right text-blue-400 hover:text-blue-700"
-              data-tooltip-id="deleteAd"
-              data-tooltip-content="Usuń ogłoszenie"
-              onClick={deleteAuction}
-            >
-              <Tooltip
-                id="deleteAd"
-                type="dark"
-                effect="solid"
-                delayShow={200}
-                delayHide={100}
-              />
-              <BsXCircle color="red" size={20} z={100} />
-            </Link>
-          )}
           <h3 className="text-[1.2vw] font-semibold mb-2">Dane użytkownika</h3>
           <Link
             to={`/ogloszenia-uzytkownika/${userData.id}`}
@@ -226,9 +214,33 @@ export default function FullAuctionInfo() {
         </div>
         <div className="bg-white rounded-lg shadow-md">
           <p className="text-[1vw] font-semibold m-4">
-            Województwo: {/*exampleAd.province*/}
+            Miejscowość: {auctionInfo.cityName},{" "}
+            {auctionInfo.province.charAt(0).toUpperCase() +
+              auctionInfo.province.slice(1)}
           </p>
         </div>
+        {isAdmin && (
+          <div className=" bg-white rounded-lg shadow-md p-[1vw]">
+            {(isSuperAdmin(localStorage.getItem("accessToken")) ||
+              canDeleteAuctions(localStorage.getItem("accessToken"))) && (
+              <Link
+                className="right text-blue-400 hover:text-blue-700"
+                data-tooltip-id="deleteAd"
+                data-tooltip-content="Usuń ogłoszenie"
+                onClick={deleteAuction}
+              >
+                <Tooltip
+                  id="deleteAd"
+                  type="dark"
+                  effect="solid"
+                  delayShow={200}
+                  delayHide={100}
+                />
+                <BsXCircle color="red" size={20} z={100} />
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
