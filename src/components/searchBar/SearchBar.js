@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {BiChevronDown, BiChevronUp, BiSearchAlt2, BiSortDown, BiSortUp} from "react-icons/bi";
-import { FaStream } from 'react-icons/fa';
-import {FaMapMarkerAlt} from "react-icons/fa";
+import {FaMapMarkerAlt, FaStream} from 'react-icons/fa';
 import {fetchCategoriesByName, fetchTopLevelCategories} from "../../services/categoryService";
 import {searchCities} from "../../services/citiesService";
 import Select from "react-select";
@@ -10,11 +9,11 @@ import CreatableSelect from "react-select/creatable";
 
 
 const radiusOptions = [
-    { label: '0 km', value: '0' },
-    { label: '20 km', value: '20' },
-    { label: '30 km', value: '30' },
-    { label: '40 km', value: '40' },
-    { label: '50 km', value: '50' },
+    {label: '0 km', value: '0'},
+    {label: '20 km', value: '20'},
+    {label: '30 km', value: '30'},
+    {label: '40 km', value: '40'},
+    {label: '50 km', value: '50'},
 ];
 
 const provinces = [
@@ -36,12 +35,6 @@ const provinces = [
     "Zachodniopomorskie",
 ];
 
-const sortOptions = [
-    { value: 'price', label: 'Cena' },
-    { value: 'name', label: 'Nazwa' },
-    // TODO: dodać więcej
-];
-
 export default function SearchBar() {
     const [searchedCities, setSearchedCities] = useState([]);
     const [searchedCategories, setSearchedCategories] = useState([]);
@@ -53,10 +46,14 @@ export default function SearchBar() {
     const [selectedProvinceName, setSelectedProvinceName] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null);
     const [selectedRadius, setSelectedRadius] = useState(0);
-    const [selectedSortByField, setSelectedSortByField] = useState(sortOptions[0]);
+    const [selectedSortByField, setSelectedSortByField] = useState(null);
     const [selectedSortOrder, setSelectedSortOrder] = useState('ASC');
 
 
+    const [sortOptions, setSortOptions] = useState([
+        {value: 'price', label: 'Cena'},
+        {value: 'name', label: 'Nazwa'},
+    ]);
 
 
     useEffect(() => {
@@ -68,10 +65,6 @@ export default function SearchBar() {
 
     const handleToggleOptions = () => {
         setIsOptionsExpanded(!isOptionsExpanded);
-    };
-
-    const handleSortChange = (order) => {
-        setSelectedSortOrder(order);
     };
 
     const handleCategoryInputChange = (inputValue) => {
@@ -101,11 +94,16 @@ export default function SearchBar() {
     };
 
 
-
     const handleSearchSubmit = (event) => {
         event.preventDefault();
 
-        console.log()
+        console.log('Searched Term in Auction Name:', searchedTermInAuctionName);
+        console.log('Selected Category:', selectedCategory);
+        console.log('Selected Province Name:', selectedProvinceName);
+        console.log('Selected City Id:', selectedCityId);
+        console.log('Selected Radius:', selectedRadius);
+        console.log('Selected Sort By Field:', selectedSortByField);
+        console.log('Selected Sort Order:', selectedSortOrder);
     };
 
     const formatToOptions = (array) => {
@@ -151,12 +149,11 @@ export default function SearchBar() {
         setSelectedSortOrder((prevOrder) => (prevOrder === 'ASC' ? 'DESC' : 'ASC'));
     };
 
-
     return (
         <div className="bg-blue-500/20 pt-5 pb-7 sm:pb-8">
             <form onSubmit={handleSearchSubmit}
                   className="search-form max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl p-4 flex flex-wrap justify-between gap-4"
-                  style={{ width: '90%' }}>
+                  style={{width: '90%'}}>
 
                 {/* Pole wpisania nazwy aukcji */}
                 <div className="flex-1 min-w-0">
@@ -222,7 +219,7 @@ export default function SearchBar() {
                         type="submit"
                         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150"
                     >
-                        <BiSearchAlt2 className="text-[2vw]" />
+                        <BiSearchAlt2 className="text-[2vw]"/>
                     </button>
                 </div>
 
@@ -233,7 +230,8 @@ export default function SearchBar() {
                         onClick={handleToggleOptions}
                         className="text-blue-500 hover:text-blue-600 transition duration-150"
                     >
-                        {isOptionsExpanded ? <BiChevronUp className="text-white text-3xl"/> : <BiChevronDown className="text-white text-3xl"/>}
+                        {isOptionsExpanded ? <BiChevronUp className="text-white text-3xl"/> :
+                            <BiChevronDown className="text-white text-3xl"/>}
                         <span className="hidden sm:inline"> Rozwiń dodatkowe opcje</span>
                     </button>
                 </div>
@@ -241,8 +239,8 @@ export default function SearchBar() {
                 {/* Dodatkowe opcje */}
                 {isOptionsExpanded && (
                     <div className="w-full pt-4">
-                        <div className="flex flex-wrap gap-2">
-                            <div className="flex-1 max-w-1/2">
+                        <div className="flex flex-wrap gap-2 items-center">
+                            <div className="w-2/5">
                                 <Select
                                     value={selectedProvinceName}
                                     onChange={handleProvinceSelectionChange}
@@ -253,24 +251,25 @@ export default function SearchBar() {
                                     isClearable
                                 />
                             </div>
+
                             <div className="flex-1 flex items-center">
                                 <Select
-                                    id="sortSelect"
                                     value={selectedSortByField}
                                     onChange={handleSortFieldChange}
                                     options={sortOptions}
-                                    placeholder="Sortuj po" // Dodany placeholder zamiast etykiety
-                                    className="cursor-pointer rounded border-2 border-gray-300 bg-white p-2 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                                    placeholder="Sortuj po"
+                                    className="text-gray-700 react-select-container w-full cursor-pointer rounded border-2"
                                     classNamePrefix="react-select"
+                                    isClearable
                                 />
                                 <div
                                     className="ml-2 cursor-pointer"
                                     onClick={toggleSortOrder}
                                 >
                                     {selectedSortOrder === 'ASC' ? (
-                                        <BiSortUp className="text-white text-3xl" />
+                                        <BiSortUp className="text-white text-3xl"/>
                                     ) : (
-                                        <BiSortDown className="text-white text-3xl" />
+                                        <BiSortDown className="text-white text-3xl"/>
                                     )}
                                 </div>
                             </div>
