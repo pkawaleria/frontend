@@ -24,7 +24,9 @@ import {AdminChangePasswordPage} from './pages/AdminChangePasswordPage'
 import {AdminEditProfilePage} from './pages/AdminEditProfilePage'
 import {AdminAddingPermissionsPage} from "./pages/AdminAddingPermissionsPage"
 import {AdminDeletingPermissionsPage} from './pages/AdminDeletingPermissions'
-import { AdminStatisticsPage } from "./pages/AdminStatisticsPage";
+import {AdminStatisticsPage} from "./pages/AdminStatisticsPage";
+import {AdminUsersAdministrationPage} from  './pages/AdminUsersAdministrationPage'
+import {AdminUserProfileInfoPage} from './pages/AdminUserProfileInfoPage'
 
 function App() {
     const accessToken = localStorage.getItem("accessToken")
@@ -58,6 +60,8 @@ function App() {
                 <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage/>}/>
                 <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage/>}/>
                 <Route path="/statystyki-serwisu" element={<AdminStatisticsPage/>}/>
+                <Route path="/zarzadzaj-uzytkownikami" element={<AdminUsersAdministrationPage/>}/>
+                <Route path="/uzytkownik/:id" element={<AdminUserProfileInfoPage/>}/>
             </Routes>
         </FontSizeProvider>
     );
