@@ -29,3 +29,18 @@ export const fetchSubcategories = async (id) => {
         throw error;
     }
 };
+
+export const fetchCategoriesByName = async (name) => {
+    try {
+        const response = await auctionMsApi.get(`/auction-service/categories/search?phraseInName=${name}`);
+        const categories = response.data;
+        return categories.map(cat => ({
+            id: cat.category.id,
+            name: cat.category.name
+        }));
+    } catch (error) {
+        console.error('Error fetching subcategories:', error);
+        throw error;
+    }
+};
+
