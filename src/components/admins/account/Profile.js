@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { formatPhoneNumber } from "./utils/ProfileInputFormat";
-import { isSuperAdmin, canAddPerms, canCreateAdminAccount, isAdmin } from "../utils/PermissionsCheck";
+import { isSuperAdmin, canAddPerms, canCreateAdminAccount, isAdmin, canBlockUsers } from "../utils/PermissionsCheck";
 import { noPermission } from "../../errors/noPermission";
 
 export default function Profile() {
@@ -87,6 +87,15 @@ export default function Profile() {
             className="text-xl font-semibold hover:underline"
           >
             Nowy Admin
+          </Link>
+        )}
+        {(isSuperAdmin(localStorage.getItem("accessToken")) ||
+          canBlockUsers(localStorage.getItem("accessToken"))) && (
+          <Link
+            to="/zarzadzaj-uzytkownikami"
+            className="text-xl font-semibold hover:underline"
+          >
+            Zarządzaj użytkownikami
           </Link>
         )}
       </nav>
