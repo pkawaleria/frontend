@@ -63,9 +63,25 @@ export function canEditCategories() {
   );
 }
 
+export function canCreateAdminAccount() {
+  const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
+  return (
+    decodedToken.roles === "ADMIN" &&
+    Array.isArray(decodedToken.permissions) &&
+    decodedToken.permissions.includes("ADM008")
+  );
+}
+
 export function isSuperAdmin() {
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" && decodedToken.isSuperAdmin
+  );
+}
+
+export function isAdmin() {
+  const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
+  return (
+    decodedToken.roles === "ADMIN"
   );
 }

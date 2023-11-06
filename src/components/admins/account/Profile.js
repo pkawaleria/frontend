@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { formatPhoneNumber } from "./utils/ProfileInputFormat";
-import { isSuperAdmin, canAddPerms } from "../utils/PermissionsCheck";
+import { isSuperAdmin, canAddPerms, canCreateAdminAccount, isAdmin } from "../utils/PermissionsCheck";
+import { noPermission } from "../../errors/noPermission";
 
 export default function Profile() {
   const [userData, setUserData] = useState({
@@ -33,9 +34,34 @@ export default function Profile() {
       });
   }, []);
 
+
+  try {
+    if (!(isAdmin(localStorage.getItem("accessToken")))) {
+      return (
+        noPermission()
+      )
+    }
+  } catch (error) {
+    return (
+      noPermission()
+    )
+  }
+
   return (
     <div className="flex flex-col items-center justify-center p-5 gradient-bg-color-only h-[80%]">
       <nav className="flex space-x-2 justify-center w-[50%] bg-blue-500 text-white p-4 rounded-t-lg mb-4">
+        <Link
+          to="/statystyki-serwisu"
+          className="text-xl font-semibold hover:underline"
+        >
+          Statystyki
+        </Link>
+        <Link
+            to="/kategorie"
+            className="text-xl font-semibold hover:underline"
+          >
+            Kategorie
+          </Link>
         {(isSuperAdmin(localStorage.getItem("accessToken")) ||
           canAddPerms(localStorage.getItem("accessToken"))) && (
           <Link
@@ -52,6 +78,15 @@ export default function Profile() {
             className="text-xl font-semibold hover:underline"
           >
             Usuń uprawnienia
+          </Link>
+        )}
+        {(isSuperAdmin(localStorage.getItem("accessToken")) ||
+          canCreateAdminAccount(localStorage.getItem("accessToken"))) && (
+          <Link
+            to="/rejestracja/admin"
+            className="text-xl font-semibold hover:underline"
+          >
+            Nowy Admin
           </Link>
         )}
       </nav>

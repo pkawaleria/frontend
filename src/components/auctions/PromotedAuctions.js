@@ -50,7 +50,7 @@ export default function PromotedAuctions() {
               rounded-lg shadow-md transition-transform duration-500 
               hover:scale-[1.02] hover:shadow-2xl hover:cursor-pointer">
                 <div className="relative">
-                  <img src={auction.thumbnail} alt={auction.name} className="w-full" />
+                  <img src={`data:image/jpeg;base64, ${auction.thumbnail}`} alt={auction.name} className="w-full" />
                 </div>
                 <h3 name={auction.name} className="text-xl font-semibold mt-2 overflow-hidden overflow-ellipsis max-h-14">
                   {auction.name.length > 30 ? auction.name.slice(0, 27) + "..." : auction.name}
