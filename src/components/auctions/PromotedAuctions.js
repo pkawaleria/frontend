@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GenericAuctionsListPage from "./GenericAuctionsListPage";
+import PromotedAuctionsComponent from "./PromotedAuctionsComponent";
 import { fetchAllAuctions } from "../../services/auctionsService";
 
 export default function PromotedAuctions() {
@@ -7,7 +7,7 @@ export default function PromotedAuctions() {
   const pageSize = 12;
 
   return (
-    <GenericAuctionsListPage
+    <PromotedAuctionsComponent
       fetchFunction={fetchAllAuctions}
       pageNumber={pageNumber}
       pageSize={pageSize}
