@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import {isSuperAdmin, canAddPerms} from './utils/PermissionsCheck'
+import {noPermission} from '../errors/noPermission'
+import jwtDecode from "jwt-decode";
 
 export default function DeletingPermissions() {
   const [admins, setAdmins] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const [selectedPermissionId, setSelectedPermissionId] = useState("");
 
-  const selectedAdminIdRef = useRef(""); // Utwórz ref dla selectedAdminId
+  const selectedAdminIdRef = useRef("");
 
   useEffect(() => {
     axios
@@ -20,7 +23,7 @@ export default function DeletingPermissions() {
   }, []);
 
   const handleAdminChange = (event) => {
-    selectedAdminIdRef.current = event.target.value; // Zaktualizuj ref
+    selectedAdminIdRef.current = event.target.value;
 
     if (event.target.value) {
       axios
@@ -46,7 +49,7 @@ export default function DeletingPermissions() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const adminId = selectedAdminIdRef.current; // Pobierz wartość ref
+    const adminId = selectedAdminIdRef.current;
 
     if (adminId && selectedPermissionId) {
       axios
@@ -54,7 +57,20 @@ export default function DeletingPermissions() {
           `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS}/${adminId}/permissions/${selectedPermissionId}`
         )
         .then((response) => {
-          console.log("Uprawnienie zostało usunięte");
+          console.log("Sukces! Uprawnienie zostało przypisane do admina.");
+          const currentToken = localStorage.getItem("accessToken");
+          if (response.data.access_token) {
+            const newToken = response.data.access_token;
+        
+            const currentTokenData = jwtDecode(currentToken);
+            const newTokenData = jwtDecode(newToken);
+        
+            if (currentTokenData.email === newTokenData.email) {
+              localStorage.removeItem("accessToken");
+              localStorage.setItem("accessToken", newToken);
+            }
+          }
+        
           window.location = "/profil/admin";
         })
         .catch((error) => {
@@ -62,6 +78,18 @@ export default function DeletingPermissions() {
         });
     }
   };
+
+  try {
+    if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
+      return (
+        noPermission()
+      )
+    }
+  } catch (error) {
+    return (
+      noPermission()
+    )
+  }
 
   return (
     <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
