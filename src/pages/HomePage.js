@@ -1,6 +1,6 @@
 import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
-import PromotedAuctions from "../components/auctions/PromotedAuctions"
+import GenericAuctionList from "../components/auctions/GenericAuctionList"
 import SearchBar from "../components/searchBar/SearchBar"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
@@ -19,7 +19,7 @@ export function HomePage() {
             <ScrollToTop />
             <ScrollToTopButton />
             <SearchBar />
-            <PromotedAuctions />
+            <GenericAuctionList />
             <Footer />
         </div>
     )
