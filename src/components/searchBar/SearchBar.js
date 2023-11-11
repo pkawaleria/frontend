@@ -57,11 +57,23 @@ export default function SearchBar() {
 
 
     useEffect(() => {
-        fetchTopLevelCategories().then(categories => {
-            setRootCategories(formatToOptions(categories))
-            setSearchedCategories(formatToOptions(categories));
-        });
-    }, []);
+        const fetchData = async () => {
+          try {
+            const [topLevelCategories, cities] = await Promise.all([
+              fetchTopLevelCategories(),
+              searchCities(''),
+            ]);
+    
+            setRootCategories(formatToOptions(topLevelCategories));
+            setSearchedCategories(formatToOptions(topLevelCategories));
+            setSearchedCities(formatToOptions(cities));
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     const handleToggleOptions = () => {
         setIsOptionsExpanded(!isOptionsExpanded);
