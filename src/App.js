@@ -27,6 +27,7 @@ import {AdminDeletingPermissionsPage} from './pages/AdminDeletingPermissions'
 import {AdminStatisticsPage} from "./pages/AdminStatisticsPage";
 import {AdminUsersAdministrationPage} from  './pages/AdminUsersAdministrationPage'
 import {AdminUserProfileInfoPage} from './pages/AdminUserProfileInfoPage'
+import SearchAuctionsPage from "./components/auctions/SearchAuctionsPage";
 
 function App() {
     const accessToken = localStorage.getItem("accessToken")
@@ -50,6 +51,8 @@ function App() {
                 <Route path="/nowe-ogloszenie" element={<NewAuctionPage/>}/>
                 <Route path="/kategorie" element={<GeneralCategoriesPage/>}/>
                 <Route path="/subcategories/:id" element={<CategoryWithSubcategoriesPage/>}/>
+                <Route path="/aukcje/search" element={<SearchAuctionsPage/>}/>
+
 
                 {/* ADMIN SECTION */}
                 <Route path="/rejestracja/admin" element={<AdminRegisterPage/>}/>

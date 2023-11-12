@@ -35,19 +35,27 @@ const provinces = [
     "Zachodniopomorskie",
 ];
 
-export default function SearchBar() {
+export default function SearchBar({
+                                      selectedCategory,
+                                      setSelectedCategory,
+                                      selectedProvinceName,
+                                      setSelectedProvinceName,
+                                      selectedCityId,
+                                      setSelectedCityId,
+                                      selectedRadius,
+                                      setSelectedRadius,
+                                      selectedSortByField,
+                                      setSelectedSortByField,
+                                      selectedSortOrder,
+                                      setSelectedSortOrder,
+                                      searchedTermInAuctionName,
+                                      setSearchedTermInAuctionName,
+                                      onSearch
+                                  }) {
     const [searchedCities, setSearchedCities] = useState([]);
     const [searchedCategories, setSearchedCategories] = useState([]);
     const [rootCategories, setRootCategories] = useState([]);
     const [isOptionsExpanded, setIsOptionsExpanded] = useState(false);
-
-    const [searchedTermInAuctionName, setSearchedTermInAuctionName] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedProvinceName, setSelectedProvinceName] = useState(null);
-    const [selectedCityId, setSelectedCityId] = useState(null);
-    const [selectedRadius, setSelectedRadius] = useState(0);
-    const [selectedSortByField, setSelectedSortByField] = useState(null);
-    const [selectedSortOrder, setSelectedSortOrder] = useState('ASC');
 
 
     const [sortOptions, setSortOptions] = useState([
@@ -58,22 +66,21 @@ export default function SearchBar() {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const [topLevelCategories, cities] = await Promise.all([
-              fetchTopLevelCategories(),
-              searchCities(''),
-            ]);
-    
-            setRootCategories(formatToOptions(topLevelCategories));
-            setSearchedCategories(formatToOptions(topLevelCategories));
-            setSearchedCities(formatToOptions(cities));
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
+            try {
+                const [topLevelCategories, cities] = await Promise.all([
+                    fetchTopLevelCategories(),
+                    searchCities(''),
+                ]);
+
+                setRootCategories(formatToOptions(topLevelCategories));
+                setSearchedCategories(formatToOptions(topLevelCategories));
+                setSearchedCities(formatToOptions(cities));
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         };
-    
         fetchData();
-      }, []);
+    }, []);
 
     const handleToggleOptions = () => {
         setIsOptionsExpanded(!isOptionsExpanded);
@@ -107,7 +114,7 @@ export default function SearchBar() {
 
 
     const handleSearchSubmit = (event) => {
-        event.preventDefault();
+        onSearch();
 
         console.log('Searched Term in Auction Name:', searchedTermInAuctionName);
         console.log('Selected Category:', selectedCategory);
@@ -138,19 +145,15 @@ export default function SearchBar() {
                 cities => setSearchedCities(formatToOptions(cities))
             );
             setSelectedCityId(null);
-            setSelectedProvinceName(null);
         }
     };
 
     const handleCitySelectionChange = (selectedOption) => {
         setSelectedCityId(selectedOption);
-        setSelectedProvinceName(null);
     };
 
     const handleProvinceSelectionChange = (selectedOption) => {
         setSelectedProvinceName(selectedOption);
-        setSelectedCityId(null);
-        setSelectedRadius(0);
     };
 
     const handleSortFieldChange = (selectedOption) => {
@@ -163,7 +166,7 @@ export default function SearchBar() {
 
     return (
         <div className="bg-blue-500/20 pt-5 pb-7 sm:pb-8">
-            <form onSubmit={handleSearchSubmit}
+            <form
                   className="search-form max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl p-4 flex flex-wrap justify-between gap-4"
                   style={{width: '90%'}}>
 
@@ -228,11 +231,14 @@ export default function SearchBar() {
                 {/* Ikonka wyszukiwania */}
                 <div className="flex justify-center items-center min-w-0">
                     <button
-                        type="submit"
+                        type="button"
+                        onClick={handleSearchSubmit}
                         className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150"
                     >
                         <BiSearchAlt2 className="text-[2vw]"/>
                     </button>
+
+
                 </div>
 
                 {/* Ikonka rozwijania opcji */}

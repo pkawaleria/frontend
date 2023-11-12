@@ -1,41 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { BiChevronsLeft, BiChevronsRight } from "react-icons/bi";
+import React from "react";
+import {Link} from "react-router-dom";
+import {BiChevronsLeft, BiChevronsRight} from "react-icons/bi";
 
-export default function GenericAuctionComponent({
-    fetchFunction,
-    pageNumber,
-    pageSize,
-    onPageChange,
-}) {
-    const [pagedAuctions, setPagedAuctions] = useState({
-        auctions: [],
-        pageNumber: 0,
-        pageCount: 0,
-    });
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await fetchFunction(pageNumber, pageSize);
-            setPagedAuctions(data);
-        };
-
-        fetchData();
-    }, [fetchFunction, pageNumber, pageSize]);
-
+export default function GenericPageableAuctionList({
+                                                    pagedAuctions,
+                                                    onPageChange
+                                                }) {
     const handlePreviousPage = () => {
-        if (pageNumber > 0) {
-            onPageChange(pageNumber - 1);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            console.log(pagedAuctions)
+        if (pagedAuctions.pageNumber > 0) {
+            onPageChange(pagedAuctions.pageNumber - 1);
+            window.scrollTo({top: 0, behavior: "smooth"});
         }
     };
 
     const handleNextPage = () => {
-        if (pageNumber + 1 < pagedAuctions.pageCount) {
-            onPageChange(pageNumber + 1);
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            console.log(pagedAuctions)
+        if (pagedAuctions.pageNumber + 1 < pagedAuctions.pageCount) {
+            onPageChange(pagedAuctions.pageNumber + 1);
+            window.scrollTo({top: 0, behavior: "smooth"});
         }
     };
 
@@ -71,21 +52,21 @@ export default function GenericAuctionComponent({
             </div>
             <div className="flex justify-center max-w-screen-xl mx-auto px-6 my-3 text-white">
                 <BiChevronsLeft
-                    className={`icon-hover text-[3.5vw] ease-linear duration-200 ${pageNumber === 0 ? "disabled" : "cursor-pointer"
-                        }`}
+                    className={`icon-hover text-[3.5vw] ease-linear duration-200 ${pagedAuctions.pageNumber === 0 ? "disabled" : "cursor-pointer"
+                    }`}
                     onClick={handlePreviousPage}
-                    disabled={pageNumber === 0}
+                    disabled={pagedAuctions.pageNumber === 0}
                 />
                 <span className="my-auto text-xl">
                     Strona {pagedAuctions.pageNumber + 1} z {pagedAuctions.pageCount}
                 </span>
                 <BiChevronsRight
-                    className={`icon-hover text-[3.5vw] ease-linear duration-200 ${pageNumber + 1 === pagedAuctions.pageCount
+                    className={`icon-hover text-[3.5vw] ease-linear duration-200 ${pagedAuctions.pageNumber + 1 === pagedAuctions.pageCount
                         ? "disabled"
                         : "cursor-pointer"
-                        }`}
+                    }`}
                     onClick={handleNextPage}
-                    disabled={pageNumber === pagedAuctions.pageCount}
+                    disabled={pagedAuctions.pageNumber + 1 === pagedAuctions.pageCount}
                 />
             </div>
         </div>
