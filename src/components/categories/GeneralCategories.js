@@ -19,7 +19,7 @@ const GeneralCategories = () => {
                 <div
                     key={category.id}
                     className="bg-gray-200 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer"
-                    onClick={() => navigate(`/subcategories/${category.id}`)}
+                    onClick={() => navigate(`/podkategorie/${category.id}`)}
                 >
                     <h2 className="text-xl font-semibold mb-2">{category.name}</h2>
                     <p className="text-gray-600">{category.description}</p>

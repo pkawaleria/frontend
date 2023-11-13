@@ -8,7 +8,7 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
     return (
         <div
             className="category-details bg-gray-200 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer"
-            onClick={() => navigate(`/subcategories/${categoryData.id}`)}
+            onClick={() => navigate(`/podkategorie/${categoryData.id}`)}
         >
             {/* Wyświetlenie ścieżki */}
             <div className="mb-2 flex items-center space-x-2">
@@ -31,7 +31,7 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
                             onClick={(e) => {
                                 e.stopPropagation();
                                 if (pathItem.id !== parentCategoryId) {
-                                    navigate(`/subcategories/${pathItem.id}`);
+                                    navigate(`/podkategorie/${pathItem.id}`);
                                 }
                             }}
                         >

@@ -50,7 +50,7 @@ function App() {
                 <Route path="/ogloszenia-uzytkownika/:id" element={<OtherUsersAuctionPage/>}/>
                 <Route path="/nowe-ogloszenie" element={<NewAuctionPage/>}/>
                 <Route path="/kategorie" element={<GeneralCategoriesPage/>}/>
-                <Route path="/subcategories/:id" element={<CategoryWithSubcategoriesPage/>}/>
+                <Route path="/podkategorie/:id" element={<CategoryWithSubcategoriesPage/>}/>
                 <Route path="/aukcje/search" element={<SearchAuctionsPage/>}/>
 
 
