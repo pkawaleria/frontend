@@ -15,11 +15,10 @@ export default function OtherUsersAuction() {
     const fetchData = async () => {
         try {
             const response = await axios.get(
-                `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_USERS}/${id}/auctions`,
+                `http://localhost:8080/auction-service/users/${id}/auctions`,
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
                     },
                 }
             );

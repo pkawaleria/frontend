@@ -1,6 +1,7 @@
 import jwt_decode from "jwt-decode";
 
 export function canDeleteAuctions() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -10,6 +11,7 @@ export function canDeleteAuctions() {
 }
 
 export function canAcceptAuctions() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -19,6 +21,7 @@ export function canAcceptAuctions() {
 }
 
 export function canAddPerms() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -28,6 +31,7 @@ export function canAddPerms() {
 }
 
 export function canAddCateogires() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -37,6 +41,7 @@ export function canAddCateogires() {
 }
 
 export function canEditAuctions() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -46,6 +51,7 @@ export function canEditAuctions() {
 }
 
 export function canBlockUsers() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -55,6 +61,7 @@ export function canBlockUsers() {
 }
 
 export function canEditCategories() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -64,6 +71,7 @@ export function canEditCategories() {
 }
 
 export function canCreateAdminAccount() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN" &&
@@ -73,15 +81,22 @@ export function canCreateAdminAccount() {
 }
 
 export function isSuperAdmin() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
+  
   return (
     decodedToken.roles === "ADMIN" && decodedToken.isSuperAdmin
   );
 }
 
 export function isAdmin() {
+  if (!doesTokenExist()) return
   const decodedToken = jwt_decode(localStorage.getItem("accessToken"));
   return (
     decodedToken.roles === "ADMIN"
   );
+}
+
+const doesTokenExist = () => {
+  return localStorage.getItem("accessToken");
 }

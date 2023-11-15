@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+ import React, {useEffect, useState} from 'react';
 import SearchBar from '../searchBar/SearchBar';
 import {searchAuctions} from '../../services/auctionsService';
 import GenericPageableAuctionsList from "./GenericPageableAuctionList";

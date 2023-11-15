@@ -55,72 +55,68 @@ export default function FullAuctionInfo() {
     window.location = "/";
   };
 
-  useEffect(() => {
-    const fetchAuctionInfo = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${id}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setAuctionInfo(response.data);
-        console.log(response.data);
-
-        const auctioneerId = response.data.auctioneerId;
-
-        const auctioneerResponse = await axios.get(
-          `${process.env.REACT_APP_ACCOUNTING_MS_USERS_ACCOUNT_SHORT}/${auctioneerId}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setUserData(auctioneerResponse.data);
-
-        const response2 = await axios.get(
-          `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${id}/images`
-        );
-
-        const imageIDs = response2.data.imageIDs;
-        const imagePromises = imageIDs.map(async (imageID) => {
-          const imageResponse = await axios.get(
-            `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${id}/images/${imageID}`,
-            {
-              responseType: "arraybuffer",
-              headers: {
-                "Content-Type": "image/jpeg",
-              },
-            }
-          );
-
-          return new Blob([imageResponse.data], { type: "image/jpeg" });
-        });
-
-        const images = await Promise.all(imagePromises);
-        setAuctionImages(images);
-        setLoading(false);
-      } catch (error) {
-        console.error(
-          "Wystąpił błąd podczas pobierania danych ogłoszenia:",
-          error
-        );
-      }
-    };
-
-    if (id) {
-      fetchAuctionInfo();
-    }
-
+  const fetchAuctionInfo = async () => {
     try {
-      if (isAdmin(localStorage.getItem("accessToken"))) {
-        setisAdmin(true);
-      }
-    } catch {}
-  }, [id]);
+      const response = await axios.get(
+        `http://localhost:8080/auction-service/auctions/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setAuctionInfo(response.data);
+      console.log(response.data);
+
+      const auctioneerId = response.data.auctioneerId;
+
+      const auctioneerResponse = await axios.get(
+        `http://localhost:5000/users/account_info_short/1`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setUserData(auctioneerResponse.data);
+
+      const response2 = await axios.get(
+        `http://localhost:8080/auction-service/auctions/${id}/images`
+      );
+
+      const imageIDs = response2.data.imageIDs;
+      const imagePromises = imageIDs.map(async (imageID) => {
+        const imageResponse = await axios.get(
+          `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${id}/images/${imageID}`,
+          {
+            responseType: "arraybuffer",
+            headers: {
+              "Content-Type": "image/jpeg",
+            },
+          }
+        );
+
+        return new Blob([imageResponse.data], { type: "image/jpeg" });
+      });
+
+      const images = await Promise.all(imagePromises);
+      setAuctionImages(images);
+      setLoading(false);
+    } catch (error) {
+      console.error(
+        "Wystąpił błąd podczas pobierania danych ogłoszenia:",
+        error
+      );
+    }
+  };
+
+  useEffect(() => {
+    // if (id) {
+    //   fetchAuctionInfo();
+    // }
+    fetchAuctionInfo();
+
+  }, []);
 
   if (loading) {
     return (
@@ -215,14 +211,13 @@ export default function FullAuctionInfo() {
         <div className="bg-white rounded-lg shadow-md">
           <p className="text-[1vw] font-semibold m-4">
             Miejscowość: {auctionInfo.cityName},{" "}
-            {auctionInfo.province.charAt(0).toUpperCase() +
-              auctionInfo.province.slice(1)}
+            {/*auctionInfo.province.charAt(0).toUpperCase() +
+              auctionInfo.province.slice(1)*/}
           </p>
         </div>
-        {isAdmin && (
+        {(isSuperAdmin() ||
+              canDeleteAuctions()) && (
           <div className=" bg-white rounded-lg shadow-md p-[1vw]">
-            {(isSuperAdmin(localStorage.getItem("accessToken")) ||
-              canDeleteAuctions(localStorage.getItem("accessToken"))) && (
               <Link
                 className="right text-blue-400 hover:text-blue-700"
                 data-tooltip-id="deleteAd"
@@ -238,7 +233,7 @@ export default function FullAuctionInfo() {
                 />
                 <BsXCircle color="red" size={20} z={100} />
               </Link>
-            )}
+            
           </div>
         )}
       </div>
