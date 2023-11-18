@@ -12,6 +12,9 @@ export default function UsersAdministration() {
   const token = localStorage.getItem("accessToken");
   const [usersData, setUsersData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [actionType, setActionType] = useState(""); // "block" or "unblock"
 
   const fetchData = async () => {
     try {
@@ -36,37 +39,45 @@ export default function UsersAdministration() {
   }, []);
 
   const unblockUser = async (user_id) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_UNBLOCK_USER}/${user_id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      window.location = "/zarzadzaj-uzytkownikami";
-    } catch (error) {
-      console.error("Wystąpił błąd podczas odblokowywania użytkownika:", error);
-    }
+    setSelectedUserId(user_id);
+    setActionType("unblock");
+    setIsConfirmationModalOpen(true);
   };
 
   const blockUser = async (user_id) => {
+    setSelectedUserId(user_id);
+    setActionType("block");
+    setIsConfirmationModalOpen(true);
+  };
+
+  const handleConfirmation = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_BLOCK_USER}/${user_id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      if (selectedUserId && actionType === "block") {
+        await axios.get(
+          `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_BLOCK_USER}/${selectedUserId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      } else if (selectedUserId && actionType === "unblock") {
+        await axios.get(
+          `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_UNBLOCK_USER}/${selectedUserId}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+      }
       window.location = "/zarzadzaj-uzytkownikami";
     } catch (error) {
-      console.error("Wystąpił błąd podczas blokowania użytkownika:", error);
+      console.error("Wystąpił błąd podczas akcji blokowania/odblokowywania użytkownika:", error);
     }
+    setIsConfirmationModalOpen(false);
   };
 
   if (loading) {
@@ -134,10 +145,9 @@ export default function UsersAdministration() {
                       />
                     </Link>
                     {user.isBanned === true ? (
-                      <Link
+                      <button
                         className="pl-2 pr-2"
                         onClick={() => unblockUser(user.id)}
-                        key={user.id}
                         data-tooltip-id={`unblockTooltip-${user.id}`}
                         data-tooltip-content="Odblokuj użytkownika"
                       >
@@ -152,12 +162,11 @@ export default function UsersAdministration() {
                           delayShow={50}
                           delayHide={100}
                         />
-                      </Link>
+                      </button>
                     ) : (
-                      <Link
+                      <button
                         className="pl-2 pr-2"
                         onClick={() => blockUser(user.id)}
-                        key={user.id}
                         data-tooltip-id={`blockTooltip-${user.id}`}
                         data-tooltip-content="Zablokuj użytkownika"
                       >
@@ -172,7 +181,7 @@ export default function UsersAdministration() {
                           delayShow={50}
                           delayHide={100}
                         />
-                      </Link>
+                      </button>
                     )}
                   </div>
                 </div>
@@ -186,6 +195,32 @@ export default function UsersAdministration() {
           <p>Brak dostępnych użytkowników.</p>
         )}
       </div>
+
+      {/* Confirmation Modal */}
+      {isConfirmationModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="absolute inset-0 bg-black opacity-50"></div>
+          <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
+            <p className="text-lg font-semibold mb-4 text-center">
+              Czy na pewno chcesz {actionType === "block" ? "zablokować" : "odblokować"} użytkownika?
+            </p>
+            <div className="flex justify-center space-x-4">
+              <button
+                className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
+                onClick={handleConfirmation}
+              >
+                Tak
+              </button>
+              <button
+                className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+                onClick={() => setIsConfirmationModalOpen(false)}
+              >
+                Anuluj
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

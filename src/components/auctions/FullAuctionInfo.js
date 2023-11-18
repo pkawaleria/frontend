@@ -71,7 +71,7 @@ export default function FullAuctionInfo() {
       const auctioneerId = response.data.auctioneerId;
 
       const auctioneerResponse = await axios.get(
-        `http://localhost:5000/users/account_info_short/1`,
+        `http://localhost:5000/users/account_info_short/4`,
         {
           headers: {
             "Content-Type": "application/json",
