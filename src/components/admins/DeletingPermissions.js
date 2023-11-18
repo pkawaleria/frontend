@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import {isSuperAdmin, canAddPerms} from './utils/PermissionsCheck'
-import {noPermission} from '../errors/noPermission'
+import { isSuperAdmin, canAddPerms } from "./utils/PermissionsCheck";
+import { noPermission } from "../errors/noPermission";
 import jwtDecode from "jwt-decode";
 
 export default function DeletingPermissions() {
   const [admins, setAdmins] = useState([]);
   const [permissions, setPermissions] = useState([]);
   const [selectedPermissionId, setSelectedPermissionId] = useState("");
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const selectedAdminIdRef = useRef("");
 
@@ -48,47 +49,61 @@ export default function DeletingPermissions() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsConfirmationModalOpen(true);
+  };
 
+  const handleConfirmation = () => {
     const adminId = selectedAdminIdRef.current;
 
     if (adminId && selectedPermissionId) {
+      const accessToken = localStorage.getItem("accessToken");
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
       axios
         .delete(
-          `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS}/${adminId}/permissions/${selectedPermissionId}`
+          `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS}/${adminId}/permissions/${selectedPermissionId}`,
+          { headers }
         )
         .then((response) => {
-          console.log("Sukces! Uprawnienie zostało przypisane do admina.");
+          console.log(
+            "Sukces! Uprawnienie zostało usunięte.",
+            response.data
+          );
           const currentToken = localStorage.getItem("accessToken");
           if (response.data.access_token) {
             const newToken = response.data.access_token;
-        
+
             const currentTokenData = jwtDecode(currentToken);
             const newTokenData = jwtDecode(newToken);
-        
+
             if (currentTokenData.email === newTokenData.email) {
               localStorage.removeItem("accessToken");
               localStorage.setItem("accessToken", newToken);
             }
           }
-        
+
           window.location = "/profil/admin";
         })
         .catch((error) => {
           console.error("Błąd podczas usuwania uprawnienia:", error);
         });
     }
+    setIsConfirmationModalOpen(false);
   };
 
   try {
-    if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canAddPerms(localStorage.getItem("accessToken")))) {
-      return (
-        noPermission()
+    if (
+      !(
+        isSuperAdmin(localStorage.getItem("accessToken")) ||
+        canAddPerms(localStorage.getItem("accessToken"))
       )
+    ) {
+      return noPermission();
     }
   } catch (error) {
-    return (
-      noPermission()
-    )
+    return noPermission();
   }
 
   return (
@@ -105,7 +120,10 @@ export default function DeletingPermissions() {
           <form onSubmit={handleSubmit}>
             <div>
               <label>Wybierz admina:</label>
-              <select className="select" onChange={handleAdminChange}>
+              <select
+                className="select"
+                onChange={handleAdminChange}
+              >
                 <option value="">Wybierz admina</option>
                 {admins.map((admin) => (
                   <option key={admin.id} value={admin.id}>
@@ -139,6 +157,32 @@ export default function DeletingPermissions() {
             </div>
           </form>
         </div>
+
+        {/* Confirmation Modal */}
+        {isConfirmationModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
+              <p className="text-lg font-semibold mb-4 text-center">
+                Czy na pewno chcesz usunąć uprawnienie?
+              </p>
+              <div className="flex justify-center space-x-4">
+                <button
+                  className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
+                  onClick={handleConfirmation}
+                >
+                  Tak, usuń
+                </button>
+                <button
+                  className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+                  onClick={() => setIsConfirmationModalOpen(false)}
+                >
+                  Anuluj
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

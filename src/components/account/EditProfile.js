@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { validateUsername, validateEmail, validateFirstname, validateLastname, validatePhoneNumber } from '../authorization/utils/RegisterValidators'
+import { validateUsername, validateEmail, validateFirstname, validateLastname, validatePhoneNumber } from '../authorization/utils/RegisterValidators';
 
 export default function EditProfile() {
     const [userData, setUserData] = useState({
@@ -20,16 +20,17 @@ export default function EditProfile() {
     });
 
     const [originalUserData, setOriginalUserData] = useState({});
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
     const [errors, setErrors] = useState({
-        usernameError: "",
-        emailError: "",
-        passwordError: "",
-        confirmPasswordError: "",
-        firstnameError: "",
-        lastnameError: "",
-        phone_numberError: ""
-    })
+        usernameError: '',
+        emailError: '',
+        passwordError: '',
+        confirmPasswordError: '',
+        firstnameError: '',
+        lastnameError: '',
+        phone_numberError: '',
+    });
 
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
@@ -85,29 +86,33 @@ export default function EditProfile() {
     };
 
     const handleUpdateProfile = () => {
-
         if (originalUserData !== updatedUserData) {
-
             if (hasErrors()) {
                 return;
             }
-            const accessToken = localStorage.getItem('accessToken');
-            const headers = {
-                Authorization: `Bearer ${accessToken}`,
-            };
-
-            axios.post(process.env.REACT_APP_ACCOUNTING_MS_USERS_ACCOUNT, updatedUserData, { headers })
-                .then((response) => {
-                    console.log('Dane zaktualizowane pomyślnie:', response.data);
-                    setUserData(updatedUserData);
-                    window.location = "/profil"
-                })
-                .catch((error) => {
-                    console.error('Błąd aktualizacji danych:', error);
-                });
+            // Otwórz modal potwierdzenia
+            setIsConfirmationModalOpen(true);
         } else {
-            window.location = "/profil"
+            window.location = '/profil';
         }
+    };
+
+    const confirmUpdateProfile = () => {
+        const accessToken = localStorage.getItem('accessToken');
+        const headers = {
+            Authorization: `Bearer ${accessToken}`,
+        };
+
+        axios.post(process.env.REACT_APP_ACCOUNTING_MS_USERS_ACCOUNT, updatedUserData, { headers })
+            .then((response) => {
+                console.log('Dane zaktualizowane pomyślnie:', response.data);
+                setUserData(updatedUserData);
+                setIsConfirmationModalOpen(false);
+                window.location = '/profil';
+            })
+            .catch((error) => {
+                console.error('Błąd aktualizacji danych:', error);
+            });
     };
 
     return (
@@ -193,7 +198,31 @@ export default function EditProfile() {
                         Aktualizuj
                     </button>
                 </div>
+
+                {/* Modal potwierdzający przed aktualizacją danych */}
+                {isConfirmationModalOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50">
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                            <p className="text-lg font-semibold mb-4 text-center">Czy na pewno chcesz zaktualizować dane?</p>
+                            <div className="flex justify-center space-x-4">
+                                <button
+                                    className="text-white bg-green-500 hover:bg-green-700 py-2 px-4 rounded-md"
+                                    onClick={confirmUpdateProfile}
+                                >
+                                    Tak, zaktualizuj dane
+                                </button>
+                                <button
+                                    className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+                                    onClick={() => setIsConfirmationModalOpen(false)}
+                                >
+                                    Anuluj
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
-    )
+    );
 }

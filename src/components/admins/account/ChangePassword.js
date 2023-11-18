@@ -15,6 +15,8 @@ export default function ChangePassword() {
         new_passwordError: '',
     });
 
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPasswordData({
@@ -49,14 +51,19 @@ export default function ChangePassword() {
             return;
         }
 
+        // Otwórz modal potwierdzenia
+        setIsConfirmationModalOpen(true);
+    };
+
+    const confirmUpdatePassword = () => {
         const accessToken = localStorage.getItem('accessToken');
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
 
         axios.post(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_CHANGE_PASSWORD, passwordData, { headers })
-            .then((response) => {
-                console.log('Hasło zaktualizowane pomyślnie:', response.data);
+            .then(() => {
+                setIsConfirmationModalOpen(false);
                 localStorage.removeItem('accessToken');
                 window.location = '/';
             })
@@ -67,15 +74,15 @@ export default function ChangePassword() {
 
     try {
         if (!(isAdmin(localStorage.getItem("accessToken")) )) {
-          return (
-            noPermission()
-          )
+            return (
+                noPermission()
+            )
         }
-      } catch (error) {
+    } catch (error) {
         return (
-          noPermission()
+            noPermission()
         )
-      }
+    }
 
     return (
         <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
@@ -116,11 +123,36 @@ export default function ChangePassword() {
                     </div>
                 </div>
 
+                {/* Przycisk otwierający modal potwierdzenia */}
                 <div className="flex justify-end w-full mt-4">
-                    <button className="nav-link absolute bottom-1 right-1 bg-green-500 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none" onClick={handleUpdatePassword}>
+                    <button className="nav-link absolute bottom-1 right-1 bg-green-500 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none" onClick={() => setIsConfirmationModalOpen(true)}>
                         Zmień hasło
                     </button>
                 </div>
+
+                {/* Modal potwierdzający przed zmianą hasła */}
+                {isConfirmationModalOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50">
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                            <p className="text-lg font-semibold mb-4 text-center">Czy na pewno chcesz zmienić hasło?</p>
+                            <div className="flex justify-center space-x-4">
+                                <button
+                                    className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
+                                    onClick={confirmUpdatePassword}
+                                >
+                                    Tak, zmień hasło
+                                </button>
+                                <button
+                                    className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+                                    onClick={() => setIsConfirmationModalOpen(false)}
+                                >
+                                    Anuluj
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

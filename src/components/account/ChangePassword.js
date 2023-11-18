@@ -13,6 +13,8 @@ export default function ChangePassword() {
         new_passwordError: '',
     });
 
+    const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPasswordData({
@@ -47,6 +49,11 @@ export default function ChangePassword() {
             return;
         }
 
+        // Poniżej znajduje się kod do otwarcia modala potwierdzającego
+        setIsConfirmationModalOpen(true);
+    };
+
+    const confirmUpdatePassword = () => {
         const accessToken = localStorage.getItem('accessToken');
         const headers = {
             Authorization: `Bearer ${accessToken}`,
@@ -61,6 +68,14 @@ export default function ChangePassword() {
             .catch((error) => {
                 console.error('Błąd aktualizacji hasła:', error);
             });
+
+        // Zamknij modal potwierdzający po udanej aktualizacji hasła
+        setIsConfirmationModalOpen(false);
+    };
+
+    const closeConfirmationModal = () => {
+        // Zamknij modal potwierdzający
+        setIsConfirmationModalOpen(false);
     };
 
     return (
@@ -107,6 +122,30 @@ export default function ChangePassword() {
                         Zmień hasło
                     </button>
                 </div>
+
+                {/* Modal potwierdzający przed zmianą hasła */}
+                {isConfirmationModalOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50">
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                            <p className="text-lg font-semibold mb-4 text-center">Czy na pewno chcesz zmienić hasło?</p>
+                            <div className="flex justify-center space-x-4">
+                                <button
+                                    className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
+                                    onClick={confirmUpdatePassword}
+                                >
+                                    Tak, zmień hasło
+                                </button>
+                                <button
+                                    className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+                                    onClick={() => setIsConfirmationModalOpen(false)}
+                                >
+                                    Anuluj
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
