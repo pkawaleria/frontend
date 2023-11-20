@@ -5,6 +5,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { deleteAuction } from "../../services/auctionsService";
 
 export default function UsersAuctions() {
     const token = localStorage.getItem("accessToken");
@@ -24,11 +25,15 @@ export default function UsersAuctions() {
         setIsDeleteModalOpen(false);
     };
 
-    const handleDelete = () => {
-        
-        closeDeleteModal();
+    const handleDelete = async () => {
+        try {
+            await deleteAuction(selectedAdId, token);
+            window.location = "/twoje-ogloszenia";
+            closeDeleteModal();
+        } catch (error) {
+            console.log("Error during auction process:", error);
+        }
     };
-
 
     const fetchData = async (status) => {
         try {
@@ -183,8 +188,7 @@ export default function UsersAuctions() {
                             <div className="flex justify-center space-x-4">
                                 <button
                                     className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
-                                    onClick={handleDelete}
-                                >
+                                    onClick={handleDelete}>
                                     Usuń
                                 </button>
                                 <button

@@ -42,17 +42,13 @@ export default function FullAuctionInfo() {
   };
 
   const deleteAuction = async () => {
-    const token = localStorage.getItem("accessToken");
-    const resp = await axios.delete(
-      `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${auctionInfo.id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    window.location = "/";
+    try {
+      const token = localStorage.getItem("accessToken");
+      await deleteAuction(auctionInfo.id, token);
+      window.location = "/";
+    } catch (error) {
+      console.log("Error during auction process:", error);
+    }
   };
 
   const fetchAuctionInfo = async () => {
@@ -87,7 +83,7 @@ export default function FullAuctionInfo() {
       const imageIDs = response2.data.imageIDs;
       const imagePromises = imageIDs.map(async (imageID) => {
         const imageResponse = await axios.get(
-          `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${id}/images/${imageID}`,
+          `http://localhost:8080/auction-service/auctions/${id}/images/${imageID}`,
           {
             responseType: "arraybuffer",
             headers: {
@@ -163,9 +159,8 @@ export default function FullAuctionInfo() {
             {auctionImages.map((image, index) => (
               <div
                 key={index}
-                className={`w-[1.2vw] h-[1.2vw] bg-gray-300 rounded-md cursor-pointer transform hover:scale-125 transition-transform ${
-                  index === currentImageIndex ? "bg-gray-500" : ""
-                }`}
+                className={`w-[1.2vw] h-[1.2vw] bg-gray-300 rounded-md cursor-pointer transform hover:scale-125 transition-transform ${index === currentImageIndex ? "bg-gray-500" : ""
+                  }`}
                 onClick={() => handleThumbnailClick(index)}
               ></div>
             ))}
@@ -210,14 +205,14 @@ export default function FullAuctionInfo() {
         </div>
         <div className="bg-white rounded-lg shadow-md">
           <p className="text-[1vw] font-semibold m-4">
-            Miejscowość: {auctionInfo.cityName},{" "}
-            {/*auctionInfo.province.charAt(0).toUpperCase() +
-              auctionInfo.province.slice(1)*/}
+            Miejscowość: {auctionInfo.cityName}
+            {/* auctionInfo.province.charAt(0).toUpperCase() +
+              auctionInfo.province.slice(1) */}
           </p>
         </div>
         {(isSuperAdmin() ||
-              canDeleteAuctions()) && (
-          <div className=" bg-white rounded-lg shadow-md p-[1vw]">
+          canDeleteAuctions()) && (
+            <div className=" bg-white rounded-lg shadow-md p-[1vw]">
               <Link
                 className="right text-blue-400 hover:text-blue-700"
                 data-tooltip-id="deleteAd"
@@ -233,9 +228,9 @@ export default function FullAuctionInfo() {
                 />
                 <BsXCircle color="red" size={20} z={100} />
               </Link>
-            
-          </div>
-        )}
+
+            </div>
+          )}
       </div>
     </div>
   );

@@ -11,6 +11,21 @@ export const createAuction = async (payload) => {
     }
 };
 
+
+export const deleteAuction = async (auctionId, token) => {
+    try {
+        await auctionMsApi.delete(`/auction-service/auctions/${auctionId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    } catch (error) {
+        console.error("Error deleting auction:", error);
+        throw error;
+    }
+}
+
 export const addImagesToAuction = async (auctionId, payload) => {
     try {
         const response = await auctionMsApi.post(`/auction-service/auctions/${auctionId}/images`, payload,
@@ -44,7 +59,7 @@ export const searchAuctions = async (pageNumber, pageSize, filters) => {
         queryParams.page = pageNumber;
         queryParams.pageSize = pageSize;
 
-        const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
+        const response = await auctionMsApi.get('/auction-service/auctions/search', { params: queryParams });
         return response.data;
     } catch (error) {
         console.error("Error searching auctions:", error);
