@@ -202,7 +202,7 @@ export default function NewAuction() {
         }
         setMessagePopup({ ...messagePopup, show: false });
     }
-
+ 
     return (
         <>
             <div className="items-center gradient-bg-color-only">

@@ -4,8 +4,7 @@ import { FaMapMarkerAlt, FaRegCalendarAlt } from "react-icons/fa";
 import { BiCategoryAlt } from "react-icons/bi";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { deleteAuction } from "../../services/auctionsService";
+import { deleteAuction, fetchUserAuctions } from "../../services/auctionsService";
 
 export default function UsersAuctions() {
     const token = localStorage.getItem("accessToken");
@@ -14,6 +13,10 @@ export default function UsersAuctions() {
     const [selectedAdId, setSelectedAdId] = useState(null);
     const [auctionsData, setAuctionsData] = useState([]);
     const [activeTab, setActiveTab] = useState("active-auctions");
+
+    useEffect(() => {
+        handleFetchUserAuctions(activeTab);
+    }, [activeTab, token]);
 
     const openDeleteModal = (adId) => {
         setSelectedAdId(adId);
@@ -25,7 +28,7 @@ export default function UsersAuctions() {
         setIsDeleteModalOpen(false);
     };
 
-    const handleDelete = async () => {
+    const handleDeleteAuction = async () => {
         try {
             await deleteAuction(selectedAdId, token);
             window.location = "/twoje-ogloszenia";
@@ -35,26 +38,14 @@ export default function UsersAuctions() {
         }
     };
 
-    const fetchData = async (status) => {
+    const handleFetchUserAuctions = async (status) => {
         try {
-            const response = await axios.get(
-                `${process.env.REACT_APP_AUCTIONS_MS_ACTIVE_AUCTIONEER_URL}/${status}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            setAuctionsData(response.data.auctions);
+            const response = await fetchUserAuctions(status, token);
+            setAuctionsData(response.auctions);
         } catch (error) {
             console.error("Wystąpił błąd podczas pobierania danych aukcji:", error);
         }
     };
-
-    useEffect(() => {
-        fetchData(activeTab);
-    }, [activeTab, token]);
 
     return (
         <div>
@@ -65,56 +56,51 @@ export default function UsersAuctions() {
                 <div className="flex mt-4 space-x-4">
                     {/* Przyciski do zmiany statusu */}
                     <button
-                        className={`${
-                            activeTab === "active-auctions" ? "bg-blue-600" : "bg-blue-500"
-                        } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "active-auctions" ? "bg-blue-600" : "bg-blue-500"
+                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
                         onClick={() => {
                             setActiveTab("active-auctions");
-                            fetchData("active-auctions");
+                            handleFetchUserAuctions("active-auctions");
                         }}
                     >
                         Aktywne
                     </button>
                     <button
-                        className={`${
-                            activeTab === "awaiting-auctions" ? "bg-blue-600" : "bg-blue-500"
-                        } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "awaiting-auctions" ? "bg-blue-600" : "bg-blue-500"
+                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
                         onClick={() => {
                             setActiveTab("awaiting-auctions");
-                            fetchData("awaiting-auctions");
+                            handleFetchUserAuctions("awaiting-auctions");
                         }}
                     >
                         Oczekujące
                     </button>
                     <button
-                        className={`${
-                            activeTab === "expired-auctions" ? "bg-blue-600" : "bg-blue-500"
-                        } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "expired-auctions" ? "bg-blue-600" : "bg-blue-500"
+                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
                         onClick={() => {
                             setActiveTab("expired-auctions");
-                            fetchData("expired-auctions");
+                            handleFetchUserAuctions("expired-auctions");
                         }}
                     >
                         Zakończone
                     </button>
                     <button
-                        className={`${
-                            activeTab === "archived-auctions" ? "bg-blue-600" : "bg-blue-500"
-                        } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "archived-auctions" ? "bg-blue-600" : "bg-blue-500"
+                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
                         onClick={() => {
                             setActiveTab("archived-auctions");
-                            fetchData("archived-auctions");
+                            handleFetchUserAuctions("archived-auctions");
                         }}
                     >
                         Zarchiwizowane
                     </button>
                     <button
-                        className={`${
-                            activeTab === "rejected-auctions" ? "bg-blue-600" : "bg-blue-500"
-                        } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "rejected-auctions" ? "bg-blue-600" : "bg-blue-500"
+                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
                         onClick={() => {
                             setActiveTab("rejected-auctions");
-                            fetchData("rejected-auctions");
+                            handleFetchUserAuctions("rejected-auctions");
                         }}
                     >
                         Odrzucone
@@ -126,7 +112,7 @@ export default function UsersAuctions() {
                     {auctionsData.map((ad) => (
                         <Link
                             to={`/ogloszenie/${ad.id}`}
-                            className="hover:scale-[1.01] ease-linear duration-100" 
+                            className="hover:scale-[1.01] ease-linear duration-100"
                             key={ad.id}
                         >
                             <div className="bg-white border rounded-lg shadow-md p-4 flex justify-between">
@@ -153,7 +139,7 @@ export default function UsersAuctions() {
                                     </div>
                                 </div>
                                 <div className="flex flex-col justify-between">
-                                <span className="text-gray-600">ID: {ad.id}</span>
+                                    <span className="text-gray-600">ID: {ad.id}</span>
                                     <div className=" space-x-2">
                                         <Link
                                             className="text-blue-400 hover:text-blue-700"
@@ -188,7 +174,7 @@ export default function UsersAuctions() {
                             <div className="flex justify-center space-x-4">
                                 <button
                                     className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
-                                    onClick={handleDelete}>
+                                    onClick={handleDeleteAuction}>
                                     Usuń
                                 </button>
                                 <button
@@ -203,10 +189,10 @@ export default function UsersAuctions() {
                 )}
             </div>
             {auctionsData.length > 5 && (
-                    <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
-                        Dodaj ogłoszenie
-                    </Link>
-                )}
+                <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
+                    Dodaj ogłoszenie
+                </Link>
+            )}
         </div>
     );
 }
