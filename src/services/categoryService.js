@@ -10,6 +10,16 @@ export const fetchTopLevelCategories = async () => {
     }
 };
 
+export const fetchFinalNodeCategories = async () => {
+    try {
+        const response = await auctionMsApi.get('/auction-service/categories/endpoints');
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching top level categories:', error);
+        throw error;
+    }
+};
+
 export const fetchCategoryDetails = async (id) => {
     try {
         const response = await auctionMsApi.get(`/auction-service/categories/${id}`);
