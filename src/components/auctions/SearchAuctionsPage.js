@@ -5,6 +5,7 @@ import GenericPageableAuctionsList from "./GenericPageableAuctionList";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useSearchParams } from 'react-router-dom';
 import { Alert, Button, Typography } from '@mui/material';
+import LoadingSpinner from "../spinner/LoadingSpinner";
 
 export default function SearchAuctionsPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -144,11 +145,7 @@ export default function SearchAuctionsPage() {
 
     return (
         <div>
-            {isLoading ? (
-                <div className="flex justify-center items-center h-screen">
-                    <AiOutlineLoading3Quarters className="animate-spin text-3xl text-white" />
-                </div>
-            ) : (
+            {isLoading ? (<LoadingSpinner/>) : (
                 <div>
                     <SearchBar
                         selectedCategory={selectedCategory}

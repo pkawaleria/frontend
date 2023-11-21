@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import LoadingSpinner from "../spinner/LoadingSpinner";
 
 export default function UserProfileInfo() {
   const token = localStorage.getItem("accessToken");
@@ -36,9 +37,7 @@ export default function UserProfileInfo() {
 
   if (loading) {
     return (
-      <div className="text-center">
-        <p>Ładowanie...</p>
-      </div>
+        <LoadingSpinner/>
     );
   }
 

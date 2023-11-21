@@ -7,6 +7,7 @@ import { BiBlock } from "react-icons/bi";
 import { BsInfoCircle } from "react-icons/bs";
 import { CgUnblock } from "react-icons/cg";
 import { Tooltip } from "react-tooltip";
+import LoadingSpinner from "../spinner/LoadingSpinner";
 
 export default function UsersAdministration() {
   const token = localStorage.getItem("accessToken");
@@ -100,7 +101,7 @@ export default function UsersAdministration() {
   if (loading) {
     return (
       <div className="text-center">
-        <p>Ładowanie...</p>
+        <LoadingSpinner/>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 import { BiCategoryAlt } from 'react-icons/bi'
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import LoadingSpinner from "../spinner/LoadingSpinner";
 
 
 
@@ -36,7 +37,7 @@ export default function OtherUsersAuction() {
     if (loading) {
         return (
             <div className="text-center">
-                <p>Ładowanie...</p>
+                <LoadingSpinner/>
             </div>
         );
     }
