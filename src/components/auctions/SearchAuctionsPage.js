@@ -1,11 +1,10 @@
- import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBar from '../searchBar/SearchBar';
-import {searchAuctions} from '../../services/auctionsService';
+import { searchAuctions } from '../../services/auctionsService';
 import GenericPageableAuctionsList from "./GenericPageableAuctionList";
-import {AiOutlineLoading3Quarters} from "react-icons/ai";
-import {useSearchParams} from 'react-router-dom';
-import {Alert, Button, Typography} from '@mui/material';
-
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useSearchParams } from 'react-router-dom';
+import { Alert, Button, Typography } from '@mui/material';
 
 export default function SearchAuctionsPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -147,7 +146,7 @@ export default function SearchAuctionsPage() {
         <div>
             {isLoading ? (
                 <div className="flex justify-center items-center h-screen">
-                    <AiOutlineLoading3Quarters className="animate-spin text-3xl text-white"/>
+                    <AiOutlineLoading3Quarters className="animate-spin text-3xl text-white" />
                 </div>
             ) : (
                 <div>
@@ -170,24 +169,22 @@ export default function SearchAuctionsPage() {
                     />
 
                     {pagedAuctions && pagedAuctions.pageCount === 0 ? (
-                        <div className="w-4/5 mx-auto text-center">
-                            <Alert severity="error" sx={{mb: 2}}>
+                        <div className="w-4/5 mx-auto text-center mt-3">
+                            <Alert severity="error" sx={{ mb: 2 }}>
                                 Nie znaleziono aukcji, wprowadź inne kryteria wyszukiwania i ponów próbę.
                             </Alert>
-                            <Button variant="outlined" onClick={clearFilters} sx={{mb: 2}}>
+                            <Button variant="outlined" onClick={clearFilters} sx={{ mb: 2 }}>
                                 Wyczyść filtry
                             </Button>
                         </div>
                     ) : (
                         <div>
-                            <div className="w-4/5 mx-auto text-center">
-                                <Typography
-                                    variant="subtitle1"
-                                    gutterBottom
-                                    sx={{textAlign: 'center', color: 'white'}}>
-                                    Liczba wyników wyszukiwania: {pagedAuctions?.totalAuctionsCount}
-                                </Typography>
-                            </div>
+                            <Typography
+                                variant="subtitle1"
+                                sx={{textAlign: "center", color: "white", marginBottom: "0px", marginTop: "10px", fontWeight: "bold"}}
+                                gutterBottom>
+                                Liczba wyników wyszukiwania: {pagedAuctions?.totalAuctionsCount}
+                            </Typography>
                             <GenericPageableAuctionsList
                                 pagedAuctions={pagedAuctions}
                                 onPageChange={newPageNumber => fetchAuctionsOnPageChange(newPageNumber)}

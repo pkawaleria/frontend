@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BiChevronsLeft, BiChevronsRight } from "react-icons/bi";
+import "../../assets/styles/index.css";
 
 export default function GenericPageableAuctionList({
     pagedAuctions,
@@ -20,21 +21,30 @@ export default function GenericPageableAuctionList({
         }
     };
 
+    const formatPrice = (price) => {
+        const parts = price.toFixed(2).toString().split('.');
+        const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        const decimalPart = parts[1] === '00' ? '' : `.${parts[1]}`;
+        const formattedPrice = `${integerPart}${decimalPart} zł`;
+
+        return formattedPrice;
+    };
+
     return (
-        <div className="container mx-auto mt-10">
+        <div className="container mx-auto mt-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mx-[15%]">
                 {pagedAuctions.auctions.map((auction) => (
                     <Link
                         to={`/ogloszenie/${auction.id}`}
                         key={auction.id}
-                        className="border rounded-lg overflow-hidden shadow-lg bg-white flex">
+                        className="border rounded-lg overflow-hidden shadow-lg bg-white flex custom-inner-shadow">
                         <img
                             src={`data:image/jpeg;base64,${auction.thumbnail}`}
                             alt={auction.name}
                             className="object-cover"
                         />
                         {console.log(auction)}
-                        <div className="w-4/5 pl-4 py-2 flex flex-col">
+                        <div className="w-[100%] px-3 py-2 flex flex-col">
                             <div className="flex h-1/5">
                                 <p className="text-xl font-semibold w-[50%] text-left">
                                     {auction.name.length > 30
@@ -42,13 +52,13 @@ export default function GenericPageableAuctionList({
                                         : auction.name}
                                 </p>
                                 <p className="w-[50%] text-right italic">
-                                    {auction.categoryPath.pathElements[0].name} / { auction.categoryPath.pathElements.length > 2 
-                                        ? `... / ${auction.categoryPath.pathElements[auction.categoryPath.pathElements.length-1].name}` : auction.categoryPath.pathElements[1].name
+                                    {auction.categoryPath.pathElements[0].name} / {auction.categoryPath.pathElements.length > 2
+                                        ? `... / ${auction.categoryPath.pathElements[auction.categoryPath.pathElements.length - 1].name}` : auction.categoryPath.pathElements[1].name
                                     }
                                 </p>
                             </div>
                             <p className="text-gray-600 text-lg h-3/5">
-                                Cena: {auction.price} zł
+                                Cena: {formatPrice(auction.price)}
                             </p>
                             <div className="flex">
                                 <p className="text-base h-1/5 w-[50%] text-left">

@@ -167,15 +167,15 @@ export default function SearchBar({
     return (
         <div className="bg-blue-500/20 pt-5 pb-7 sm:pb-8">
             <form
-                  className="search-form max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl p-4 flex flex-wrap justify-between gap-4"
+                  className="search-form max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl px-4 pt-4 pb-0 flex flex-wrap justify-between gap-2"
                   style={{width: '90%'}}>
 
                 {/* Pole wpisania nazwy aukcji */}
                 <div className="flex-1 min-w-0">
-                    <div className="input-wrapper flex items-center rounded border-2 border-gray-300">
+                    <div className="input-wrapper flex items-center rounded border-0 border-gray-300">
                         <input
                             type="text"
-                            className="w-full py-2 pl-3 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded"
+                            className="w-full py-2 px-3 placeholder-gray-500 border-0 outline-none focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded"
                             placeholder="Wpisz nazwę aukcji"
                             value={searchedTermInAuctionName}
                             onChange={handleSearchChange}
@@ -186,7 +186,7 @@ export default function SearchBar({
                 {/* Grupa lokalizacji */}
                 <div className="flex flex-1 min-w-0 items-center gap-2">
                     {/* Ikonka lokalizacji */}
-                    <FaMapMarkerAlt className="text-white text-3xl"/>
+                    <FaMapMarkerAlt className="text-green-500 text-3xl"/>
 
                     {/* Pole wpisania nazwy miasta */}
                     <Select
@@ -214,7 +214,7 @@ export default function SearchBar({
                 </div>
                 <div className="flex flex-1 min-w-0 items-center gap-2">
                     {/* Ikonka kategorii */}
-                    <FaStream className="text-white text-3xl"/>
+                    <FaStream className="text-red-500 text-3xl"/>
 
                     <Select
                         value={selectedCategory}
@@ -233,21 +233,17 @@ export default function SearchBar({
                     <button
                         type="button"
                         onClick={handleSearchSubmit}
-                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150"
-                    >
+                        className="px-2 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150">
                         <BiSearchAlt2 className="text-[2vw]"/>
                     </button>
-
-
                 </div>
 
                 {/* Ikonka rozwijania opcji */}
-                <div className="w-full flex justify-center py-2">
+                <div className="w-full flex justify-center">
                     <button
                         type="button"
                         onClick={handleToggleOptions}
-                        className="text-blue-500 hover:text-blue-600 transition duration-150"
-                    >
+                        className="text-blue-500 hover:text-blue-600 transition duration-150">
                         {isOptionsExpanded ? <BiChevronUp className="text-white text-3xl"/> :
                             <BiChevronDown className="text-white text-3xl"/>}
                         <span className="hidden sm:inline"> Rozwiń dodatkowe opcje</span>
@@ -256,8 +252,8 @@ export default function SearchBar({
 
                 {/* Dodatkowe opcje */}
                 {isOptionsExpanded && (
-                    <div className="w-full pt-4">
-                        <div className="flex flex-wrap gap-2 items-center">
+                    <div className="w-full pt-0">
+                        <div className="flex flex-wrap gap-2 pb-4 items-center">
                             <div className="w-2/5">
                                 <Select
                                     value={selectedProvinceName}
@@ -273,21 +269,19 @@ export default function SearchBar({
                             <div className="flex-1 flex items-center">
                                 <Select
                                     value={selectedSortByField}
-                                    onChange={handleSortFieldChange}
+                                    onChange={handleSortFieldChange}               
                                     options={sortOptions}
                                     placeholder="Sortuj po"
-                                    className="text-gray-700 react-select-container w-full cursor-pointer rounded border-2"
+                                    className="text-gray-700 react-select-container w-full cursor-pointer rounded"
                                     classNamePrefix="react-select"
-                                    isClearable
-                                />
+                                    isClearable/>
                                 <div
                                     className="ml-2 cursor-pointer"
-                                    onClick={toggleSortOrder}
-                                >
+                                    onClick={toggleSortOrder}>
                                     {selectedSortOrder === 'ASC' ? (
-                                        <BiSortUp className="text-white text-3xl"/>
+                                        <BiSortUp className="text-yellow-400 text-3xl"/>
                                     ) : (
-                                        <BiSortDown className="text-white text-3xl"/>
+                                        <BiSortDown className="text-yellow-400 text-3xl"/>
                                     )}
                                 </div>
                             </div>

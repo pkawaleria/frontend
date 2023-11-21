@@ -85,7 +85,7 @@ export default function FullAuctionInfo() {
   }
 
   return (
-    <div className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 h-[80%] w-full">
+    <div className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 min-h-[80vh] w-full">
 
       {/* COLUMN 1 */}
       <div className="mt-3 mb-5 flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
