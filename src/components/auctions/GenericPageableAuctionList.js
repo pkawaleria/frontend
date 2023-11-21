@@ -43,7 +43,6 @@ export default function GenericPageableAuctionList({
                             alt={auction.name}
                             className="object-cover"
                         />
-                        {console.log(auction)}
                         <div className="w-[100%] px-3 py-2 flex flex-col">
                             <div className="flex h-1/5">
                                 <p className="text-xl font-semibold w-[50%] text-left">
