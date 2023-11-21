@@ -3,16 +3,17 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import { BsXCircle } from "react-icons/bs";
 import { Tooltip } from "react-tooltip";
-import axios from "axios";
+import { Img } from "react-image";
 
 import {
   canDeleteAuctions,
   isSuperAdmin,
   isAdmin,
 } from "../admins/utils/PermissionsCheck";
+import { fetchAuctionInfo, getAuctionImage, getAuctionImages } from "../../services/auctionsService";
+import { getUserShortInfo } from "../../services/accountsService";
 
 export default function FullAuctionInfo() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
   const { id } = useParams();
   const [auctionInfo, setAuctionInfo] = useState(null);
@@ -21,102 +22,59 @@ export default function FullAuctionInfo() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setisAdmin] = useState(false);
 
-  const goToPreviousImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? auctionImages.length - 1 : prevIndex - 1
-    );
-  };
-
-  const goToNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === auctionImages.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const handleThumbnailClick = (index) => {
-    setCurrentImageIndex(index);
-  };
+  useEffect(() => {
+    handleFetchUserAndAuctionInfo();
+  }, []);
 
   const togglePhoneNumber = () => {
     setShowPhoneNumber((prevValue) => !prevValue);
   };
 
   const deleteAuction = async () => {
-    const token = localStorage.getItem("accessToken");
-    const resp = await axios.delete(
-      `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${auctionInfo.id}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    window.location = "/";
-  };
-
-  const fetchAuctionInfo = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/auction-service/auctions/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setAuctionInfo(response.data);
-      console.log(response.data);
-
-      const auctioneerId = response.data.auctioneerId;
-
-      const auctioneerResponse = await axios.get(
-        `http://localhost:5000/users/account_info_short/${auctioneerId}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setUserData(auctioneerResponse.data);
-
-      const response2 = await axios.get(
-        `http://localhost:8080/auction-service/auctions/${id}/images`
-      );
-
-      const imageIDs = response2.data.imageIDs;
-      const imagePromises = imageIDs.map(async (imageID) => {
-        const imageResponse = await axios.get(
-          `${process.env.REACT_APP_AUCTIONS_MS_AUCTION_SERVICE_AUCTIONS_URL}/${id}/images/${imageID}`,
-          {
-            responseType: "arraybuffer",
-            headers: {
-              "Content-Type": "image/jpeg",
-            },
-          }
-        );
-
-        return new Blob([imageResponse.data], { type: "image/jpeg" });
-      });
-
-      const images = await Promise.all(imagePromises);
-      setAuctionImages(images);
-      setLoading(false);
+      const token = localStorage.getItem("accessToken");
+      await deleteAuction(auctionInfo.id, token);
+      window.location = "/";
     } catch (error) {
-      console.error(
-        "Wystąpił błąd podczas pobierania danych ogłoszenia:",
-        error
-      );
+      console.log("Error during auction process:", error);
     }
   };
 
-  useEffect(() => {
-    // if (id) {
-    //   fetchAuctionInfo();
-    // }
-    fetchAuctionInfo();
+  const handleFetchUserAndAuctionInfo = async () => {
+    try {
+      const responseAuctionInfo = await fetchAuctionInfo(id);
+      setAuctionInfo(responseAuctionInfo);
 
-  }, []);
+      const auctioneerInfoResponse = await getUserShortInfo(responseAuctionInfo.auctioneerId);
+      setUserData(auctioneerInfoResponse);
+
+      const auctionImagesResponse = await getAuctionImages(id);
+      // console.log(auctionImagesResponse);
+
+      const auctionImagesByteArrays = await Promise.all(
+        auctionImagesResponse.map(async (imageId) => {
+          const imageByteArray = await getAuctionImage(id, imageId);
+
+          const base64 = btoa(
+            new Uint8Array(imageByteArray).reduce(
+              (data, byte) => data + String.fromCharCode(byte),
+              ''
+            )
+          );
+
+          return `data:image/png;base64,${base64}`;
+        })
+      );
+
+      setAuctionImages(auctionImagesByteArrays);
+      // console.log(auctionImagesByteArrays);
+      setLoading(false);
+    } catch (error) {
+      console.error("Wystąpił błąd podczas pobierania danych ogłoszenia:", error);
+    }
+  };
+
+
 
   if (loading) {
     return (
@@ -127,80 +85,59 @@ export default function FullAuctionInfo() {
   }
 
   return (
-    <div className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 h-[80%] w-full">
+    <div className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 min-h-[80vh] w-full">
+
+      {/* COLUMN 1 */}
       <div className="mt-3 mb-5 flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
-        {/* COLUMN 1 */}
         <div className="bg-white rounded-lg shadow-md md:w-2/3 mb-10">
-          <div className="flex">
-            <button
-              className="flex-none bg-gray-100 hover:bg-gray-200 p-2"
-              onClick={goToPreviousImage}
-            >
-              <FaChevronLeft className="text-[1.5vw]" />
-            </button>
-            <div className="flex-grow flex items-center justify-center">
-              {auctionImages.length > 0 ? (
-                auctionImages.map((imageBlob, index) => (
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(imageBlob)}
-                    alt={`Image ${index}`}
-                    className=""
-                  />
-                ))
-              ) : (
-                <p>Brak obrazów</p>
-              )}
-            </div>
-            <button
-              className="flex-none bg-gray-100 hover:bg-gray-200 p-2"
-              onClick={goToNextImage}
-            >
-              <FaChevronRight className="text-[1.5vw]" />
-            </button>
-          </div>
-          <div className="flex justify-center mt-5 mb-2 space-x-2">
+
+          {/* TUTAJ MA BYC OBSLUGA ZDJEC*/}
+          <div className="bg-white rounded-lg shadow-md md:w-2/3 mb-10">
             {auctionImages.map((image, index) => (
-              <div
+              <Img
                 key={index}
-                className={`w-[1.2vw] h-[1.2vw] bg-gray-300 rounded-md cursor-pointer transform hover:scale-125 transition-transform ${
-                  index === currentImageIndex ? "bg-gray-500" : ""
-                }`}
-                onClick={() => handleThumbnailClick(index)}
-              ></div>
+                src={image}
+                alt={`Auction ${index + 1}`}
+                className="w-full h-auto rounded-md mb-2"
+              />
             ))}
           </div>
+
         </div>
         <div className="bg-white rounded-lg shadow-md p-4 md:w-1/3">
-          <h2 className="text-[2.2vw] font-semibold mb-2">
+          <h2 className="text-[2.2vw] font-normal mb-5">
             {auctionInfo.name}
           </h2>
-          <p className="text-[1.8vw] font-medium mb-10">{auctionInfo.price}</p>
-          <p className="text-[1.6vw] font-medium mb-5">Opis</p>
-          <p className="text-[1.3vw] text-gray-600">
+          <p className="text-[1.8vw] font-semibold mb-10">{auctionInfo.price} zł</p>
+          <p className="text-[1.5vw] font-bold mb-5">OPIS</p>
+          <p className="text-[1.25vw] text-gray-600">
             {auctionInfo.description}
           </p>
+          <hr className="border-0 h-[1px] my-3 bg-slate-500 font-bold" />
+          <div className="flex">
+            <p className="w-[50%] text-left">ID: {auctionInfo.id}</p>
+            <p className="w-[50%] text-right">Wyświetlenia: {auctionInfo.viewCount}</p>
+          </div>
         </div>
       </div>
+
       {/* COLUMN 2 */}
       <div className="mt-3 flex flex-col w-[20%] max-w-screen-md bg-white rounded-lg shadow-md p-4 space-y-4 self-start">
-        <div className="bg-white rounded-lg shadow-md p-[1vw]">
-          <h3 className="text-[1.2vw] font-semibold mb-2">Dane użytkownika</h3>
+        <div className="bg-white rounded-lg shadow-md p-[1vw] grid">
+          <h3 className="text-[1.2vw] font-semibold text-center">Dane użytkownika</h3>
           <Link
             to={`/ogloszenia-uzytkownika/${userData.id}`}
-            className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw]"
-          >
+            className="bg-blue-500 text-white text-center py-[0.5vw] px-[1vw] mt-2 rounded-md hover:bg-blue-600 text-[1vw]">
             Sprzedający: {userData.username}
           </Link>
           {showPhoneNumber ? (
-            <p className="mb-1 text-[1vw] mt-6">
+            <p className="mb-1 text-[1vw] text-center mt-5">
               Numer telefonu: {userData.phone_number}
             </p>
           ) : (
             <button
               onClick={togglePhoneNumber}
-              className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-6 hover:bg-blue-600 text-[1vw] mr-1"
-            >
+              className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] mr-1">
               Pokaż numer
             </button>
           )}
@@ -210,20 +147,20 @@ export default function FullAuctionInfo() {
         </div>
         <div className="bg-white rounded-lg shadow-md">
           <p className="text-[1vw] font-semibold m-4">
-            Miejscowość: {auctionInfo.cityName},{" "}
-            {/*auctionInfo.province.charAt(0).toUpperCase() +
-              auctionInfo.province.slice(1)*/}
+            Województwo: {auctionInfo.province.charAt(0).toUpperCase() + auctionInfo.province.slice(1)}
+          </p>
+          <p className="text-[1vw] font-semibold m-4">
+            Miejscowość: {auctionInfo.cityName}
           </p>
         </div>
         {(isSuperAdmin() ||
-              canDeleteAuctions()) && (
-          <div className=" bg-white rounded-lg shadow-md p-[1vw]">
+          canDeleteAuctions()) && (
+            <div className=" bg-white rounded-lg shadow-md p-[1vw]">
               <Link
                 className="right text-blue-400 hover:text-blue-700"
                 data-tooltip-id="deleteAd"
                 data-tooltip-content="Usuń ogłoszenie"
-                onClick={deleteAuction}
-              >
+                onClick={deleteAuction}>
                 <Tooltip
                   id="deleteAd"
                   type="dark"
@@ -233,9 +170,8 @@ export default function FullAuctionInfo() {
                 />
                 <BsXCircle color="red" size={20} z={100} />
               </Link>
-            
-          </div>
-        )}
+            </div>
+          )}
       </div>
     </div>
   );

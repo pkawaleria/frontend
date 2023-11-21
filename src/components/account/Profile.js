@@ -54,14 +54,14 @@ export default function Profile() {
                     </div>
                 </div>
                 <Link className="nav-link absolute top-1 right-1 bg-blue-500 text-white py-3 px-3 rounded-full hover:bg-blue-600 easy-linear duration-200 focus:outline-none" to="/edytuj-profil" data-tooltip-id='editProfileTooltip' data-tooltip-content="Edytuj dane konta">
-                    <FaEdit size={18} />
+                    <FaEdit size={20} />
                     <Tooltip id="editProfileTooltip" type="dark" effect="solid" delayShow={50} delayHide={100} />
                 </Link>
-                <Link className="nav-link absolute bottom-1 right-1 bg-red-500 text-white py-3 px-3 rounded-full hover:bg-red-600 easy-linear duration-200 focus:outline-none" to="/wyloguj" data-tooltip-id='logoutTooltip' data-tooltip-content="Wyloguj">
-                    <BiLogOut size={23} />
+                <Link className="nav-link absolute bottom-1 right-1 bg-red-500 text-white py-3 pr-3 pl-2 rounded-full hover:bg-red-800 easy-linear duration-200 focus:outline-none" to="/wyloguj" data-tooltip-id='logoutTooltip' data-tooltip-content="Wyloguj się">
+                    <BiLogOut size={20} />
                     <Tooltip id="logoutTooltip" type="dark" effect="solid" delayShow={50} delayHide={100} />
                 </Link>
-                <Link className="nav-link absolute bottom-1 right-14 bg-yellow-500 text-white py-3 px-3 rounded-full hover:bg-yellow-600 easy-linear duration-200 focus:outline-none" to="/zmien-haslo">
+                <Link className="nav-link absolute bottom-1 right-12 bg-yellow-500 text-white py-[10px] px-[10px] rounded-full hover:bg-yellow-600 easy-linear duration-200 focus:outline-none" to="/zmien-haslo">
                     Zmień hasło
                 </Link>
             </div>

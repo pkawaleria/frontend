@@ -1,6 +1,5 @@
 import auctionMsApi from './auctionMsApi';
 
-
 export const createAuction = async (payload) => {
     try {
         const response = await auctionMsApi.post(`/auction-service/auctions`, payload);
@@ -10,6 +9,45 @@ export const createAuction = async (payload) => {
         throw error;
     }
 };
+
+
+export const deleteAuction = async (auctionId, token) => {
+    try {
+        await auctionMsApi.delete(`/auction-service/auctions/${auctionId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    } catch (error) {
+        console.error("Error deleting auction:", error);
+        throw error;
+    }
+}
+
+export const getAuctionImages = async (auctionId) => {
+    try {
+        const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images`);
+        return response.data.imageIDs;
+    } catch (error) {
+        console.error("Error deleting auction:", error);
+        throw error;
+    }
+}
+
+export const getAuctionImage = async (auctionId, imageId) => {
+    try {
+        const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images/${imageId}`, {
+            headers: {
+                responseType: "arraybuffer"
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error deleting auction:", error);
+        throw error;
+    }
+}
 
 export const addImagesToAuction = async (auctionId, payload) => {
     try {
@@ -23,6 +61,31 @@ export const addImagesToAuction = async (auctionId, payload) => {
         return response.data;
     } catch (error) {
         console.error("Error adding images to auction", error);
+        throw error;
+    }
+};
+
+export const fetchAuctionInfo = async (auctionId) => {
+    try {
+        const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}`)
+        return response.data;
+    } catch (error)  {
+        console.error("Error fetching auction details", error);
+        throw error;
+    }
+}
+
+export const fetchUserAuctions = async (status, token) => {
+    try {
+        const response = await auctionMsApi.get(`/auction-service/active-auctioneer/${status}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all auctions:", error);
         throw error;
     }
 };
@@ -44,7 +107,7 @@ export const searchAuctions = async (pageNumber, pageSize, filters) => {
         queryParams.page = pageNumber;
         queryParams.pageSize = pageSize;
 
-        const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
+        const response = await auctionMsApi.get('/auction-service/auctions/search', { params: queryParams });
         return response.data;
     } catch (error) {
         console.error("Error searching auctions:", error);
