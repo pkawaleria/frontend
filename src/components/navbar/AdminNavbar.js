@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useFontSize } from "../themes/FontSizeContext";
 import jwtDecode from "jwt-decode";
 
-export default function Navbar() {
+export default function AdminNavbar() {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 

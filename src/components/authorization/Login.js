@@ -53,7 +53,6 @@ export default function Login() {
 
       if (response.status === 200) {
         const token = response.data.access_token;
-        console.log(token);
         localStorage.setItem("accessToken", token);
         window.location.href = "/";
       } else {
@@ -95,9 +94,8 @@ export default function Login() {
               onChange={handleInputChange}
             />
             <span
-              className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${
-                errors[input.name + "Error"] ? "block" : "hidden"
-              }`}
+              className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"
+                }`}
             >
               {errors[input.name + "Error"]}
             </span>
@@ -108,7 +106,7 @@ export default function Login() {
         </div>
         <div className="flex space-x-4 mt-5">
           <Link className="login-button flex justify-center" to="/logowanie/admin">
-              Logowanie pracownika
+            Logowanie pracownika
           </Link>
         </div>
       </form>

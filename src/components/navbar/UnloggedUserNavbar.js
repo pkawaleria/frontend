@@ -1,7 +1,7 @@
 import "../../assets/styles/navbar/navbar.css";
 import React, { useState, useEffect } from "react";
 import Logo from "../../assets/images/logo.png";
-import { BiUser, BiFontSize } from "react-icons/bi";
+import { BiFontSize } from "react-icons/bi";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import { useFontSize } from "../themes/FontSizeContext";
@@ -54,7 +54,7 @@ export default function UnloggedUserNavbar() {
         </Link>
 
         <Link
-          className="w-[7.5%] text-center relative"
+          className="w-[7.5%] h-auto text-center relative"
           to="/"
           data-tooltip-id="advertisements"
           data-tooltip-content="Ogłoszenia"

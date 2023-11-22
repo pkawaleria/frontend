@@ -53,7 +53,6 @@ export default function Login() {
 
             if (response.status === 200) {
                 const token = response.data.access_token;
-                console.log(token);
                 localStorage.setItem("accessToken", token);
                 window.location.href = "/";
             } else {
