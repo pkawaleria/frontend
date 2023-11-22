@@ -1,13 +1,9 @@
 import jwtDecode from "jwt-decode";
-import { getUserFullInfo } from "./accountsService";
 
 export const resolveUserType = (token) => {
     var resolvedUser = ""
-
     const decodedToken = jwtDecode(token);
-    var userName = getUserFullInfo(token);
-    console.log(userName)
-
+    
     if (decodedToken.roles === "USER") {
         resolvedUser = "loggedInUser";
     }
@@ -16,5 +12,5 @@ export const resolveUserType = (token) => {
         resolvedUser = "adminUser";
     }
 
-    return {resolvedUser, userName};
+    return resolvedUser;
 }

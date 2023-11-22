@@ -37,6 +37,31 @@ export default function Login() {
     }
   };
 
+  const handleEnterPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Zapobiega domyślnej akcji przeglądarki (np. submit formularza)
+      if (isFormValid()) {
+        handleSubmit(e);
+      } else {
+        setErrors({
+          loginError: loginData.login.trim() === "" ? "Login nie może być pusty" : "",
+          passwordError: loginData.password.trim() === "" ? "Hasło nie może być puste" : "",
+        });
+      }
+    }
+  };
+
+
+  const isFormValid = () => {
+    // Sprawdź, czy pola są wypełnione i nie zawierają błędów
+    return (
+      loginData.login.trim() !== "" &&
+      loginData.password.trim() !== "" &&
+      errors.loginError === "" &&
+      errors.passwordError === ""
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -92,6 +117,7 @@ export default function Login() {
               {...input}
               value={loginData[input.name]}
               onChange={handleInputChange}
+              onKeyDown={handleEnterPress}
             />
             <span
               className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"

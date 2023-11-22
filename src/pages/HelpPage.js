@@ -13,7 +13,7 @@ export function HelpPage() {
     };
 
     return (
-        <div className="h-full flex flex-col" style={style}>
+        <div className="h-screen flex flex-col" style={style}>
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />

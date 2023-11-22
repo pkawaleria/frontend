@@ -12,13 +12,13 @@ export const getUserShortInfo = async (auctioneerId) => {
 
 export const getUserFullInfo = async (token) => {
     try {
-        const response = await accountMsApi.get(`/users/account_info/`, {
+        const response = await accountMsApi.get(`/users/account_info`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             },
         });
-        return response;
+        return response.data;
     } catch (error) {
         console.error("Error accessing user full info", error);
         throw error;

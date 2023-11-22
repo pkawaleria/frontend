@@ -8,7 +8,7 @@ import { Alert, Button, Typography } from '@mui/material';
 
 export default function SearchAuctionsPage() {
     const [searchParams, setSearchParams] = useSearchParams();
-    const [searchedTermInAuctionName, setSearchedTermInAuctionName] = useState(null);
+    const [searchedTermInAuctionName, setSearchedTermInAuctionName] = useState("");
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedProvinceName, setSelectedProvinceName] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null);
