@@ -30,21 +30,17 @@ export const getAuctionImages = async (auctionId) => {
         const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images`);
         return response.data.imageIDs;
     } catch (error) {
-        console.error("Error deleting auction:", error);
+        console.error("Error getting auction images", error);
         throw error;
     }
 }
 
 export const getAuctionImage = async (auctionId, imageId) => {
     try {
-        const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images/${imageId}`, {
-            headers: {
-                responseType: "arraybuffer"
-            }
-        });
+        const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images/${imageId}`, {responseType: 'blob'});
         return response.data;
     } catch (error) {
-        console.error("Error deleting auction:", error);
+        console.error(`Error getting image of id ${imageId} for auction:`, error);
         throw error;
     }
 }
