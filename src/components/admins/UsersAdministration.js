@@ -79,7 +79,7 @@ export default function UsersAdministration() {
       await axios.post(
         process.env.REACT_APP_ACCOUNTING_MS_ADMINS_SEND_MAIL,
         {
-          email: usersData.find((user) => user.id === selectedUserId)?.email,
+          id: usersData.find((user) => user.id === selectedUserId)?.id,
           subject: emailTitle,
           message: emailMessage,
         },
