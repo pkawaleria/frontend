@@ -1,8 +1,8 @@
 import jwtDecode from "jwt-decode";
 
 export const resolveUserType = (token) => {
-    var resolvedUser = ""
     const decodedToken = jwtDecode(token);
+    var resolvedUser = ""
     
     if (decodedToken.roles === "USER") {
         resolvedUser = "loggedInUser";

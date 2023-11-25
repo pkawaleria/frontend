@@ -21,7 +21,7 @@
     }
 
     .navbar-logo {
-        @apply bg-white p-1 rounded-[2vw] mx-2 my-2 hover:rounded-[1.3vw] transition-all ease-linear duration-200 w-[4vw]
+        @apply bg-white p-1 rounded-[2vw] mx-2 my-2 hover:rounded-[1.3vw] transition-all ease-linear duration-100 w-[4vw]
     }
 
     .disabled {
@@ -58,7 +58,7 @@ option:hover {
     color: red;
 }
 
-.custom-inner-shadow:hover {
+.hover\:custom-inner-shadow:hover {
     --tw-shadow: inset -20px 0 40px 0 rgba(50, 50, 50, 0.5);
     --tw-shadow-colored: inset -20px 0 0 0 var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);

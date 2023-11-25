@@ -3,7 +3,7 @@ import { resolveUserType } from "../../services/userResolverService";
 import UnloggedUserNavbar from "./UnloggedUserNavbar";
 import LoggedInUserNavbar from "./LoggedInUserNavbar";
 import AdminNavbar from "./AdminNavbar";
-import { getUserFullInfo } from "../../services/accountsService";
+import { getAdminFullInfo, getUserFullInfo } from "../../services/accountsService";
 
 export default function Navbar() {
     const [userFirstName, setUserFirstName] = useState(null);
@@ -14,9 +14,16 @@ export default function Navbar() {
             const token = localStorage.getItem("accessToken");
             if (token !== null) {
                 try {
-                    const userInfo = await getUserFullInfo(token);
-                    setUserFirstName(userInfo.firstname);
-                    setResolvedUser(resolveUserType(token));
+                    const test = resolveUserType(token)
+                    setResolvedUser(test)
+                    if (test === "loggedInUser") {
+                        const userInfo = await getUserFullInfo(token);
+                        setUserFirstName(userInfo.firstname);
+                    }
+                    if (test === "adminUser") {
+                        const userInfo = await getAdminFullInfo(token);
+                        setUserFirstName(userInfo.firstname);
+                    }
                 } catch (error) {
                     console.error("Błąd podczas pobierania informacji o użytkowniku:", error);
                 }
@@ -31,7 +38,7 @@ export default function Navbar() {
     }
 
     if (resolvedUser === "adminUser") {
-        return <AdminNavbar />;
+        return <AdminNavbar adminFirstName={userFirstName} />;
     }
 
     return <UnloggedUserNavbar />;

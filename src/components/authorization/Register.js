@@ -134,7 +134,7 @@ export default function Register() {
     };
 
     return (
-        <div className="flex items-center mt-10 pb-3 justify-center gradient-bg-color-only">
+        <div className="flex items-center justify-center h-screen linear gradient-bg">
             <div className="group">
                 <Link to="/">
                     <AiFillHome

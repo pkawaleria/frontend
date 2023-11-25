@@ -37,7 +37,7 @@ export default function GenericPageableAuctionList({
                     <Link
                         to={`/ogloszenie/${auction.id}`}
                         key={auction.id}
-                        className="border rounded-lg overflow-hidden shadow-lg bg-white flex custom-inner-shadow">
+                        className="flex border rounded-lg overflow-hidden hover:shadow-inner bg-white">
                         <img
                             src={`data:image/jpeg;base64,${auction.thumbnail}`}
                             alt={auction.name}
