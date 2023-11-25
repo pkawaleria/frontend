@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BsPencilSquare, BsXCircle } from "react-icons/bs";
 import { FaMapMarkerAlt, FaRegCalendarAlt } from "react-icons/fa";
+import { FaEdit } from 'react-icons/fa';
 import { BiCategoryAlt } from "react-icons/bi";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
@@ -143,7 +144,7 @@ export default function UsersAuctions() {
                                     <div className=" space-x-2">
                                         <Link
                                             className="text-blue-400 hover:text-blue-700"
-                                            to="/edytuj-ogloszenie"
+                                            to={`/edytuj-ogloszenie/${ad.id}`}
                                             data-tooltip-id="editAdTooltip"
                                             data-tooltip-content="Edytuj ogłoszenie"
                                         >
