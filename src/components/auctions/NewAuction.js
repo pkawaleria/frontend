@@ -87,8 +87,8 @@ export default function NewAuction() {
         }
     };
 
-    const validatePhoneNumber = () => {
-        if (!phoneNumber.match(/^\d{9}$/)) {
+    const validatePhoneNumber = (value) => {
+        if (!value.match(/^\d{9}$/)) {
             setPhoneNumberError("Numer telefonu musi zawierać dokładnie 9 cyfr.");
         } else {
             setPhoneNumberError("");
@@ -105,8 +105,8 @@ export default function NewAuction() {
         }
     };
 
-    const validateCondition = () => {
-        if (condition === "") {
+    const validateCondition = (value) => {
+        if (value === "") {
             setConditionError("Stan jest wymagany.");
         } else {
             setConditionError("");
@@ -268,9 +268,9 @@ export default function NewAuction() {
                                 value={condition}
                                 onChange={(e) => {
                                     setCondition(e.target.value);
-                                    validateCondition();
+                                    validateCondition(e.target.value);
                                 }}
-                                onBlur={validateCondition}
+                                onBlur={() => validateCondition(condition)}
                                 className={`w-[50%] p-2 border border-blue-500 rounded-md focus:outline-none `}
                                 required
                             >
@@ -396,9 +396,9 @@ export default function NewAuction() {
                                 value={phoneNumber}
                                 onChange={(e) => {
                                     setPhoneNumber(e.target.value);
-                                    validatePhoneNumber();
+                                    validatePhoneNumber(e.target.value);
                                 }}
-                                onBlur={validatePhoneNumber}
+                                onBlur={() => validatePhoneNumber(phoneNumber)}
                                 className={`w-[50%] p-2 border border-blue-500 rounded-md focus:outline-none ${
                                     phoneNumberError ? "border-red-500" : "focus:border-blue-500"
                                 }`}
