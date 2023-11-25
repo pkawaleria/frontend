@@ -186,7 +186,7 @@ export default function SearchBar({
                 {/* Grupa lokalizacji */}
                 <div className="flex flex-1 min-w-0 items-center gap-2">
                     {/* Ikonka lokalizacji */}
-                    <FaMapMarkerAlt className="text-green-500 text-3xl"/>
+                    <FaMapMarkerAlt className="text-white text-3xl"/>
 
                     {/* Pole wpisania nazwy miasta */}
                     <Select
@@ -214,7 +214,7 @@ export default function SearchBar({
                 </div>
                 <div className="flex flex-1 min-w-0 items-center gap-2">
                     {/* Ikonka kategorii */}
-                    <FaStream className="text-red-500 text-3xl"/>
+                    <FaStream className="text-white text-3xl"/>
 
                     <Select
                         value={selectedCategory}
@@ -233,7 +233,7 @@ export default function SearchBar({
                     <button
                         type="button"
                         onClick={handleSearchSubmit}
-                        className="px-2 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150">
+                        className="px-2 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600/50 transition duration-150">
                         <BiSearchAlt2 className="text-[2vw]"/>
                     </button>
                 </div>
@@ -279,9 +279,9 @@ export default function SearchBar({
                                     className="ml-2 cursor-pointer"
                                     onClick={toggleSortOrder}>
                                     {selectedSortOrder === 'ASC' ? (
-                                        <BiSortUp className="text-yellow-400 text-3xl"/>
+                                        <BiSortUp className="text-white text-3xl hover:text-blue-400 duration-100 ease-linear"/>
                                     ) : (
-                                        <BiSortDown className="text-yellow-400 text-3xl"/>
+                                        <BiSortDown className="text-white text-3xl hover:text-blue-400 duration-100 ease-linear"/>
                                     )}
                                 </div>
                             </div>

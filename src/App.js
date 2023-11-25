@@ -1,33 +1,35 @@
 import {Route, Routes} from "react-router";
-import Logout from './components/account/Logout'
-import {LoginPage} from "./pages/LoginPage"
-import {RegisterPage} from "./pages/RegisterPage"
-import {HelpPage} from "./pages/HelpPage"
-import {RulesPage} from "./pages/RulesPage"
-import {HomePage} from "./pages/HomePage"
-import {ProfilePage} from "./pages/ProfilePage"
-import {AdvertPage} from "./pages/AdvertPage"
-import {UsersAuctionsPage} from "./pages/UsersAuctionsPage"
-import {OtherUsersAuctionPage} from "./pages/OtherUsersAuctionPage"
-import {NewAuctionPage} from './pages/NewAuctionPage'
-import {AboutPage} from './pages/AboutPage'
-import {ChangePasswordPage} from './pages/ChangePasswordPage'
-import {EditProfilePage} from './pages/EditProfilePage'
+import Logout from './components/account/Logout';
+import {LoginPage} from "./pages/LoginPage";
+import {RegisterPage} from "./pages/RegisterPage";
+import {HelpPage} from "./pages/HelpPage";
+import {RulesPage} from "./pages/RulesPage";
+import {HomePage} from "./pages/HomePage";
+import {ProfilePage} from "./pages/ProfilePage";
+import {AdvertPage} from "./pages/AdvertPage";
+import {UsersAuctionsPage} from "./pages/UsersAuctionsPage";
+import {OtherUsersAuctionPage} from "./pages/OtherUsersAuctionPage";
+import {NewAuctionPage} from './pages/NewAuctionPage';
+import {AboutPage} from './pages/AboutPage';
+import {ChangePasswordPage} from './pages/ChangePasswordPage';
+import {EditProfilePage} from './pages/EditProfilePage';
 import {FontSizeProvider} from "./components/themes/FontSizeContext";
 import {GeneralCategoriesPage} from "./pages/GeneralCategoriesPage";
 import {CategoryWithSubcategoriesPage} from "./pages/CategoryWithSubcategoriesPage";
 
 import {AdminRegisterPage} from "./pages/AdminRegisterPage";
-import {AdminLoginPage} from './pages/AdminLoginPage'
-import {AdminProfilePage} from './pages/AdminProfilePage'
-import {AdminChangePasswordPage} from './pages/AdminChangePasswordPage'
-import {AdminEditProfilePage} from './pages/AdminEditProfilePage'
-import {AdminAddingPermissionsPage} from "./pages/AdminAddingPermissionsPage"
-import {AdminDeletingPermissionsPage} from './pages/AdminDeletingPermissions'
+import {AdminLoginPage} from './pages/AdminLoginPage';
+import {AdminProfilePage} from './pages/AdminProfilePage';
+import {AdminChangePasswordPage} from './pages/AdminChangePasswordPage';
+import {AdminEditProfilePage} from './pages/AdminEditProfilePage';
+import {AdminAddingPermissionsPage} from "./pages/AdminAddingPermissionsPage";
+import {AdminDeletingPermissionsPage} from './pages/AdminDeletingPermissions';
 import {AdminStatisticsPage} from "./pages/AdminStatisticsPage";
-import {AdminUsersAdministrationPage} from  './pages/AdminUsersAdministrationPage'
-import {AdminUserProfileInfoPage} from './pages/AdminUserProfileInfoPage'
+import {AdminUsersAdministrationPage} from  './pages/AdminUsersAdministrationPage';
+import {AdminUserProfileInfoPage} from './pages/AdminUserProfileInfoPage';
+import {AdminPanelPage} from "./pages/AdminPanelPage";
 import SearchAuctionsPage from "./components/auctions/SearchAuctionsPage";
+
 
 function App() {
     const accessToken = localStorage.getItem("accessToken")
@@ -65,6 +67,7 @@ function App() {
                 <Route path="/statystyki-serwisu" element={<AdminStatisticsPage/>}/>
                 <Route path="/zarzadzaj-uzytkownikami" element={<AdminUsersAdministrationPage/>}/>
                 <Route path="/uzytkownik/:id" element={<AdminUserProfileInfoPage/>}/>
+                <Route path="/panel-administratora" element={<AdminPanelPage/>}/>
             </Routes>
         </FontSizeProvider>
     );

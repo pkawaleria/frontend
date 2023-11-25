@@ -1,11 +1,11 @@
-import UsersAdministration from "../components/admins/UsersAdministration"
+import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
+import AdminPanel from "../components/admins/AdminPanel"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
-import Navbar from "../components/navbar/Navbar"
 
-export function AdminUsersAdministrationPage() {
+export function AdminPanelPage() {
     const { fontSize } = useFontSize();
 
     const style = {
@@ -17,9 +17,8 @@ export function AdminUsersAdministrationPage() {
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
-            <UsersAdministration />
+            <AdminPanel />
             <Footer />
         </div>
-
     )
 }

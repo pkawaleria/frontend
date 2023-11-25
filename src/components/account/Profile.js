@@ -32,7 +32,7 @@ export default function Profile() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center p-5 gradient-bg-color-only h-[80%]">
+        <div className="flex flex-col items-center p-5 gradient-bg-color-only h-screen mt-10">
             <nav className="flex flex-col justify-center w-[50%] bg-blue-500 text-white p-4 rounded-t-lg mb-4">
                 <Link to="/twoje-ogloszenia" className="text-xl font-semibold hover:underline">Moje ogłoszenia</Link>
             </nav>
