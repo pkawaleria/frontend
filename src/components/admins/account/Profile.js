@@ -6,7 +6,6 @@ import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { formatPhoneNumber } from "./utils/ProfileInputFormat";
 import { isSuperAdmin, canAddPerms, canCreateAdminAccount, isAdmin, canBlockUsers } from "../utils/PermissionsCheck";
-import { noPermission } from "../../errors/noPermission";
 
 export default function Profile() {
   const [userData, setUserData] = useState({
@@ -34,18 +33,6 @@ export default function Profile() {
       });
   }, []);
 
-
-  try {
-    if (!(isAdmin(localStorage.getItem("accessToken")))) {
-      return (
-        noPermission()
-      )
-    }
-  } catch (error) {
-    return (
-      noPermission()
-    )
-  }
 
   return (
     <div className="flex flex-col items-center justify-center p-5 gradient-bg-color-only h-[80%]">
