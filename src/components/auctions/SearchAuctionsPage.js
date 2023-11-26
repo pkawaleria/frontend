@@ -13,8 +13,8 @@ export default function SearchAuctionsPage() {
     const [selectedProvinceName, setSelectedProvinceName] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null);
     const [selectedRadius, setSelectedRadius] = useState(0);
-    const [selectedPriceTo, setSelectedPriceTo] = useState(null);
-    const [selectedPriceFrom, setSelectedPriceFrom] = useState(null);
+    const [selectedPriceTo, setSelectedPriceTo] = useState('');
+    const [selectedPriceFrom, setSelectedPriceFrom] = useState('');
     const [selectedSortByField, setSelectedSortByField] = useState(null);
     const [selectedSortOrder, setSelectedSortOrder] = useState('ASC');
     const [pageNumber, setPageNumber] = useState(0);
@@ -123,12 +123,12 @@ export default function SearchAuctionsPage() {
         const updatedSelectedProvinceName = searchParams.get('selectedProvinceName') ? JSON.parse(searchParams.get('selectedProvinceName')) : null;
         const updatedSelectedCityId = searchParams.get('selectedCityId') ? JSON.parse(searchParams.get('selectedCityId')) : null;
         const updatedSelectedRadius = searchParams.get('selectedRadius') ? JSON.parse(searchParams.get('selectedRadius')) : 0;
-        const updatedSelectedSortByField = searchParams.get('selectedSortByField') ? searchParams.get('selectedSortByField') : null;
+        const updatedSelectedSortByField = searchParams.get('selectedSortByField') ? JSON.parse(searchParams.get('selectedSortByField')) : null;
         const updatedSelectedSortOrder = searchParams.get('selectedSortOrder') ? searchParams.get('selectedSortOrder') : 'ASC';
         const updatedPageNumber = searchParams.get('pageNumber') != null ? parseInt(searchParams.get('pageNumber')) : null;
         const updatedPageSize = searchParams.get('pageSize') != null ? parseInt(searchParams.get('pageSize')) : 20;
-        const updatedPriceTo = searchParams.get('priceTo') != null ? parseInt(searchParams.get('priceTo')) : null;
-        const updatedPriceFrom = searchParams.get('priceFrom') != null ? parseInt(searchParams.get('priceFrom')) : null;
+        const updatedPriceTo = searchParams.get('selectedPriceTo');
+        const updatedPriceFrom = searchParams.get('selectedPriceFrom')
 
         setSearchedTermInAuctionName(updatedSearchedTermInAuctionName);
         setSelectedCategory(updatedSelectedCategory);

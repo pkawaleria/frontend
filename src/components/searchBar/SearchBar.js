@@ -182,21 +182,9 @@ export default function SearchBar({
         let errorMessage = "";
         if (value < 0) {
             errorMessage = "Wartość nie może być ujemna";
+            setPriceFrom('');
         }
         setPriceFromError(errorMessage);
-    };
-
-    const clearFilters = () => {
-        setSelectedCityId(null)
-        setSelectedCategory(null)
-        setSelectedProvinceName(null)
-        setSearchedTermInAuctionName('')
-        setSelectedSortByField(null)
-        setPriceTo(null)
-        setPriceFrom(null)
-        setSelectedRadius(0)
-        setPriceToError("")
-        setPriceFromError("")
     };
 
     const handlePriceToChange = (event) => {
@@ -205,8 +193,22 @@ export default function SearchBar({
         let errorMessage = "";
         if (value < 0) {
             errorMessage = "Wartość nie może być ujemna";
+            setPriceTo('');
         }
         setPriceToError(errorMessage);
+    };
+
+    const clearFilters = () => {
+        setSelectedCityId(null);
+        setSelectedCategory(null);
+        setSelectedProvinceName(null);
+        setSearchedTermInAuctionName('');
+        setSelectedSortByField(null);
+        setPriceTo('');
+        setPriceFrom('');
+        setSelectedRadius(0);
+        setPriceToError('');
+        setPriceFromError('');
     };
 
     const validateSearchCriteria = () => {
