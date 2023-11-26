@@ -78,10 +78,6 @@ export default function Login() {
                 className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
                     mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
                 onSubmit={handleSubmit}>
-                <div className="flex">
-                    <SwapToRegisterButton />
-                    <SwapToLoginButton isOn={true} />
-                </div>
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input
