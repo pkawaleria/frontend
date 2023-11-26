@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { isSuperAdmin, canAddPerms } from "./utils/PermissionsCheck";
-import { noPermission } from "../errors/noPermission";
 import jwtDecode from "jwt-decode";
 
 export default function AdminPermissionsForm() {
@@ -84,18 +83,6 @@ export default function AdminPermissionsForm() {
     setIsConfirmationModalOpen(false);
   };
 
-  try {
-    if (
-      !(
-        isSuperAdmin(localStorage.getItem("accessToken")) ||
-        canAddPerms(localStorage.getItem("accessToken"))
-      )
-    ) {
-      return noPermission();
-    }
-  } catch (error) {
-    return noPermission();
-  }
 
   return (
     <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
