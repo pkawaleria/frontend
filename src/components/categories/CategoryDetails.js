@@ -1,9 +1,16 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {FaArrowRight, FaChevronRight} from 'react-icons/fa';
+import {VscListOrdered} from "react-icons/vsc";
+import {formatToUrlOption} from "../../services/formattingUtils";
 
 const CategoryDetails = ({parentCategoryId, categoryData}) => {
     const navigate = useNavigate();
+
+    function navigateToAuctions() {
+        let category = formatToUrlOption(categoryData.name, categoryData.id);
+        navigate(`/?selectedCategory=${category}`);
+    }
 
     return (
         <div
@@ -48,6 +55,9 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
 
             <h2 className="text-xl font-semibold mb-2">{categoryData.name}</h2>
             <p className="text-gray-600">{categoryData.description}</p>
+            <div>
+                <VscListOrdered onClick={navigateToAuctions}/>
+            </div>
         </div>
     );
 };

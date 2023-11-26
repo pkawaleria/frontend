@@ -4,3 +4,10 @@ export const formatToOptions = (array) => {
         label: element.name
     }));
 }
+
+export const formatToUrlOption = (label, value) => {
+    return JSON.stringify({
+        value: value,
+        label: label
+    });
+}
