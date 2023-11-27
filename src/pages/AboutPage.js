@@ -15,11 +15,11 @@ export function AboutPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
-           <Navbar/>
-           <ScrollToTop/>
-           <ScrollToTopButton/>
-           <About/>
-           <Footer/>
+            <Navbar />
+            <ScrollToTop />
+            <ScrollToTopButton />
+            <About />
+            <Footer />
         </div>
     )
 }

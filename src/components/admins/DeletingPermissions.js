@@ -93,7 +93,8 @@ export default function DeletingPermissions() {
     };
 
     return (
-        <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
+        <div className="flex flex-col items-center justify-center p-5">
+            <span className="text-white text-[45px] font-bold mb-4 text-center">USUWANIE UPRAWNIEŃ</span>
             <div className="w-[50%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
                 <div className="flex-shrink-0">
                     <img
@@ -104,12 +105,11 @@ export default function DeletingPermissions() {
                 </div>
                 <div className="ml-6">
                     <form onSubmit={handleSubmit}>
-                        <div>
-                            <label>Wybierz admina:</label>
+                        <div className="mb-1">
+                            <label>Wybierz admina: </label>
                             <select
-                                className="select"
-                                onChange={handleAdminChange}
-                            >
+                                className="select px-1"
+                                onChange={handleAdminChange}>
                                 <option value="">Wybierz admina</option>
                                 {admins.map((admin) => (
                                     <option key={admin.id} value={admin.id}>
@@ -119,9 +119,9 @@ export default function DeletingPermissions() {
                             </select>
                         </div>
                         <div>
-                            <label>Wybierz uprawnienie:</label>
+                            <label>Wybierz uprawnienie: </label>
                             <select
-                                className="select"
+                                className="select px-1"
                                 value={selectedPermissionId}
                                 onChange={handlePermissionChange}
                             >
@@ -135,7 +135,7 @@ export default function DeletingPermissions() {
                         </div>
                         <div className="flex justify-end w-full mt-4">
                             <button
-                                className="nav-link absolute bottom-1 right-1 bg-red-500 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none"
+                                className="nav-link absolute bottom-1 right-1 bg-red-400 text-white py-3 px-4 rounded-full hover:bg-red-600 easy-linear duration-200 focus:outline-none"
                                 type="submit"
                             >
                                 Usuń uprawnienie
