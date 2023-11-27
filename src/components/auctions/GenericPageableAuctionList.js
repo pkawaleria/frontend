@@ -51,10 +51,22 @@ export default function GenericPageableAuctionList({
                                         : auction.name}
                                 </p>
                                 <p className="w-[50%] text-right italic">
-                                    {auction.categoryPath.pathElements[0].name} / {auction.categoryPath.pathElements.length > 2
-                                        ? `... / ${auction.categoryPath.pathElements[auction.categoryPath.pathElements.length - 1].name}` : auction.categoryPath.pathElements[1].name
+                                    {auction.categoryPath.pathElements.length > 0
+                                        ? (
+                                            <>
+                                                {auction.categoryPath.pathElements[0].name}
+                                                {auction.categoryPath.pathElements.length > 2
+                                                    ? ` / ... / ${auction.categoryPath.pathElements[auction.categoryPath.pathElements.length - 1].name}`
+                                                    : (auction.categoryPath.pathElements.length > 1
+                                                        ? ` / ${auction.categoryPath.pathElements[1].name}`
+                                                        : '')
+                                                }
+                                            </>
+                                        )
+                                        : ''
                                     }
                                 </p>
+
                             </div>
                             <p className="text-gray-600 text-lg h-3/5">
                                 Cena: {formatPrice(auction.price)}

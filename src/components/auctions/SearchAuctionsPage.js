@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import SearchBar from '../searchBar/SearchBar';
-import { searchAuctions } from '../../services/auctionsService';
+import {searchAuctions, searchAuctionsWithFullQueryParams} from '../../services/auctionsService';
 import GenericPageableAuctionsList from "./GenericPageableAuctionList";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useSearchParams } from 'react-router-dom';
-import { Alert, Button, Typography } from '@mui/material';
+import {useSearchParams} from 'react-router-dom';
+import {Alert, Button, Typography} from '@mui/material';
 import LoadingSpinner from "../spinner/LoadingSpinner";
 
 export default function SearchAuctionsPage() {
@@ -14,6 +13,8 @@ export default function SearchAuctionsPage() {
     const [selectedProvinceName, setSelectedProvinceName] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null);
     const [selectedRadius, setSelectedRadius] = useState(0);
+    const [selectedPriceTo, setSelectedPriceTo] = useState('');
+    const [selectedPriceFrom, setSelectedPriceFrom] = useState('');
     const [selectedSortByField, setSelectedSortByField] = useState(null);
     const [selectedSortOrder, setSelectedSortOrder] = useState('ASC');
     const [pageNumber, setPageNumber] = useState(0);
@@ -23,15 +24,16 @@ export default function SearchAuctionsPage() {
     const [isLoading, setIsLoading] = useState(true)
     const [currentlyAppliedFilters, setCurrentlyAppliedFilters] = useState({})
 
+
     useEffect(() => {
+
         const fetchDefaultAuctions = async () => {
             setIsLoading(true)
-            // updateStateFromURL()
+            const initialPagingAndFilters = updateStateAndGetApiQueryParamsFromUrl();
             try {
-                const initialFilters = {};
-                const result = await searchAuctions(pageNumber, pageSize, initialFilters);
+                const result = await searchAuctionsWithFullQueryParams(initialPagingAndFilters);
                 setPagedAuctions(result);
-                setCurrentlyAppliedFilters(initialFilters)
+                setCurrentlyAppliedFilters(initialPagingAndFilters)
             } catch (error) {
                 console.error("Error searching auctions:", error);
             } finally {
@@ -40,18 +42,18 @@ export default function SearchAuctionsPage() {
         };
 
         fetchDefaultAuctions();
-    }, [
-        // searchParams
-    ]);
+    }, []);
 
 
-    function mapToFilters() {
+    const mapToApiFilters = () => {
         return {
             searchPhrase: searchedTermInAuctionName,
             categoryId: selectedCategory?.value,
             province: selectedProvinceName?.value,
             cityId: selectedCityId?.value,
             radius: selectedRadius?.value,
+            priceTo: selectedPriceTo,
+            priceFrom: selectedPriceFrom,
             sortBy: selectedSortByField?.value,
             sortOrder: selectedSortOrder,
         };
@@ -60,19 +62,25 @@ export default function SearchAuctionsPage() {
     // Fetch auctions with new filters criteria and move to first page
     const fetchAuctionsOnFiltersChange = async () => {
         setIsLoading(true);
-        setPageNumber(0)
-        const filters = mapToFilters();
+        let firstPage = 0;
+        setPageNumber(firstPage)
+        const filters = mapToApiFilters();
 
         try {
-            const result = await searchAuctions(pageNumber, pageSize, filters);
+            const result = await searchAuctions(firstPage, pageSize, filters);
             setPagedAuctions(result);
             setCurrentlyAppliedFilters(filters)
-            saveCurrentStateToURL()
         } catch (error) {
             console.error("Error searching auctions:", error);
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const onSearchIconClick = async () => {
+        fetchAuctionsOnFiltersChange().then(() => {
+            saveCurrentFiltersAndPagingToUrl(0);
+        })
     };
 
 
@@ -83,7 +91,6 @@ export default function SearchAuctionsPage() {
         try {
             const result = await searchAuctions(pageNumber, pageSize, currentlyAppliedFilters);
             setPagedAuctions(result);
-            saveCurrentStateToURL()
         } catch (error) {
             console.error("Error searching auctions:", error);
         } finally {
@@ -91,28 +98,37 @@ export default function SearchAuctionsPage() {
         }
     };
 
-    const clearFilters = () => {
-        // Reset filter states and trigger a new search
-        setSearchedTermInAuctionName(null);
+    const onPageChange = async pageNumber => {
+        fetchAuctionsOnPageChange(pageNumber).then(() => saveCurrentFiltersAndPagingToUrl(pageNumber));
+    }
+
+
+    const clearFilters = async () => {
+        setSearchedTermInAuctionName('');
         setSelectedCategory(null);
         setSelectedProvinceName(null);
         setSelectedCityId(null);
-        setSelectedRadius(null);
+        setSelectedRadius(0);
+        setSelectedPriceTo(null);
+        setSelectedPriceFrom(null);
         setSelectedSortByField(null);
         setSelectedSortOrder('ASC');
+        saveCurrentFiltersAndPagingToUrl();
         fetchAuctionsOnFiltersChange();
     };
 
-    const updateStateFromURL = () => {
+    const updateStateAndGetApiQueryParamsFromUrl = () => {
         const updatedSearchedTermInAuctionName = searchParams.get('searchedTermInAuctionName') || '';
         const updatedSelectedCategory = searchParams.get('selectedCategory') ? JSON.parse(searchParams.get('selectedCategory')) : null;
         const updatedSelectedProvinceName = searchParams.get('selectedProvinceName') ? JSON.parse(searchParams.get('selectedProvinceName')) : null;
         const updatedSelectedCityId = searchParams.get('selectedCityId') ? JSON.parse(searchParams.get('selectedCityId')) : null;
-        const updatedSelectedRadius = searchParams.get('selectedRadius') ? JSON.parse(searchParams.get('selectedRadius')) : null;
+        const updatedSelectedRadius = searchParams.get('selectedRadius') ? JSON.parse(searchParams.get('selectedRadius')) : 0;
         const updatedSelectedSortByField = searchParams.get('selectedSortByField') ? JSON.parse(searchParams.get('selectedSortByField')) : null;
-        const updatedSelectedSortOrder = searchParams.get('selectedSortOrder') ? JSON.parse(searchParams.get('selectedSortOrder')) : null;
-        const updatedPageNumber = parseInt(searchParams.get('pageNumber'));
-        const updatedPageSize = parseInt(searchParams.get('pageSize'));
+        const updatedSelectedSortOrder = searchParams.get('selectedSortOrder') ? searchParams.get('selectedSortOrder') : 'ASC';
+        const updatedPageNumber = searchParams.get('pageNumber') != null ? parseInt(searchParams.get('pageNumber')) : null;
+        const updatedPageSize = searchParams.get('pageSize') != null ? parseInt(searchParams.get('pageSize')) : 20;
+        const updatedPriceTo = searchParams.get('selectedPriceTo');
+        const updatedPriceFrom = searchParams.get('selectedPriceFrom')
 
         setSearchedTermInAuctionName(updatedSearchedTermInAuctionName);
         setSelectedCategory(updatedSelectedCategory);
@@ -123,15 +139,34 @@ export default function SearchAuctionsPage() {
         setSelectedSortOrder(updatedSelectedSortOrder);
         setPageNumber(updatedPageNumber);
         setPageSize(updatedPageSize);
+        setSelectedPriceFrom(updatedPriceFrom);
+        setSelectedPriceTo(updatedPriceTo);
+
+        return {
+            searchPhrase: updatedSearchedTermInAuctionName,
+            categoryId: updatedSelectedCategory?.value,
+            province: updatedSelectedProvinceName?.value,
+            cityId: updatedSelectedCityId?.value,
+            radius: updatedSelectedRadius?.value,
+            priceTo: updatedPriceTo,
+            priceFrom: updatedPriceFrom,
+            sortBy: updatedSelectedSortByField?.value,
+            sortOrder: updatedSelectedSortOrder,
+            pageNumber: updatedPageNumber,
+            pageSize: updatedPageSize,
+        };
     };
 
-    const saveCurrentStateToURL = () => {
+
+    const saveCurrentFiltersAndPagingToUrl = (pageNumber) => {
         const params = {
             searchedTermInAuctionName: searchedTermInAuctionName,
             selectedCategory: selectedCategory ? JSON.stringify(selectedCategory) : null,
             selectedProvinceName: selectedProvinceName ? JSON.stringify(selectedProvinceName) : null,
             selectedCityId: selectedCityId ? JSON.stringify(selectedCityId) : null,
             selectedRadius: selectedRadius ? JSON.stringify(selectedRadius) : null,
+            selectedPriceTo: selectedPriceTo,
+            selectedPriceFrom: selectedPriceFrom,
             selectedSortByField: selectedSortByField ? JSON.stringify(selectedSortByField) : null,
             selectedSortOrder: selectedSortOrder,
             pageNumber: pageNumber,
@@ -162,15 +197,19 @@ export default function SearchAuctionsPage() {
                         setSelectedSortOrder={setSelectedSortOrder}
                         setSearchedTermInAuctionName={setSearchedTermInAuctionName}
                         searchedTermInAuctionName={searchedTermInAuctionName}
-                        onSearch={fetchAuctionsOnFiltersChange}
+                        priceFrom={selectedPriceFrom}
+                        setPriceFrom={setSelectedPriceFrom}
+                        priceTo={selectedPriceTo}
+                        setPriceTo={setSelectedPriceTo}
+                        onSearch={onSearchIconClick}
                     />
 
                     {pagedAuctions && pagedAuctions.pageCount === 0 ? (
                         <div className="w-4/5 mx-auto text-center mt-3">
-                            <Alert severity="error" sx={{ mb: 2 }}>
+                            <Alert severity="error" sx={{mb: 2}}>
                                 Nie znaleziono aukcji, wprowadź inne kryteria wyszukiwania i ponów próbę.
                             </Alert>
-                            <Button variant="outlined" onClick={clearFilters} sx={{ mb: 2 }}>
+                            <Button variant="outlined" onClick={clearFilters} sx={{mb: 2}}>
                                 Wyczyść filtry
                             </Button>
                         </div>
@@ -178,13 +217,19 @@ export default function SearchAuctionsPage() {
                         <div>
                             <Typography
                                 variant="subtitle1"
-                                sx={{textAlign: "center", color: "white", marginBottom: "0px", marginTop: "10px", fontWeight: "bold"}}
+                                sx={{
+                                    textAlign: "center",
+                                    color: "white",
+                                    marginBottom: "0px",
+                                    marginTop: "10px",
+                                    fontWeight: "bold"
+                                }}
                                 gutterBottom>
                                 Liczba wyników wyszukiwania: {pagedAuctions?.totalAuctionsCount}
                             </Typography>
                             <GenericPageableAuctionsList
                                 pagedAuctions={pagedAuctions}
-                                onPageChange={newPageNumber => fetchAuctionsOnPageChange(newPageNumber)}
+                                onPageChange={newPageNumber => onPageChange(newPageNumber)}
                             />
                         </div>
 
@@ -193,4 +238,4 @@ export default function SearchAuctionsPage() {
             )}
         </div>
     );
-}
+};

@@ -65,7 +65,7 @@ export const fetchAuctionInfo = async (auctionId) => {
     try {
         const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}`)
         return response.data;
-    } catch (error)  {
+    } catch (error) {
         console.error("Error fetching auction details", error);
         throw error;
     }
@@ -103,7 +103,18 @@ export const searchAuctions = async (pageNumber, pageSize, filters) => {
         queryParams.page = pageNumber;
         queryParams.pageSize = pageSize;
 
-        const response = await auctionMsApi.get('/auction-service/auctions/search', { params: queryParams });
+        const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
+        return response.data;
+    } catch (error) {
+        console.error("Error searching auctions:", error);
+        throw error;
+    }
+};
+export const searchAuctionsWithFullQueryParams = async (pagingAndFilters) => {
+    try {
+        const queryParams = createQueryParams(pagingAndFilters);
+        queryParams.page = pagingAndFilters.pageNumber;
+        const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
         return response.data;
     } catch (error) {
         console.error("Error searching auctions:", error);
