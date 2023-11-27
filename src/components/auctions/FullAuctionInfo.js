@@ -33,6 +33,17 @@ export default function FullAuctionInfo() {
         setShowPhoneNumber((prevValue) => !prevValue);
     };
 
+    const formatPhoneNumber = (phoneNumber) => {
+        const cleaned = phoneNumber.replace(/\D/g, '');
+    
+        if (cleaned && cleaned.length >= 9) {
+            return cleaned.replace(/(\d{3})(\d{3})(\d{3})/, '$1-$2-$3');
+        } else {
+            return phoneNumber;
+        }
+    };
+    
+
     const deleteAuction = async () => {
         try {
             const token = localStorage.getItem("accessToken");
@@ -47,6 +58,7 @@ export default function FullAuctionInfo() {
         try {
             const responseAuctionInfo = await fetchAuctionInfo(id);
             setAuctionInfo(responseAuctionInfo);
+            console.log(responseAuctionInfo)
 
             try {
                 const auctioneerInfoResponse = await getUserShortInfo(responseAuctionInfo.auctioneerId);
@@ -158,7 +170,7 @@ export default function FullAuctionInfo() {
                         </Link>
                         {showPhoneNumber ? (
                             <p className="mb-1 text-[1vw] text-center mt-5">
-                                Numer telefonu: {userData.phone_number}
+                                Numer telefonu: {formatPhoneNumber(auctionInfo.phoneNumber)}
                             </p>
                         ) : (
                             <button
