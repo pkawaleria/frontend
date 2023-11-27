@@ -1,11 +1,12 @@
-import UsersAdministration from "../components/admins/UsersAdministration"
+import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
+import NoPermission from '../components/errors/noPermission'
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
-import Navbar from "../components/navbar/Navbar"
 
-export function AdminUsersAdministrationPage() {
+export function NoPermissionPage() {
+
     const { fontSize } = useFontSize();
 
     const style = {
@@ -17,9 +18,8 @@ export function AdminUsersAdministrationPage() {
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
-            <UsersAdministration />
+            <NoPermission />
             <Footer />
         </div>
-
     )
 }

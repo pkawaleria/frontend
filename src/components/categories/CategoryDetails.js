@@ -1,15 +1,26 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {FaArrowRight, FaChevronRight} from 'react-icons/fa';
+import {VscListOrdered} from "react-icons/vsc";
+import {formatToUrlOption} from "../../services/formattingUtils";
 
 const CategoryDetails = ({parentCategoryId, categoryData}) => {
     const navigate = useNavigate();
 
+    function navigateToAuctions() {
+        let category = formatToUrlOption(categoryData.name, categoryData.id);
+        navigate(`/?selectedCategory=${category}`);
+    }
+
     return (
         <div
-            className="category-details bg-gray-200 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer"
-            onClick={() => navigate(`/podkategorie/${categoryData.id}`)}
-        >
+            className="category-details bg-gray-200 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer">
+            <div className="absolute top-0 right-0 mt-2 mr-2">
+                <VscListOrdered
+                    onClick={navigateToAuctions}
+                    className="text-blue-500 text-3xl cursor-pointer hover:text-blue-600"
+                />
+            </div>
             {/* Wyświetlenie ścieżki */}
             <div className="mb-2 flex items-center space-x-2">
                 <button
@@ -46,8 +57,11 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
             {/* Delikatna kreska oddzielająca ścieżkę od danych kategorii */}
             <div className="border-b border-gray-300 my-2"></div>
 
-            <h2 className="text-xl font-semibold mb-2">{categoryData.name}</h2>
-            <p className="text-gray-600">{categoryData.description}</p>
+            <div onClick={() => navigate(`/podkategorie/${categoryData.id}`)}>
+                <h2 className="text-xl font-semibold mb-2">{categoryData.name}</h2>
+                <p className="text-gray-600">{categoryData.description}</p>
+            </div>
+
         </div>
     );
 };

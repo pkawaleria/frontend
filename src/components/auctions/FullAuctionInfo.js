@@ -1,33 +1,42 @@
-import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
-import {BsXCircle} from "react-icons/bs";
-import {Tooltip} from "react-tooltip";
-import 'react-image-lightbox/style.css';
-import {FaArrowLeft, FaArrowRight, FaSearch} from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { BsXCircle } from "react-icons/bs";
+import { Tooltip } from "react-tooltip";
+import "react-image-lightbox/style.css";
+import { FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
+import axios from "axios";
 
+import {
+  canDeleteAuctions,
+  isSuperAdmin,
+} from "../admins/utils/PermissionsCheck";
+import {
+  fetchAuctionInfo,
+  getAuctionImage,
+  getAuctionImages,
+} from "../../services/auctionsService";
+import { getUserShortInfo } from "../../services/accountsService";
 
-import {canDeleteAuctions, isSuperAdmin,} from "../admins/utils/PermissionsCheck";
-import {fetchAuctionInfo, getAuctionImage, getAuctionImages} from "../../services/auctionsService";
-import {getUserShortInfo} from "../../services/accountsService";
-
-import '../../assets/styles/imageGallery/style.css'
+import "../../assets/styles/imageGallery/style.css";
 import Lightbox from "react-image-lightbox";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 
 export default function FullAuctionInfo() {
-    const [showPhoneNumber, setShowPhoneNumber] = useState(false);
-    const {id} = useParams();
-    const [auctionInfo, setAuctionInfo] = useState(null);
-    const [auctionImages, setAuctionImages] = useState([]);
-    const [userData, setUserData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [isAdmin, setisAdmin] = useState(false);
-    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-    const [photoIndex, setPhotoIndex] = useState(0);
+  const [showPhoneNumber, setShowPhoneNumber] = useState(false);
+  const { id } = useParams();
+  const [auctionInfo, setAuctionInfo] = useState(null);
+  const [auctionImages, setAuctionImages] = useState([]);
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
+  const [emailTitle, setEmailTitle] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-    useEffect(() => {
-        handleFetchUserAndAuctionInfo();
-    }, []);
+  useEffect(() => {
+    handleFetchUserAndAuctionInfo();
+  }, []);
 
     const togglePhoneNumber = () => {
         setShowPhoneNumber((prevValue) => !prevValue);
@@ -44,119 +53,167 @@ export default function FullAuctionInfo() {
     };
     
 
-    const deleteAuction = async () => {
-        try {
-            const token = localStorage.getItem("accessToken");
-            await deleteAuction(auctionInfo.id, token);
-            window.location = "/";
-        } catch (error) {
-            console.log("Error during auction process:", error);
-        }
-    };
-
-    const handleFetchUserAndAuctionInfo = async () => {
-        try {
-            const responseAuctionInfo = await fetchAuctionInfo(id);
-            setAuctionInfo(responseAuctionInfo);
-            console.log(responseAuctionInfo)
-
-            try {
-                const auctioneerInfoResponse = await getUserShortInfo(responseAuctionInfo.auctioneerId);
-                setUserData(auctioneerInfoResponse);
-            } catch (error) {
-                setUserData({}) //TODO: temp workaround
-            }
-
-
-            const auctionImagesResponse = await getAuctionImages(id);
-
-
-            const images = await Promise.all(
-                auctionImagesResponse.map(async (imageId) => {
-                    const imageByteArray = await getAuctionImage(id, imageId);
-                    return URL.createObjectURL(imageByteArray);
-                })
-            );
-
-            setAuctionImages(images);
-            setPhotoIndex(0)
-            setLoading(false);
-        } catch (error) {
-            console.error("Wystąpił błąd podczas pobierania danych ogłoszenia:", error);
-        }
-    };
-
-
-    if (loading) {
-        return (<LoadingSpinner/>);
+  const deleteAuction = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      await deleteAuction(auctionInfo.id, token);
+      window.location = "/";
+    } catch (error) {
+      console.log("Error during auction process:", error);
     }
+  };
 
-    return (
-        <>
+  const handleFetchUserAndAuctionInfo = async () => {
+    try {
+      const responseAuctionInfo = await fetchAuctionInfo(id);
+      setAuctionInfo(responseAuctionInfo);
 
-            <div
-                className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 min-h-[80vh] w-full">
+      try {
+        const auctioneerInfoResponse = await getUserShortInfo(
+          responseAuctionInfo.auctioneerId
+        );
+        setUserData(auctioneerInfoResponse);
+      } catch (error) {
+        setUserData({}); //TODO: temp workaround
+      }
 
-                {/* COLUMN 1 */}
-                <div
-                    className="mt-3 mb-5 flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
+      const auctionImagesResponse = await getAuctionImages(id);
 
+      const images = await Promise.all(
+        auctionImagesResponse.map(async (imageId) => {
+          const imageByteArray = await getAuctionImage(id, imageId);
+          return URL.createObjectURL(imageByteArray);
+        })
+      );
 
-                    {(auctionImages.length !== 0) && (
-                        <div className="bg-white rounded-lg shadow-md md:w-2/3 mb-10">
-                            <div className="image-container">
-                                <img src={auctionImages[photoIndex]} alt={`Auction ${photoIndex}`}
-                                     onClick={() => setIsLightboxOpen(true)}/>
-                                <div className="magnifier-icon">
-                                    <FaSearch onClick={() => setIsLightboxOpen(true)}/>
-                                </div>
-                                <div className="navigation-button left"
-                                     onClick={() => setPhotoIndex((photoIndex + auctionImages.length - 1) % auctionImages.length)}>
-                                    <FaArrowLeft/>
-                                </div>
-                                <div className="navigation-button right"
-                                     onClick={() => setPhotoIndex((photoIndex + 1) % auctionImages.length)}>
-                                    <FaArrowRight/>
-                                </div>
-                                <div className="image-caption">
-                                    Zdjęcie {photoIndex + 1} z {auctionImages.length}
-                                </div>
-                            </div>
+      setAuctionImages(images);
+      setPhotoIndex(0);
+      setLoading(false);
+    } catch (error) {
+      console.error(
+        "Wystąpił błąd podczas pobierania danych ogłoszenia:",
+        error
+      );
+    }
+  };
 
-                            {isLightboxOpen && (
-                                <Lightbox
-                                    mainSrc={auctionImages[photoIndex]}
-                                    nextSrc={auctionImages[(photoIndex + 1) % auctionImages.length]}
-                                    prevSrc={auctionImages[(photoIndex + auctionImages.length - 1) % auctionImages.length]}
-                                    onCloseRequest={() => setIsLightboxOpen(false)}
-                                    onMovePrevRequest={() =>
-                                        setPhotoIndex((photoIndex + auctionImages.length - 1) % auctionImages.length)
-                                    }
-                                    onMoveNextRequest={() =>
-                                        setPhotoIndex((photoIndex + 1) % auctionImages.length)
-                                    }
-                                />
-                            )}
-                        </div>
-                        )
-                    }
+  const handleConfirmation = async () => {
+    try {
+      await axios.post(
+        process.env.REACT_APP_ACCOUNTING_MS_USERS_SEND_MAIL,
+        {
+          id: userData.id,
+          subject: emailTitle,
+          message: emailMessage,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Wystąpił błąd:", error);
+    }
+    setIsConfirmationModalOpen(false);
+  };
 
-                    <div className="bg-white rounded-lg shadow-md p-4 md:w-1/3">
-                        <h2 className="text-[2.2vw] font-normal mb-5">
-                            {auctionInfo.name}
-                        </h2>
-                        <p className="text-[1.8vw] font-semibold mb-10">{auctionInfo.price} zł</p>
-                        <p className="text-[1.5vw] font-bold mb-5">OPIS</p>
-                        <p className="text-[1.25vw] text-gray-600">
-                            {auctionInfo.description}
-                        </p>
-                        <hr className="border-0 h-[1px] my-3 bg-slate-500 font-bold"/>
-                        <div className="flex">
-                            <p className="w-[50%] text-left">ID: {auctionInfo.id}</p>
-                            <p className="w-[50%] text-right">Wyświetlenia: {auctionInfo.viewCount}</p>
-                        </div>
-                    </div>
+  const sendMail = async () => {
+    setIsConfirmationModalOpen(true);
+  };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  return (
+    <>
+      <div className="flex items-center justify-center gradient-bg-color-only pt-[2.5vh] px-2 min-h-[80vh] w-full">
+        {/* COLUMN 1 */}
+        <div className="mt-3 mb-5 flex flex-col md:flex-row w-[70%] max-w-screen-xl bg-white rounded-lg shadow-md p-6 space-y-6 md:space-y-0 md:space-x-6 mr-2 self-start mw-480:p-4">
+          {auctionImages.length !== 0 && (
+            <div className="bg-white rounded-lg shadow-md md:w-2/3 mb-10">
+              <div className="image-container">
+                <img
+                  src={auctionImages[photoIndex]}
+                  alt={`Auction ${photoIndex}`}
+                  onClick={() => setIsLightboxOpen(true)}
+                />
+                <div className="magnifier-icon">
+                  <FaSearch onClick={() => setIsLightboxOpen(true)} />
                 </div>
+                <div
+                  className="navigation-button left"
+                  onClick={() =>
+                    setPhotoIndex(
+                      (photoIndex + auctionImages.length - 1) %
+                        auctionImages.length
+                    )
+                  }
+                >
+                  <FaArrowLeft />
+                </div>
+                <div
+                  className="navigation-button right"
+                  onClick={() =>
+                    setPhotoIndex((photoIndex + 1) % auctionImages.length)
+                  }
+                >
+                  <FaArrowRight />
+                </div>
+                <div className="image-caption">
+                  Zdjęcie {photoIndex + 1} z {auctionImages.length}
+                </div>
+              </div>
+
+              {isLightboxOpen && (
+                <Lightbox
+                  mainSrc={auctionImages[photoIndex]}
+                  nextSrc={
+                    auctionImages[(photoIndex + 1) % auctionImages.length]
+                  }
+                  prevSrc={
+                    auctionImages[
+                      (photoIndex + auctionImages.length - 1) %
+                        auctionImages.length
+                    ]
+                  }
+                  onCloseRequest={() => setIsLightboxOpen(false)}
+                  onMovePrevRequest={() =>
+                    setPhotoIndex(
+                      (photoIndex + auctionImages.length - 1) %
+                        auctionImages.length
+                    )
+                  }
+                  onMoveNextRequest={() =>
+                    setPhotoIndex((photoIndex + 1) % auctionImages.length)
+                  }
+                />
+              )}
+            </div>
+          )}
+
+          <div className="bg-white rounded-lg shadow-md p-4 md:w-1/3">
+            <h2 className="text-[2.2vw] font-normal mb-5">
+              {auctionInfo.name}
+            </h2>
+            <p className="text-[1.8vw] font-semibold mb-10">
+              {auctionInfo.price} zł
+            </p>
+            <p className="text-[1.5vw] font-bold mb-5">OPIS</p>
+            <p className="text-[1.25vw] text-gray-600">
+              {auctionInfo.description}
+            </p>
+            <hr className="border-0 h-[1px] my-3 bg-slate-500 font-bold" />
+            <div className="flex">
+              <p className="w-[50%] text-left">ID: {auctionInfo.id}</p>
+              <p className="w-[50%] text-right">
+                Wyświetlenia: {auctionInfo.viewCount}
+              </p>
+            </div>
+          </div>
+        </div>
 
                 {/* COLUMN 2 */}
                 <div

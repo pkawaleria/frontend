@@ -37,13 +37,12 @@ export default function GenericPageableAuctionList({
                     <Link
                         to={`/ogloszenie/${auction.id}`}
                         key={auction.id}
-                        className="border rounded-lg overflow-hidden shadow-lg bg-white flex custom-inner-shadow">
+                        className="flex border rounded-lg overflow-hidden hover:shadow-inner bg-white">
                         <img
                             src={`data:image/jpeg;base64,${auction.thumbnail}`}
                             alt={auction.name}
                             className="object-cover"
                         />
-                        {console.log(auction)}
                         <div className="w-[100%] px-3 py-2 flex flex-col">
                             <div className="flex h-1/5">
                                 <p className="text-xl font-semibold w-[50%] text-left">
@@ -52,10 +51,22 @@ export default function GenericPageableAuctionList({
                                         : auction.name}
                                 </p>
                                 <p className="w-[50%] text-right italic">
-                                    {auction.categoryPath.pathElements[0].name} / {auction.categoryPath.pathElements.length > 2
-                                        ? `... / ${auction.categoryPath.pathElements[auction.categoryPath.pathElements.length - 1].name}` : auction.categoryPath.pathElements[1].name
+                                    {auction.categoryPath.pathElements.length > 0
+                                        ? (
+                                            <>
+                                                {auction.categoryPath.pathElements[0].name}
+                                                {auction.categoryPath.pathElements.length > 2
+                                                    ? ` / ... / ${auction.categoryPath.pathElements[auction.categoryPath.pathElements.length - 1].name}`
+                                                    : (auction.categoryPath.pathElements.length > 1
+                                                        ? ` / ${auction.categoryPath.pathElements[1].name}`
+                                                        : '')
+                                                }
+                                            </>
+                                        )
+                                        : ''
                                     }
                                 </p>
+
                             </div>
                             <p className="text-gray-600 text-lg h-3/5">
                                 Cena: {formatPrice(auction.price)}

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { arePasswordsIdentical, validatePassword } from '../authorization/utils/RegisterValidators';
 import { isAdmin } from '../utils/PermissionsCheck';
-import { noPermission } from '../../errors/noPermission';
 
 export default function ChangePassword() {
     const [passwordData, setPasswordData] = useState({
@@ -72,17 +71,6 @@ export default function ChangePassword() {
             });
     };
 
-    try {
-        if (!(isAdmin(localStorage.getItem("accessToken")) )) {
-            return (
-                noPermission()
-            )
-        }
-    } catch (error) {
-        return (
-            noPermission()
-        )
-    }
 
     return (
         <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { isSuperAdmin, canBlockUsers } from "./utils/PermissionsCheck";
-import { noPermission } from "../errors/noPermission";
 import { BiBlock } from "react-icons/bi";
 import { BsInfoCircle } from "react-icons/bs";
 import { CgUnblock } from "react-icons/cg";
@@ -79,7 +78,7 @@ export default function UsersAdministration() {
       await axios.post(
         process.env.REACT_APP_ACCOUNTING_MS_ADMINS_SEND_MAIL,
         {
-          email: usersData.find((user) => user.id === selectedUserId)?.email,
+          id: usersData.find((user) => user.id === selectedUserId)?.id,
           subject: emailTitle,
           message: emailMessage,
         },
@@ -104,19 +103,6 @@ export default function UsersAdministration() {
         <LoadingSpinner/>
       </div>
     );
-  }
-
-  try {
-    if (
-      !(
-        isSuperAdmin(localStorage.getItem("accessToken")) ||
-        canBlockUsers(localStorage.getItem("accessToken"))
-      )
-    ) {
-      return noPermission();
-    }
-  } catch (error) {
-    return noPermission();
   }
 
   return (

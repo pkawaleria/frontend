@@ -65,8 +65,8 @@ export default function Help() {
     };
 
     return (
-        <div className="flex justify-center linear gradient-bg-color-only h-[800px]">
-            <form className="bg-white py-3 px-8 rounded-md border-0 w-96 min-h-72 max-h-[720px] self-center" onSubmit={handleSubmit}>
+        <div className="flex justify-center linear gradient-bg-color-only mt-5 min-h-[80vh]">
+            <form className="bg-white py-3 px-8 mb-5 rounded-md border-0 w-96 min-h-72 max-h-[720px] self-center" onSubmit={handleSubmit}>
                 <h1 className="text-center text-xl font-semibold">Potrzebujesz pomocy?</h1>
                 <h1 className="text-center text-xl font-semibold">Napisz do nas :)</h1>
                 <Input
@@ -85,7 +85,7 @@ export default function Help() {
                         ref={textareaRef}
                         name="message"
                         placeholder="Wprowadź wiadomość"
-                        className="mw-xs:placeholder:text-sm min-h-55 max-h-[450px] focus:shadow-2xl focus:border-2 p-2 w-full placeholder-blue-600/50 text-blue-600 bg-transparent outline-none border border-blue-500 rounded-xl"
+                        className="mw-xs:placeholder:text-sm min-h-55 max-h-[400px] focus:shadow-2xl focus:border-2 p-2 w-full placeholder-blue-600/50 text-blue-600 bg-transparent outline-none border border-blue-500 rounded-xl"
                         value={newMessageData.message}
                         onChange={handleInputChange}
                     />

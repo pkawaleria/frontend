@@ -1,6 +1,5 @@
 import React from "react";
 import {isAdmin} from './utils/PermissionsCheck'
-import {noPermission} from '../errors/noPermission'
 
 
 export default function Statistics() {
@@ -16,17 +15,6 @@ export default function Statistics() {
     { title: "Przykład 5", value: 456, color: "bg-red-500" },
   ];
 
-  try {
-    if (!(isAdmin(localStorage.getItem("accessToken")) )) {
-      return (
-        noPermission()
-      )
-    }
-  } catch (error) {
-    return (
-      noPermission()
-    )
-  }
 
 
   return (

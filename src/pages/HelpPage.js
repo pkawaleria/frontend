@@ -6,7 +6,6 @@ import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 
 export function HelpPage() {
-
     const { fontSize } = useFontSize();
 
     const style = {
@@ -14,11 +13,11 @@ export function HelpPage() {
     };
 
     return (
-        <div className="h-full flex flex-col" style={style}>
-            <Navbar/>
-            <ScrollToTop/>
-            <ScrollToTopButton/>
-            <Help/>
+        <div className="h-screen flex flex-col" style={style}>
+            <Navbar />
+            <ScrollToTop />
+            <ScrollToTopButton />
+            <Help />
             <Footer />
         </div>
     )

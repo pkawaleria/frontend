@@ -9,7 +9,6 @@ import axios from "axios"
 import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical, validateFirstname, validateLastname, validatePhoneNumber } from "./utils/RegisterValidators"
 import { inputs } from "./utils/RegisterInputs"
 import { isSuperAdmin, canCreateAdminAccount } from "../utils/PermissionsCheck"
-import { noPermission } from "../../errors/noPermission"
 
 export default function Register() {
     const [newUserData, setNewUserData] = useState({
@@ -102,19 +101,6 @@ export default function Register() {
             console.error('Błąd podczas rejestracji:', error);
         }
     };
-
-    try {
-        if (!(isSuperAdmin(localStorage.getItem("accessToken")) || canCreateAdminAccount(localStorage.getItem("accessToken")))) {
-          return (
-            noPermission()
-          )
-        }
-      } catch (error) {
-        return (
-          noPermission()
-        )
-      }
-
 
     return (
         <div className="flex items-center mt-10 pb-3 justify-center gradient-bg-color-only">

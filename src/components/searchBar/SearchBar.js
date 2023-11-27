@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {BiChevronDown, BiChevronUp, BiSearchAlt2, BiSortDown, BiSortUp} from "react-icons/bi";
+import {BiChevronDown, BiChevronUp, BiSearchAlt, BiSortDown, BiSortUp} from "react-icons/bi";
 import {FaMapMarkerAlt, FaStream} from 'react-icons/fa';
 import {fetchCategoriesByName, fetchTopLevelCategories} from "../../services/categoryService";
 import {searchCities} from "../../services/citiesService";
 import Select from "react-select";
 import '../../assets/styles/searchbar/searchbar.css'
 import CreatableSelect from "react-select/creatable";
-
+import {Button, InputAdornment, TextField} from "@mui/material";
+import {MdOutlineSearchOff, MdOutlineTitle} from "react-icons/md";
+import {GiBroom, GiPoland} from "react-icons/gi";
+import {TbMoneybag} from "react-icons/tb";
 
 const radiusOptions = [
     {label: '0 km', value: '0'},
@@ -50,17 +53,23 @@ export default function SearchBar({
                                       setSelectedSortOrder,
                                       searchedTermInAuctionName,
                                       setSearchedTermInAuctionName,
-                                      onSearch
+                                      priceFrom,
+                                      setPriceFrom,
+                                      priceTo,
+                                      setPriceTo,
+                                      onSearch,
                                   }) {
     const [searchedCities, setSearchedCities] = useState([]);
     const [searchedCategories, setSearchedCategories] = useState([]);
     const [rootCategories, setRootCategories] = useState([]);
     const [isOptionsExpanded, setIsOptionsExpanded] = useState(false);
+    const [priceFromError, setPriceFromError] = useState("");
+    const [priceToError, setPriceToError] = useState("");
 
 
     const [sortOptions, setSortOptions] = useState([
-        {value: 'price', label: 'Cena'},
-        {value: 'name', label: 'Nazwa'},
+        {value: 'PRICE', label: 'Cena'},
+        {value: 'NAME', label: 'Nazwa'},
     ]);
 
 
@@ -150,6 +159,9 @@ export default function SearchBar({
 
     const handleCitySelectionChange = (selectedOption) => {
         setSelectedCityId(selectedOption);
+        if (selectedOption === null) {
+            setSelectedRadius(0);
+        }
     };
 
     const handleProvinceSelectionChange = (selectedOption) => {
@@ -164,29 +176,71 @@ export default function SearchBar({
         setSelectedSortOrder((prevOrder) => (prevOrder === 'ASC' ? 'DESC' : 'ASC'));
     };
 
+    const handlePriceFromChange = (event) => {
+        const value = event.target.value;
+        setPriceFrom(value);
+        let errorMessage = "";
+        if (value < 0) {
+            errorMessage = "Wartość nie może być ujemna";
+            setPriceFrom('');
+        }
+        setPriceFromError(errorMessage);
+    };
+
+    const handlePriceToChange = (event) => {
+        const value = event.target.value;
+        setPriceTo(value);
+        let errorMessage = "";
+        if (value < 0) {
+            errorMessage = "Wartość nie może być ujemna";
+            setPriceTo('');
+        }
+        setPriceToError(errorMessage);
+    };
+
+    const clearFilters = () => {
+        setSelectedCityId(null);
+        setSelectedCategory(null);
+        setSelectedProvinceName(null);
+        setSearchedTermInAuctionName('');
+        setSelectedSortByField(null);
+        setPriceTo('');
+        setPriceFrom('');
+        setSelectedRadius(0);
+        setPriceToError('');
+        setPriceFromError('');
+    };
+
+    const validateSearchCriteria = () => {
+        return priceFromError === "" && priceToError === "";
+    };
+
     return (
         <div className="bg-blue-500/20 pt-5 pb-7 sm:pb-8">
             <form
-                  className="search-form max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl px-4 pt-4 pb-0 flex flex-wrap justify-between gap-2"
-                  style={{width: '90%'}}>
-
+                className="search-form max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl px-4 pt-4 pb-0 flex flex-wrap justify-between gap-2"
+                style={{width: '90%'}}>
                 {/* Pole wpisania nazwy aukcji */}
-                <div className="flex-1 min-w-0">
-                    <div className="input-wrapper flex items-center rounded border-0 border-gray-300">
-                        <input
-                            type="text"
-                            className="w-full py-2 px-3 placeholder-gray-500 border-0 outline-none focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded"
-                            placeholder="Wpisz nazwę aukcji"
-                            value={searchedTermInAuctionName}
-                            onChange={handleSearchChange}
-                        />
-                    </div>
+                <div className="w-full flex items-center">
+                    <MdOutlineTitle className="text-white text-3xl mr-2"/>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        size="small"
+                        placeholder="Wpisz nazwę aukcji"
+                        value={searchedTermInAuctionName}
+                        onChange={handleSearchChange}
+                        className="bg-white rounded text-gray-700 flex-grow"
+                        InputProps={{
+                            className: "border-0 outline-none focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded",
+                        }}
+                    />
                 </div>
 
                 {/* Grupa lokalizacji */}
                 <div className="flex flex-1 min-w-0 items-center gap-2">
                     {/* Ikonka lokalizacji */}
-                    <FaMapMarkerAlt className="text-green-500 text-3xl"/>
+                    <FaMapMarkerAlt className="text-white text-3xl"/>
 
                     {/* Pole wpisania nazwy miasta */}
                     <Select
@@ -214,7 +268,7 @@ export default function SearchBar({
                 </div>
                 <div className="flex flex-1 min-w-0 items-center gap-2">
                     {/* Ikonka kategorii */}
-                    <FaStream className="text-red-500 text-3xl"/>
+                    <FaStream className="text-white text-3xl"/>
 
                     <Select
                         value={selectedCategory}
@@ -233,8 +287,9 @@ export default function SearchBar({
                     <button
                         type="button"
                         onClick={handleSearchSubmit}
-                        className="px-2 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150">
-                        <BiSearchAlt2 className="text-[2vw]"/>
+                        className="px-2 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600/50 transition duration-150">
+                        {validateSearchCriteria() ? <BiSearchAlt color={'white'} className="text-[2vw] text-white"/>
+                            : <MdOutlineSearchOff enableBackground={false} className="text-[2vw] text-white"/>}
                     </button>
                 </div>
 
@@ -251,42 +306,103 @@ export default function SearchBar({
                 </div>
 
                 {/* Dodatkowe opcje */}
-                {isOptionsExpanded && (
-                    <div className="w-full pt-0">
-                        <div className="flex flex-wrap gap-2 pb-4 items-center">
-                            <div className="w-2/5">
-                                <Select
-                                    value={selectedProvinceName}
-                                    onChange={handleProvinceSelectionChange}
-                                    options={formatProvincesToOptions(provinces)}
-                                    placeholder="Województwo"
-                                    className="text-gray-700 react-select-container w-full"
-                                    classNamePrefix="react-select"
-                                    isClearable
-                                />
+                {isOptionsExpanded && (<>
+                        <div className="w-full pt-0">
+                            <div className="flex flex-wrap gap-2 pb-4 items-center">
+                                <div className="w-2/5 flex-1 flex items-center">
+                                    <GiPoland className="text-white text-3xl mr-2"/>
+                                    <Select
+                                        value={selectedProvinceName}
+                                        onChange={handleProvinceSelectionChange}
+                                        options={formatProvincesToOptions(provinces)}
+                                        placeholder="Województwo"
+                                        className="text-gray-700 react-select-container w-full"
+                                        classNamePrefix="react-select"
+                                        isClearable
+                                    />
+                                </div>
+
+                                <div className="flex-1 flex items-center">
+                                    <div
+                                        className="ml-2 cursor-pointer"
+                                        onClick={toggleSortOrder}>
+                                        {selectedSortOrder === 'ASC' ? (
+                                            <BiSortUp
+                                                className="text-white text-3xl hover:text-blue-400 duration-100 ease-linear"/>
+                                        ) : (
+                                            <BiSortDown
+                                                className="text-white text-3xl hover:text-blue-400 duration-100 ease-linear"/>
+                                        )}
+                                    </div>
+                                    <Select
+                                        value={selectedSortByField}
+                                        onChange={handleSortFieldChange}
+                                        options={sortOptions}
+                                        placeholder="Sortuj po"
+                                        className="text-gray-700 react-select-container w-full cursor-pointer rounded"
+                                        classNamePrefix="react-select"
+                                        isClearable/>
+
+                                </div>
+
+                                <div className="flex-1 flex items-center space-x-2">
+                                    {/* Ikonka ceny */}
+                                    <div>
+                                        <TbMoneybag className="text-3xl text-white"/>
+                                    </div>
+
+                                    {/* Pole wpisania minimalnej ceny */}
+                                    <TextField
+                                        type="number"
+                                        placeholder={"Cena od"}
+                                        variant="outlined"
+                                        size="small"
+                                        value={priceFrom}
+                                        onChange={handlePriceFromChange}
+                                        error={Boolean(priceFromError)}
+                                        helperText={priceFromError}
+                                        InputProps={{
+                                            startAdornment: <InputAdornment position="start">PLN</InputAdornment>,
+                                        }}
+                                        className="bg-white rounded text-gray-700"
+                                    />
+
+                                    {/* Pole wpisania maksymalnej ceny */}
+                                    <TextField
+                                        type="number"
+                                        placeholder={"Cena do"}
+                                        variant="outlined"
+                                        size="small"
+                                        value={priceTo}
+                                        onChange={handlePriceToChange}
+                                        error={Boolean(priceToError)}
+                                        helperText={priceToError}
+                                        InputProps={{
+                                            startAdornment: <InputAdornment position="start">PLN</InputAdornment>,
+                                        }}
+                                        className="bg-white rounded text-gray-700"
+                                    />
+                                </div>
+
                             </div>
 
-                            <div className="flex-1 flex items-center">
-                                <Select
-                                    value={selectedSortByField}
-                                    onChange={handleSortFieldChange}               
-                                    options={sortOptions}
-                                    placeholder="Sortuj po"
-                                    className="text-gray-700 react-select-container w-full cursor-pointer rounded"
-                                    classNamePrefix="react-select"
-                                    isClearable/>
-                                <div
-                                    className="ml-2 cursor-pointer"
-                                    onClick={toggleSortOrder}>
-                                    {selectedSortOrder === 'ASC' ? (
-                                        <BiSortUp className="text-yellow-400 text-3xl"/>
-                                    ) : (
-                                        <BiSortDown className="text-yellow-400 text-3xl"/>
-                                    )}
-                                </div>
-                            </div>
                         </div>
-                    </div>
+                        <div className="w-full flex justify-center">
+                            <GiBroom className="text-white text-3xl mr-2"/>
+                            <Button
+                                variant="outlined"
+                                onClick={clearFilters}
+                                sx={{
+                                    mb: 2,
+                                    color: "white",
+                                    borderColor: "white",
+                                }}
+                            >
+                                Wyczyść filtry
+                            </Button>
+                        </div>
+                    </>
+
                 )}
             </form>
         </div>

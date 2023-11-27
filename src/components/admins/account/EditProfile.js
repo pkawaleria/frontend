@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { validateUsername, validateEmail, validateFirstname, validateLastname, validatePhoneNumber } from '../authorization/utils/RegisterValidators'
 import { isAdmin } from '../utils/PermissionsCheck';
-import { noPermission } from '../../errors/noPermission';
 
 export default function EditProfile() {
     const [userData, setUserData] = useState({
@@ -116,18 +115,6 @@ export default function EditProfile() {
                 console.error('Błąd aktualizacji danych:', error);
             });
     };
-
-    try {
-        if (!(isAdmin(localStorage.getItem("accessToken")))) {
-            return (
-                noPermission()
-            )
-        }
-    } catch (error) {
-        return (
-            noPermission()
-        )
-    }
 
     return (
         <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">

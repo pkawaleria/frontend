@@ -7,6 +7,8 @@ const accountMsApi = axios.create({
 
 const errorCodes = {
     "AUCT01": "Niepoprawne dane użytkownika",
+    "AUCT02": "Niepoprawne dane użytkownika",
+    "AUCT03": "Niepoprawne dane użytkownika",
 };
 
 accountMsApi.interceptors.request.use((config) => {
