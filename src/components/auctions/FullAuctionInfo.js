@@ -38,9 +38,20 @@ export default function FullAuctionInfo() {
     handleFetchUserAndAuctionInfo();
   }, []);
 
-  const togglePhoneNumber = () => {
-    setShowPhoneNumber((prevValue) => !prevValue);
-  };
+    const togglePhoneNumber = () => {
+        setShowPhoneNumber((prevValue) => !prevValue);
+    };
+
+    const formatPhoneNumber = (phoneNumber) => {
+        const cleaned = phoneNumber.replace(/\D/g, '');
+    
+        if (cleaned && cleaned.length >= 9) {
+            return cleaned.replace(/(\d{3})(\d{3})(\d{3})/, '$1-$2-$3');
+        } else {
+            return phoneNumber;
+        }
+    };
+    
 
   const deleteAuction = async () => {
     try {
@@ -204,124 +215,61 @@ export default function FullAuctionInfo() {
           </div>
         </div>
 
-        {/* COLUMN 2 */}
-        <div className="mt-3 flex flex-col w-[20%] max-w-screen-md bg-white rounded-lg shadow-md p-4 space-y-4 self-start">
-          <div className="bg-white rounded-lg shadow-md p-[1vw] grid">
-            <h3 className="text-[1.2vw] font-semibold text-center">
-              Dane użytkownika
-            </h3>
-            <Link
-              to={`/ogloszenia-uzytkownika/${userData.id}`}
-              className="bg-blue-500 text-white text-center py-[0.5vw] px-[1vw] mt-2 rounded-md hover:bg-blue-600 text-[1vw]"
-            >
-              Sprzedający: {userData.username}
-            </Link>
-            {showPhoneNumber ? (
-              <p className="mb-1 text-[1vw] text-center mt-5">
-                Numer telefonu: {userData.phone_number}
-              </p>
-            ) : (
-              <button
-                onClick={togglePhoneNumber}
-                className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] mr-1"
-              >
-                Pokaż numer
-              </button>
-            )}
-            <button className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw]"
-            onClick={sendMail}>
-              Wyślij wiadomość
-            </button>
-          </div>
-          <div className="bg-white rounded-lg shadow-md">
-            <p className="text-[1vw] font-semibold m-4">
-              Województwo:{" "}
-              {auctionInfo.province.charAt(0).toUpperCase() +
-                auctionInfo.province.slice(1)}
-            </p>
-            <p className="text-[1vw] font-semibold m-4">
-              Miejscowość: {auctionInfo.cityName}
-            </p>
-          </div>
-          {(isSuperAdmin() || canDeleteAuctions()) && (
-            <div className=" bg-white rounded-lg shadow-md p-[1vw]">
-              <Link
-                className="right text-blue-400 hover:text-blue-700"
-                data-tooltip-id="deleteAd"
-                data-tooltip-content="Usuń ogłoszenie"
-                onClick={deleteAuction}
-              >
-                <Tooltip
-                  id="deleteAd"
-                  type="dark"
-                  effect="solid"
-                  delayShow={200}
-                  delayHide={100}
-                />
-                <BsXCircle color="red" size={20} z={100} />
-              </Link>
+                {/* COLUMN 2 */}
+                <div
+                    className="mt-3 flex flex-col w-[20%] max-w-screen-md bg-white rounded-lg shadow-md p-4 space-y-4 self-start">
+                    <div className="bg-white rounded-lg shadow-md p-[1vw] grid">
+                        <h3 className="text-[1.2vw] font-semibold text-center">Dane użytkownika</h3>
+                        <Link
+                            to={`/ogloszenia-uzytkownika/${userData.id}`}
+                            className="bg-blue-500 text-white text-center py-[0.5vw] px-[1vw] mt-2 rounded-md hover:bg-blue-600 text-[1vw]">
+                            Sprzedający: {userData.username}
+                        </Link>
+                        {showPhoneNumber ? (
+                            <p className="mb-1 text-[1vw] text-center mt-5">
+                                Numer telefonu: {formatPhoneNumber(auctionInfo.phoneNumber)}
+                            </p>
+                        ) : (
+                            <button
+                                onClick={togglePhoneNumber}
+                                className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] mr-1">
+                                Pokaż numer
+                            </button>
+                        )}
+                        <button
+                            className="bg-blue-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw]">
+                            Wyślij wiadomość
+                        </button>
+                    </div>
+                    <div className="bg-white rounded-lg shadow-md">
+                        <p className="text-[1vw] font-semibold m-4">
+                            Województwo: {auctionInfo.province.charAt(0).toUpperCase() + auctionInfo.province.slice(1)}
+                        </p>
+                        <p className="text-[1vw] font-semibold m-4">
+                            Miejscowość: {auctionInfo.cityName}
+                        </p>
+                    </div>
+                    {(isSuperAdmin() ||
+                        canDeleteAuctions()) && (
+                        <div className=" bg-white rounded-lg shadow-md p-[1vw]">
+                            <Link
+                                className="right text-blue-400 hover:text-blue-700"
+                                data-tooltip-id="deleteAd"
+                                data-tooltip-content="Usuń ogłoszenie"
+                                onClick={deleteAuction}>
+                                <Tooltip
+                                    id="deleteAd"
+                                    type="dark"
+                                    effect="solid"
+                                    delayShow={200}
+                                    delayHide={100}
+                                />
+                                <BsXCircle color="red" size={20} z={100}/>
+                            </Link>
+                        </div>
+                    )}
+                </div>
             </div>
-          )}
-          {isConfirmationModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50">
-              <div className="absolute inset-0 bg-black opacity-50"></div>
-              <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                <p className="text-lg font-semibold mb-4 text-center">
-                  Wyślij wiadomość do użytkownika
-                </p>
-                <div className="mb-4">
-                  <label
-                    htmlFor="emailTitle"
-                    className="block text-gray-600 font-medium mb-2"
-                  >
-                    Tytuł:
-                  </label>
-                  <input
-                    type="text"
-                    id="emailTitle"
-                    name="emailTitle"
-                    value={emailTitle}
-                    onChange={(e) => setEmailTitle(e.target.value)}
-                    className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
-                    required
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="emailMessage"
-                    className="block text-gray-600 font-medium mb-2"
-                  >
-                    Wiadomość:
-                  </label>
-                  <textarea
-                    id="emailMessage"
-                    name="emailMessage"
-                    value={emailMessage}
-                    onChange={(e) => setEmailMessage(e.target.value)}
-                    rows="4"
-                    className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
-                    required
-                  ></textarea>
-                </div>
-                <div className="flex justify-center space-x-4">
-                  <button
-                    className="text-white bg-green-500 hover:bg-green-700 py-2 px-4 rounded-md"
-                    onClick={handleConfirmation}
-                  >
-                    Tak
-                  </button>
-                  <button
-                    className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
-                    onClick={() => setIsConfirmationModalOpen(false)}
-                  >
-                    Anuluj
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 }
