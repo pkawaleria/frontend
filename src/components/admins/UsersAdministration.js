@@ -106,7 +106,8 @@ export default function UsersAdministration() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center mt-2">
+        <div className="flex flex-col items-center justify-center my-2">
+            <span className="text-white text-[45px] font-bold mb-4 text-center">UŻYTKOWNICY W SYSTEMIE</span>
             <div className="grid grid-cols-1 gap-6 w-2/3">
                 {usersData.length > 0 ? (
                     usersData.map((user) => (

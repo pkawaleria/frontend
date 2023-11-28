@@ -45,7 +45,7 @@ const CategoryWithSubcategories = () => {
     }
 
     return (
-        <div className="w-8/12 mx-auto space-y-4">
+        <div className="w-8/12 mx-auto space-y-4 mb-4">
             <div className="w-full shadow-xl rounded-lg bg-white p-4 border-t-4 border-indigo-500">
                 <h5 className="font-bold text-xl mb-2">{currentCategory.name}</h5>
                 <p className="text-gray-600 mb-2">{currentCategory.description}</p>

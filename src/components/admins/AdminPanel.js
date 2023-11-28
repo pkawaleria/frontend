@@ -62,6 +62,7 @@ export default function AdminPanel() {
                 <Button
                     className='w-full bg-blue-500/5 hover:bg-blue-400/50 border border-white rounded mb-3'
                     onClick={() => {
+                        if (selectedOption === 'addPermissions' || selectedOption === 'deletePermissions') return
                         setPermissionsExpanded(!permissionsExpanded);
                     }}
                 >
@@ -73,19 +74,23 @@ export default function AdminPanel() {
                     border border-white rounded mb-3 
                     ${permissionsExpanded ? 'my-3' : ""} 
                     ${selectedOption === 'userAccounts' ? "bg-blue-400/50" : "bg-blue-500/5"}`}
-                    onClick={() => setSelectedOption('userAccounts')}>
+                    onClick={() => {
+                        setPermissionsExpanded(false);
+                        setSelectedOption('userAccounts')
+                    }}>
                     Konta w systemie
                 </Button>
                 <Button
                     className={`w-full bg-blue-500/5 hover:bg-blue-400/50 
                     border border-white rounded mb-3 
                     ${selectedOption === 'categories' ? "bg-blue-400/50" : "bg-blue-500/5"}`}
-                    onClick={() => setSelectedOption('categories')}>
+                    onClick={() => {
+                        setPermissionsExpanded(false);
+                        setSelectedOption('categories')
+                    }}>
                     Kategorie
                 </Button>
             </div>
-
-            {/* Right Content */}
             <div className="w-5/6 items-center my-2 mr-8 p-2 border-2 border-white rounded">
                 {renderContent()}
             </div>

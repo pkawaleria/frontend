@@ -1,5 +1,4 @@
 import React from "react";
-import { isAdmin } from './utils/PermissionsCheck'
 
 export default function Statistics() {
     const statisticsData = [
@@ -13,8 +12,6 @@ export default function Statistics() {
         { title: "Przykład 4", value: 123, color: "bg-gray-500" },
         { title: "Przykład 5", value: 456, color: "bg-red-500" },
     ];
-
-
 
     return (
         <div className="flex flex-col justify-center p-5">
