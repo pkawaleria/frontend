@@ -106,19 +106,19 @@ export default function UsersAdministration() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center my-2">
-            <span className="text-white text-[45px] font-bold mb-4 text-center">UŻYTKOWNICY W SYSTEMIE</span>
+        <div className="flex flex-col items-center my-2 h-screen">
+            <span className="text-white dark:text-neutral-200 text-[45px] font-bold mb-4 text-center">UŻYTKOWNICY W SYSTEMIE</span>
             <div className="grid grid-cols-1 gap-6 w-2/3">
                 {usersData.length > 0 ? (
                     usersData.map((user) => (
-                        <div className="bg-white border rounded-lg shadow-md p-4 flex justify-between" key={user.id}>
+                        <div className="bg-white dark:bg-neutral-600 border rounded-lg shadow-md p-4 flex justify-between" key={user.id}>
                             <div className="flex items-center">
                                 <div className="ml-4">
-                                    <h3 className="text-xl font-semibold mb-2">
+                                    <h3 className="text-xl font-semibold mb-2 dark:text-neutral-100">
                                         {user.username}
                                     </h3>
                                     <div className="flex items-center space-x-2 mb-2">
-                                        <p className="text-gray-600">{user.email}</p>
+                                        <p className="text-gray-600 dark:text-neutral-400">{user.email}</p>
                                     </div>
                                     <div className="flex items-center space-x-2 mb-2">
                                         {user.isBanned === false ? (

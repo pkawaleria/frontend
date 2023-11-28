@@ -85,9 +85,9 @@ export default function AdminPermissionsForm() {
 
 
     return (
-        <div className="flex flex-col items-center justify-center p-5">
-            <span className="text-white text-[45px] font-bold mb-4 text-center">DODAWANIE UPRAWNIEŃ</span>
-            <div className="w-[50%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
+        <div className="flex flex-col items-center p-5 h-screen">
+            <span className="text-white dark:text-neutral-200 text-[45px] font-bold mb-4 text-center">DODAWANIE UPRAWNIEŃ</span>
+            <div className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
                 <div className="flex-shrink-0">
                     <img
                         src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png"
@@ -95,17 +95,20 @@ export default function AdminPermissionsForm() {
                         className="w-32 h-32 rounded-full object-cover"
                     />
                 </div>
-                <div className="ml-6">
+                <div className="ml-6 dark:text-neutral-300">
                     <form onSubmit={handleSubmit}>
                         <div>
                             <label>Wybierz admina:</label>
                             <select
-                                className="select p-1"
+                                className="select p-1 dark:bg-neutral-400/50 dark:text-neutral-100"
                                 value={selectedAdminId}
                                 onChange={handleAdminChange}>
-                                <option value="">Wybierz admina</option>
+                                <option value="" className="dark:bg-neutral-600/50">Wybierz admina</option>
                                 {admins.map((admin) => (
-                                    <option key={admin.id} value={admin.id}>
+                                    <option
+                                        key={admin.id} 
+                                        value={admin.id}
+                                        className="dark:bg-neutral-600/50">
                                         {admin.username}
                                     </option>
                                 ))}
@@ -114,13 +117,15 @@ export default function AdminPermissionsForm() {
                         <div>
                             <label>Wybierz uprawnienie:</label>
                             <select
-                                className="select p-1"
+                                className="select p-1 dark:bg-neutral-400/50 dark:text-neutral-100"
                                 value={selectedPermissionId}
-                                onChange={handlePermissionChange}
-                            >
-                                <option value="">Wybierz uprawnienie</option>
+                                onChange={handlePermissionChange}>
+                                <option value="" className="dark:bg-neutral-600/50">Wybierz uprawnienie</option>
                                 {permissions.map((permission) => (
-                                    <option key={permission.id} value={permission.id}>
+                                    <option 
+                                        key={permission.id} 
+                                        value={permission.id}
+                                        className="dark:bg-neutral-600/50">
                                         {permission.description_short}
                                     </option>
                                 ))}
@@ -131,7 +136,7 @@ export default function AdminPermissionsForm() {
 
                 <div className="flex justify-end w-full mt-4">
                     <button
-                        className="nav-link absolute bottom-1 right-1 bg-green-400 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none"
+                        className="nav-link absolute bottom-1 right-1 bg-green-400/70 hover:bg-green-500 dark:bg-green-800 dark:hover:bg-green-700 text-white py-3 px-4 rounded-full  easy-linear duration-200 focus:outline-none"
                         type="submit"
                         onClick={handleSubmit}
                     >

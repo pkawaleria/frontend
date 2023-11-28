@@ -26,8 +26,7 @@ export default function ScrollToTopButton() {
             {isVisible && (
                 <button
                     onClick={scrollToTop}
-                    className="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-700 transition-all duration-300"
-                >
+                    className="bg-blue-500 hover:bg-blue-700 dark:border-white dark:border dark:bg-neutral-600 dark:hover:bg-neutral-700/50 text-white py-2 px-4 rounded-full transition-all duration-300">
                     <FaArrowUp className="text-2xl" />
                 </button>
             )}

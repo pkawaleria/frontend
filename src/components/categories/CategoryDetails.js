@@ -14,17 +14,17 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
 
     return (
         <div
-            className="category-details bg-gray-200 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer">
+            className="category-details bg-gray-200 dark:bg-neutral-400/70 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer">
             <div className="absolute top-0 right-0 mt-2 mr-2">
                 <VscListOrdered
                     onClick={navigateToAuctions}
-                    className="text-blue-500 text-3xl cursor-pointer hover:text-blue-600"
+                    className="text-blue-500 dark:text-white hover:dark:text-neutral-400 text-3xl cursor-pointer hover:text-blue-600"
                 />
             </div>
             {/* Wyświetlenie ścieżki */}
             <div className="mb-2 flex items-center space-x-2">
                 <button
-                    className="flex items-center space-x-1 bg-gray-100 px-3 py-1 rounded-l-md cursor-pointer hover:bg-blue-100"
+                    className="flex items-center space-x-1 bg-gray-100 dark:bg-neutral-100 hover:dark:bg-neutral-300 px-3 py-1 rounded-l-md cursor-pointer hover:bg-blue-100"
                     onClick={(e) => {
                         e.stopPropagation();
                         navigate(`/kategorie`);
@@ -38,7 +38,7 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
                 {categoryData.path.path.map((pathItem, index, array) => (
                     <React.Fragment key={pathItem.id}>
                         <button
-                            className={`flex items-center space-x-1 bg-gray-100 px-3 py-1 rounded-l-md ${pathItem.id === parentCategoryId ? 'text-gray-400 cursor-not-allowed' : 'cursor-pointer hover:bg-blue-100'}`}
+                            className={`flex items-center space-x-1 bg-gray-100 dark:bg-neutral-100 hover:dark:bg-neutral-300 px-3 py-1 rounded-l-md ${pathItem.id === parentCategoryId ? 'text-gray-400 cursor-not-allowed' : 'cursor-pointer hover:bg-blue-100'}`}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 if (pathItem.id !== parentCategoryId) {
@@ -58,8 +58,8 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
             <div className="border-b border-gray-300 my-2"></div>
 
             <div onClick={() => navigate(`/podkategorie/${categoryData.id}`)}>
-                <h2 className="text-xl font-semibold mb-2">{categoryData.name}</h2>
-                <p className="text-gray-600">{categoryData.description}</p>
+                <h2 className="text-xl font-semibold mb-2 dark:text-neutral-50">{categoryData.name}</h2>
+                <p className="text-gray-600 dark:text-neutral-300">{categoryData.description}</p>
             </div>
 
         </div>

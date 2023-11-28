@@ -26,7 +26,6 @@ export default function SearchAuctionsPage() {
 
 
     useEffect(() => {
-
         const fetchDefaultAuctions = async () => {
             setIsLoading(true)
             const initialPagingAndFilters = updateStateAndGetApiQueryParamsFromUrl();

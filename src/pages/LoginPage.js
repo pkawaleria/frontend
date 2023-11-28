@@ -5,7 +5,6 @@ import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 
 export function LoginPage() {
-
     const { fontSize } = useFontSize();
 
     const style = {
@@ -13,7 +12,7 @@ export function LoginPage() {
     };
 
     return (
-        <div div className="h-full flex flex-col" style={style}>
+        <div className="h-full flex flex-col" style={style}>
             <ScrollToTop />
             <ScrollToTopButton />
             <Login />
