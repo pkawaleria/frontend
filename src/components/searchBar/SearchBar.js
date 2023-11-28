@@ -324,7 +324,7 @@ export default function SearchBar({
 
                                 <div className="flex-1 flex items-center">
                                     <div
-                                        className="ml-2 cursor-pointer"
+                                        className="mr-2 cursor-pointer"
                                         onClick={toggleSortOrder}>
                                         {selectedSortOrder === 'ASC' ? (
                                             <BiSortUp

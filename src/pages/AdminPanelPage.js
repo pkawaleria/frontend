@@ -13,7 +13,7 @@ export function AdminPanelPage() {
     };
 
     return (
-        <div className="h-full flex flex-col" style={style}>
+        <div className="flex flex-col" style={style}>
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
