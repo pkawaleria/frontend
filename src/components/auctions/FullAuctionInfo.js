@@ -270,14 +270,14 @@ export default function FullAuctionInfo() {
                     {isConfirmationModalOpen && (
                         <div className="fixed inset-0 flex items-center justify-center z-50">
                             <div className="absolute inset-0 bg-black opacity-50"></div>
-                            <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                                <p className="text-lg font-semibold mb-4 text-center">
+                            <div className="relative bg-white dark:bg-neutral-700 w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                                <p className="text-lg font-semibold mb-4 text-center dark:text-neutral-300">
                                     Wyślij wiadomość do użytkownika
                                 </p>
                                 <div className="mb-4">
                                     <label
                                         htmlFor="emailTitle"
-                                        className="block text-gray-600 font-medium mb-2"
+                                        className="block text-gray-600 dark:text-neutral-400 font-medium mb-2"
                                     >
                                         Tytuł:
                                     </label>
@@ -287,14 +287,14 @@ export default function FullAuctionInfo() {
                                         name="emailTitle"
                                         value={emailTitle}
                                         onChange={(e) => setEmailTitle(e.target.value)}
-                                        className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
+                                        className="w-full p-2 border dark:text-neutral-300 border-blue-500 dark:bg-neutral-500 dark:border-neutral-200 rounded-md focus:outline-none"
                                         required
                                     />
                                 </div>
                                 <div className="mb-4">
                                     <label
                                         htmlFor="emailMessage"
-                                        className="block text-gray-600 font-medium mb-2"
+                                        className="block text-gray-600 dark:text-neutral-400 font-medium mb-2"
                                     >
                                         Wiadomość:
                                     </label>
@@ -304,19 +304,19 @@ export default function FullAuctionInfo() {
                                         value={emailMessage}
                                         onChange={(e) => setEmailMessage(e.target.value)}
                                         rows="4"
-                                        className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
+                                        className="w-full p-2 border dark:text-neutral-300 border-blue-500 dark:bg-neutral-500 dark:border-neutral-200 rounded-md focus:outline-none"
                                         required
                                     ></textarea>
                                 </div>
                                 <div className="flex justify-center space-x-4">
                                     <button
-                                        className="text-white bg-green-500 hover:bg-green-700 py-2 px-4 rounded-md"
+                                        className="text-white bg-green-500 hover:bg-green-700 dark:bg-green-900 dark:hover:bg-green-700 ease-linear duration-100 py-2 px-4 rounded-md"
                                         onClick={handleConfirmation}
                                     >
                                         Tak
-                                    </button>
+                                    </button> 
                                     <button
-                                        className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+                                        className="text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 py-2 px-4 rounded-md"
                                         onClick={() => setIsConfirmationModalOpen(false)}
                                     >
                                         Anuluj
