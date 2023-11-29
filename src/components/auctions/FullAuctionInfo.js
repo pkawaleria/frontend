@@ -236,8 +236,8 @@ export default function FullAuctionInfo() {
                                 Pokaż numer
                             </button>
                         )}
-                        <button
-                            className="bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] ease-linear duration-100">
+                        <button className="bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] ease-linear duration-100"
+                            onClick={sendMail}>
                             Wyślij wiadomość
                         </button>
                     </div>
@@ -267,6 +267,64 @@ export default function FullAuctionInfo() {
                                 </Link>
                             </div>
                         )}
+                    {isConfirmationModalOpen && (
+                        <div className="fixed inset-0 flex items-center justify-center z-50">
+                            <div className="absolute inset-0 bg-black opacity-50"></div>
+                            <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                                <p className="text-lg font-semibold mb-4 text-center">
+                                    Wyślij wiadomość do użytkownika
+                                </p>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="emailTitle"
+                                        className="block text-gray-600 font-medium mb-2"
+                                    >
+                                        Tytuł:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="emailTitle"
+                                        name="emailTitle"
+                                        value={emailTitle}
+                                        onChange={(e) => setEmailTitle(e.target.value)}
+                                        className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label
+                                        htmlFor="emailMessage"
+                                        className="block text-gray-600 font-medium mb-2"
+                                    >
+                                        Wiadomość:
+                                    </label>
+                                    <textarea
+                                        id="emailMessage"
+                                        name="emailMessage"
+                                        value={emailMessage}
+                                        onChange={(e) => setEmailMessage(e.target.value)}
+                                        rows="4"
+                                        className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
+                                        required
+                                    ></textarea>
+                                </div>
+                                <div className="flex justify-center space-x-4">
+                                    <button
+                                        className="text-white bg-green-500 hover:bg-green-700 py-2 px-4 rounded-md"
+                                        onClick={handleConfirmation}
+                                    >
+                                        Tak
+                                    </button>
+                                    <button
+                                        className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
+                                        onClick={() => setIsConfirmationModalOpen(false)}
+                                    >
+                                        Anuluj
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </>
