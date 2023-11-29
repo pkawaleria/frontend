@@ -14,11 +14,11 @@ export default function Statistics() {
     ];
 
     return (
-        <div className="flex flex-col justify-center p-5">
-            <span className="text-white text-[50px] font-bold mb-4 text-center">STATYSTYKI SYSTEMOWE</span>
+        <div className="flex flex-col p-5 h-screen">
+            <span className="text-white dark:text-neutral-200 text-[50px] font-bold mb-4 text-center">STATYSTYKI SYSTEMOWE</span>
             <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
                 {statisticsData.map((data, index) => (
-                    <div key={index} className="bg-white rounded-lg w-[50%] mx-auto shadow-lg p-4 hover:scale-105 hover:cursor-pointer border-2 border-blue-500">
+                    <div key={index} className="bg-white dark:bg-neutral-600 dark:border-neutral-200 rounded-lg w-[50%] mx-auto shadow-lg p-4 hover:scale-105 ease-linear duration-75 hover:cursor-pointer border-2 border-blue-500">
                         <div className={`rounded-lg shadow-lg text-white ${data.color}`}>
                             <div className="text-4xl font-semibold">{data.value}</div>
                             <div className="text-xl">{data.title}</div>

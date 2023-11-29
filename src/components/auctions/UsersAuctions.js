@@ -48,17 +48,26 @@ export default function UsersAuctions() {
         }
     };
 
+    const formatPrice = (price) => {
+        const parts = price.toFixed(2).toString().split('.');
+        const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        const decimalPart = parts[1] === '00' ? '' : `.${parts[1]}`;
+        const formattedPrice = `${integerPart}${decimalPart} zł`;
+
+        return formattedPrice;
+    };
+
     return (
         <div>
-            <nav className="flex flex-col items-center justify-center w-[50%] bg-blue-500 text-white p-4 rounded-t-lg mx-auto">
+            <nav className="flex flex-col items-center justify-center w-[50%] bg-blue-500 dark:bg-neutral-600 text-white p-4 rounded-t-lg mx-auto">
                 <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
                     Dodaj ogłoszenie
                 </Link>
                 <div className="flex mt-4 space-x-4">
                     {/* Przyciski do zmiany statusu */}
                     <button
-                        className={`${activeTab === "active-auctions" ? "bg-blue-600" : "bg-blue-500"
-                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "active-auctions" ? "bg-blue-600 dark:bg-neutral-400" : "bg-blue-500 dark:bg-neutral-500"
+                            } hover:bg-blue-700 dark:hover:bg-neutral-400 text-white px-4 py-2 rounded-md ease-linear duration-100`}
                         onClick={() => {
                             setActiveTab("active-auctions");
                             handleFetchUserAuctions("active-auctions");
@@ -67,8 +76,8 @@ export default function UsersAuctions() {
                         Aktywne
                     </button>
                     <button
-                        className={`${activeTab === "awaiting-auctions" ? "bg-blue-600" : "bg-blue-500"
-                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "awaiting-auctions" ? "bg-blue-600 dark:bg-neutral-400" : "bg-blue-500 dark:bg-neutral-500"
+                            } hover:bg-blue-700 dark:hover:bg-neutral-400 text-white px-4 py-2 rounded-md ease-linear duration-100`}
                         onClick={() => {
                             setActiveTab("awaiting-auctions");
                             handleFetchUserAuctions("awaiting-auctions");
@@ -77,8 +86,8 @@ export default function UsersAuctions() {
                         Oczekujące
                     </button>
                     <button
-                        className={`${activeTab === "expired-auctions" ? "bg-blue-600" : "bg-blue-500"
-                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "expired-auctions" ? "bg-blue-600 dark:bg-neutral-400" : "bg-blue-500 dark:bg-neutral-500"
+                            } hover:bg-blue-700 dark:hover:bg-neutral-400 text-white px-4 py-2 rounded-md ease-linear duration-100`}
                         onClick={() => {
                             setActiveTab("expired-auctions");
                             handleFetchUserAuctions("expired-auctions");
@@ -87,8 +96,8 @@ export default function UsersAuctions() {
                         Zakończone
                     </button>
                     <button
-                        className={`${activeTab === "archived-auctions" ? "bg-blue-600" : "bg-blue-500"
-                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "archived-auctions" ? "bg-blue-600 dark:bg-neutral-400" : "bg-blue-500 dark:bg-neutral-500"
+                            } hover:bg-blue-700 dark:hover:bg-neutral-400 text-white px-4 py-2 rounded-md ease-linear duration-100`}
                         onClick={() => {
                             setActiveTab("archived-auctions");
                             handleFetchUserAuctions("archived-auctions");
@@ -97,8 +106,8 @@ export default function UsersAuctions() {
                         Zarchiwizowane
                     </button>
                     <button
-                        className={`${activeTab === "rejected-auctions" ? "bg-blue-600" : "bg-blue-500"
-                            } hover:bg-blue-700 text-white px-4 py-2 rounded-md`}
+                        className={`${activeTab === "rejected-auctions" ? "bg-blue-600 dark:bg-neutral-400" : "bg-blue-500 dark:bg-neutral-500"
+                            } hover:bg-blue-700 dark:hover:bg-neutral-400 text-white px-4 py-2 rounded-md ease-linear duration-100`}
                         onClick={() => {
                             setActiveTab("rejected-auctions");
                             handleFetchUserAuctions("rejected-auctions");
@@ -116,18 +125,18 @@ export default function UsersAuctions() {
                             className="hover:scale-[1.01] ease-linear duration-100"
                             key={ad.id}
                         >
-                            <div className="bg-white border rounded-lg shadow-md p-4 flex justify-between">
+                            <div className="bg-white dark:bg-neutral-900 dark:text-neutral-100 border rounded-lg shadow-md p-4 flex justify-between">
                                 <div className="flex items-center">
                                     <img src={`data:image/jpeg;base64,${ad.thumbnail}`} alt={ad.name} className="w-200 h-200 object-cover" />
                                     <div className="ml-4">
                                         <h3 className="text-xl font-semibold mb-2">{ad.name}</h3>
                                         <div className="flex items-center space-x-2 mb-2">
                                             <BiCategoryAlt size={20} />
-                                            <p className="text-gray-600 mb-2">{ad.category.name}</p>
+                                            <p className="text-gray-600 dark:text-neutral-300 mb-2">{ad.category.name}</p>
                                         </div>
                                         <div className="flex items-center space-x-2 mb-2">
                                             <FaMapMarkerAlt size={18} />
-                                            <p className="text-gray-600">{ad.cityName}</p>
+                                            <p className="text-gray-600 dark:text-neutral-300">{ad.cityName}</p>
                                         </div>
                                         {/* TODO ZWRACANIE DATY KOŃCOWEJ */}
                                         {/* <div className="flex items-center space-x-2 mb-2">
@@ -136,11 +145,11 @@ export default function UsersAuctions() {
                                                 {ad.startDate} - {ad.endDate}
                                             </p>
                                         </div> */}
-                                        <p className="text-lg font-semibold mb-2">{ad.price}</p>
+                                        <p className="text-lg font-semibold mb-2">{formatPrice(ad.price)}</p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col justify-between">
-                                    <span className="text-gray-600">ID: {ad.id}</span>
+                                    <span className="text-gray-600 dark:text-neutral-300">ID: {ad.id}</span>
                                     <div className=" space-x-2">
                                         <Link
                                             className="text-blue-400 hover:text-blue-700"
@@ -190,9 +199,11 @@ export default function UsersAuctions() {
                 )}
             </div>
             {auctionsData.length > 5 && (
-                <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
-                    Dodaj ogłoszenie
-                </Link>
+                <div className="text-center my-4 text-white dark:text-neutral-50">
+                    <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
+                        Dodaj ogłoszenie
+                    </Link>
+                </div>
             )}
         </div>
     );

@@ -216,9 +216,9 @@ export default function SearchBar({
     };
 
     return (
-        <div className="bg-blue-500/20 pt-5 pb-7 sm:pb-8">
+        <div className="bg-blue-500/20 dark:bg-neutral-900/60 pt-5 pb-7 sm:pb-8">
             <form
-                className="search-form max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl px-4 pt-4 pb-0 flex flex-wrap justify-between gap-2"
+                className="search-form dark:bg-neutral-700 max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl px-4 pt-4 pb-0 flex flex-wrap justify-between gap-2"
                 style={{width: '90%'}}>
                 {/* Pole wpisania nazwy aukcji */}
                 <div className="w-full flex items-center">
@@ -287,7 +287,7 @@ export default function SearchBar({
                     <button
                         type="button"
                         onClick={handleSearchSubmit}
-                        className="px-2 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600/50 transition duration-150">
+                        className="px-2 py-2 bg-blue-500 hover:bg-blue-600/50 dark:bg-neutral-400 dark:hover:bg-neutral-500 text-white rounded-full transition duration-150">
                         {validateSearchCriteria() ? <BiSearchAlt color={'white'} className="text-[2vw] text-white"/>
                             : <MdOutlineSearchOff enableBackground={false} className="text-[2vw] text-white"/>}
                     </button>

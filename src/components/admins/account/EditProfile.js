@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { validateUsername, validateEmail, validateFirstname, validateLastname, validatePhoneNumber } from '../authorization/utils/RegisterValidators'
-import { isAdmin } from '../utils/PermissionsCheck';
 
 export default function EditProfile() {
     const [userData, setUserData] = useState({
@@ -117,8 +116,8 @@ export default function EditProfile() {
     };
 
     return (
-        <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
-            <div className="w-[50%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
+        <div className="flex items-center justify-center p-5 gradient-bg-color-only h-screen">
+            <div className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
                 <div className="flex-shrink-0">
                     <img
                         src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
@@ -126,7 +125,7 @@ export default function EditProfile() {
                         className="w-32 h-32 rounded-full object-cover"
                     />
                 </div>
-                <div className="ml-6">
+                <div className="ml-6 dark:text-neutral-300">
                     <div className="mb-4">
                         <label className="text-lg font-medium">Nazwa użytkownika:</label>
                         <input
@@ -134,7 +133,7 @@ export default function EditProfile() {
                             name="username"
                             value={updatedUserData.username}
                             onChange={handleInputChange}
-                            className="border border-gray-300 p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
                         />
                     </div>
                     {errors.usernameError && (
@@ -147,7 +146,7 @@ export default function EditProfile() {
                             name="email"
                             value={updatedUserData.email}
                             onChange={handleInputChange}
-                            className="border border-gray-300 p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
                         />
                     </div>
                     {errors.emailError && (
@@ -160,7 +159,7 @@ export default function EditProfile() {
                             name="firstname"
                             value={updatedUserData.firstname}
                             onChange={handleInputChange}
-                            className="border border-gray-300 p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
                         />
                     </div>
                     {errors.firstnameError && (
@@ -173,7 +172,7 @@ export default function EditProfile() {
                             name="lastname"
                             value={updatedUserData.lastname}
                             onChange={handleInputChange}
-                            className="border border-gray-300 p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
                         />
                     </div>
                     {errors.lastnameError && (
@@ -186,7 +185,7 @@ export default function EditProfile() {
                             name="phone_number"
                             value={updatedUserData.phone_number}
                             onChange={handleInputChange}
-                            className="border border-gray-300 p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
                         />
                     </div>
                     {errors.phone_numberError && (
@@ -195,7 +194,7 @@ export default function EditProfile() {
                 </div>
 
                 <div className="flex justify-end w-full mt-4">
-                    <button className="nav-link absolute bottom-1 right-1 bg-green-500 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none" onClick={handleUpdateProfile}>
+                    <button className="nav-link absolute bottom-1 right-1 bg-green-500 dark:bg-green-800 dark:hover:bg-green-700 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none" onClick={handleUpdateProfile}>
                         Aktualizuj
                     </button>
                 </div>

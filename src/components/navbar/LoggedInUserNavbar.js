@@ -6,9 +6,10 @@ import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import { useFontSize } from "../themes/FontSizeContext";
 import { FiAlignLeft, FiAlignRight } from "react-icons/fi";
-import { BiSolidCategory, BiSolidCategoryAlt, BiSolidMoon } from "react-icons/bi";
+import { BiSolidCategory, BiSolidCategoryAlt } from "react-icons/bi";
 import { PiSunFill } from "react-icons/pi";
 import { RiMenuAddFill } from "react-icons/ri";
+import { IoMoon } from "react-icons/io5";
 
 export default function LoggedInUserNavbar({ userFirstName }) {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -28,6 +29,41 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                     ? "24px"
                     : "24px",
     };
+
+    const userTheme = localStorage.getItem("theme");
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const [darkMode, setDarkMode] = useState(false);
+
+    const themeCheck = () => {
+        if (userTheme === "dark" || (!userTheme && systemTheme)) {
+            document.documentElement.classList.add("dark");
+            document.body.style.backgroundColor = "rgb(38 38 38)";
+            localStorage.setItem("theme", "dark")
+            setDarkMode(true);
+            return;
+        }
+        document.body.style.backgroundColor = "rgb(25, 70, 113)";
+        localStorage.setItem("theme", "light")
+        setDarkMode(false);
+    }
+
+    const toogleTheme = () => {
+        if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light")
+            document.body.style.backgroundColor = "rgb(25, 70, 113)";
+            setDarkMode(false);
+            return;
+        }
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        document.body.style.backgroundColor = "rgb(38 38 38)";
+        setDarkMode(true);
+    }
+
+    useEffect(() => {
+        themeCheck()
+    }, [])
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
@@ -62,7 +98,7 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                 }`}
             style={{ zIndex: 2, ...style }}
         >
-            <div className="border-2 border-white rounded-md bg-custom-blue shadow-3xl w-2/3 mx-auto my-5 flex items-center">
+            <div className="border-2 border-white rounded-md bg-custom-blue dark:bg-neutral-700 shadow-3xl w-2/3 mx-auto my-5 flex items-center">
                 <Link
                     className="w-[10%] text-center mx-auto"
                     to="/"
@@ -143,7 +179,16 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                                 className="nav-link text-white"
                                 data-tooltip-id="darkModeController"
                                 data-tooltip-content="Zmień tryb strony">
-                                <PiSunFill className="mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-yellow-500" />
+                                {darkMode ?
+                                    (
+                                        <PiSunFill
+                                            className="mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-yellow-500"
+                                            onClick={toogleTheme} />
+                                    ) : (
+                                        <IoMoon
+                                            className="mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-yellow-200"
+                                            onClick={toogleTheme} />
+                                    )}
                                 <Tooltip
                                     id="darkModeController"
                                     type="dark"

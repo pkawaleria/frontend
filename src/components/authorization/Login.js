@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
@@ -40,7 +40,7 @@ export default function Login() {
     const handleEnterPress = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            
+
             if (isFormValid()) {
                 handleSubmit(e);
             } else {
@@ -52,9 +52,7 @@ export default function Login() {
         }
     };
 
-
     const isFormValid = () => {
-        // Sprawdź, czy pola są wypełnione i nie zawierają błędów
         return (
             loginData.login.trim() !== "" &&
             loginData.password.trim() !== "" &&
@@ -89,24 +87,43 @@ export default function Login() {
         }
     };
 
+    const userTheme = localStorage.getItem("theme");
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    const themeCheck = () => {
+        if (userTheme === "dark" || (!userTheme && systemTheme)) {
+            document.documentElement.classList.add("dark");
+            document.body.style.backgroundColor = "rgb(38 38 38)";
+            localStorage.setItem("theme", "dark")
+            return;
+        }
+        document.body.style.backgroundColor = "rgb(25, 70, 113)";
+        localStorage.setItem("theme", "light")
+    }
+
+    useEffect(() => {
+        themeCheck()
+    }, [])
+
     return (
-        <div className="flex items-center justify-center h-screen linear gradient-bg">
+        <div className="flex items-center justify-center h-screen linear gradient-bg-color-only">
             <div className="group">
                 <Link to="/">
                     <AiFillHome
-                        className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
-            mw-xs:text-3xl mh-xs:text-3xl"
-                    />
+                        className="absolute top-6 left-8 text-5xl 
+                        rounded text-white bg-blue-600/15 
+                        hover:bg-transparent hover:border-b-4 
+                        hover:cursor-pointer transition-colors 
+                        duration-200 mw-xs:text-3xl mh-xs:text-3xl"/>
                 </Link>
                 <span className="group-hover:scale-100 home-tooltip">
                     Strona główna
                 </span>
             </div>
             <form
-                className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96
+                className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
                     mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
-                onSubmit={handleSubmit}
-            >
+                onSubmit={handleSubmit}>
                 <div className="flex">
                     <SwapToRegisterButton />
                     <SwapToLoginButton isOn={true} />

@@ -46,10 +46,10 @@ const CategoryWithSubcategories = () => {
 
     return (
         <div className="w-8/12 mx-auto space-y-4 mb-4">
-            <div className="w-full shadow-xl rounded-lg bg-white p-4 border-t-4 border-indigo-500">
-                <h5 className="font-bold text-xl mb-2">{currentCategory.name}</h5>
-                <p className="text-gray-600 mb-2">{currentCategory.description}</p>
-                <button onClick={navigateToAuctions} className="bg-blue-600 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700">Pokaż aukcje
+            <div className="w-full shadow-xl rounded-lg bg-white dark:bg-neutral-600 p-4 border-t-4 border-indigo-500 dark:border-neutral-100">
+                <h5 className="font-bold text-xl mb-2 dark:text-neutral-50">{currentCategory.name}</h5>
+                <p className="text-gray-600 dark:text-neutral-200 mb-2">{currentCategory.description}</p>
+                <button onClick={navigateToAuctions} className="bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700">Pokaż aukcje
                 </button>
                 {isAdmin && (
                     <>
@@ -60,7 +60,7 @@ const CategoryWithSubcategories = () => {
                     </>
                 )}
                 <div className="mt-2">
-                    <small className="text-gray-400">Liczba podkategorii: {currentCategory.subcategories.length}</small>
+                    <small className="text-gray-400 dark:text-neutral-300">Liczba podkategorii: {currentCategory.subcategories.length}</small>
                 </div>
             </div>
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { arePasswordsIdentical, validatePassword } from '../authorization/utils/RegisterValidators';
-import { isAdmin } from '../utils/PermissionsCheck';
 
 export default function ChangePassword() {
     const [passwordData, setPasswordData] = useState({
@@ -73,8 +72,8 @@ export default function ChangePassword() {
 
 
     return (
-        <div className="flex items-center justify-center p-5 gradient-bg-color-only h-[80%]">
-            <div className="w-[50%] max-w-screen-md bg-white rounded-lg shadow-xl p-6 flex relative">
+        <div className="flex items-center justify-center p-5 gradient-bg-color-only h-screen">
+            <div className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
                 <div className="flex-shrink-0">
                     <img
                         src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
@@ -82,7 +81,7 @@ export default function ChangePassword() {
                         className="w-32 h-32 rounded-full object-cover"
                     />
                 </div>
-                <div className="ml-6">
+                <div className="ml-6 dark:text-neutral-300">
                     <div className="mb-4">
                         <label className="text-lg font-medium">Nowe hasło:</label>
                         <input
@@ -90,7 +89,7 @@ export default function ChangePassword() {
                             name="new_password"
                             value={passwordData.new_password}
                             onChange={handleInputChange}
-                            className="border border-gray-300 p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full outline-none border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
                         />
                     </div>
                     {errors.new_passwordError && (
@@ -103,7 +102,7 @@ export default function ChangePassword() {
                             name="new_password_confirm"
                             value={passwordData.new_password_confirm}
                             onChange={handleInputChange}
-                            className="border border-gray-300 p-2 rounded-lg w-full"
+                            className="border p-2 rounded-lg w-full outline-none border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
                         />
                         {errors.new_password_confirmError && (
                             <span className="text-red-500 text-lg">{errors.new_password_confirmError}</span>
@@ -113,7 +112,7 @@ export default function ChangePassword() {
 
                 {/* Przycisk otwierający modal potwierdzenia */}
                 <div className="flex justify-end w-full mt-4">
-                    <button className="nav-link absolute bottom-1 right-1 bg-green-500 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none" onClick={() => setIsConfirmationModalOpen(true)}>
+                    <button className="nav-link absolute bottom-1 right-1 bg-green-500 dark:bg-green-800 dark:hover:bg-green-700 text-white py-3 px-4 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none" onClick={() => setIsConfirmationModalOpen(true)}>
                         Zmień hasło
                     </button>
                 </div>
