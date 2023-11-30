@@ -208,14 +208,12 @@ export default function EditProfile() {
                             <div className="flex justify-center space-x-4">
                                 <button
                                     className="text-white bg-green-500 hover:bg-green-700 dark:bg-green-900 dark:hover:bg-green-700 ease-linear duration-100 py-2 px-4 rounded-md"
-                                    onClick={confirmUpdateProfile}
-                                >
+                                    onClick={confirmUpdateProfile}>
                                     Tak, zaktualizuj dane
                                 </button>
                                 <button
                                     className="text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 py-2 px-4 rounded-md"
-                                    onClick={() => setIsConfirmationModalOpen(false)}
-                                >
+                                    onClick={() => setIsConfirmationModalOpen(false)}>
                                     Anuluj
                                 </button>
                             </div>

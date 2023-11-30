@@ -182,11 +182,11 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                                 {darkMode ?
                                     (
                                         <PiSunFill
-                                            className="mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-yellow-500"
+                                            className="mx-auto text-[2.5vw] ease-linear duration-100 hover:text-yellow-500"
                                             onClick={toogleTheme} />
                                     ) : (
                                         <IoMoon
-                                            className="mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-yellow-200"
+                                            className="mx-auto text-[2.5vw] ease-linear duration-100 hover:text-yellow-200"
                                             onClick={toogleTheme} />
                                     )}
                                 <Tooltip
@@ -201,7 +201,7 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                                 className="nav-link text-white"
                                 data-tooltip-id="fontTooltip"
                                 data-tooltip-content="Zmień wielkość czcionki">
-                                <BiFontSize className="mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-red-600" />
+                                <BiFontSize className="mx-auto text-[2.5vw] ease-linear duration-100 hover:text-red-600" />
                                 <Tooltip
                                     id="fontTooltip"
                                     type="dark"
@@ -213,10 +213,10 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                         <div className="flex justify-evenly">
                             <Link
                                 to="/nowe-ogloszenie"
-                                className="nav-link text-white"
+                                className="text-white"
                                 data-tooltip-id="newAd"
                                 data-tooltip-content="Dodaj ogłoszenie">
-                                <RiMenuAddFill className="mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-blue-500" />
+                                <RiMenuAddFill className="mx-auto text-[2.5vw] ease-linear duration-100 hover:text-blue-500" />
                                 <Tooltip
                                     id="newAd"
                                     type="dark"
@@ -229,7 +229,7 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                                 onClick={handleDropdownToggle}
                                 className="relative cursor-pointer">
                                 <BiUser
-                                    className={`mx-auto icon-hover text-[2.5vw] ease-linear duration-100 hover:text-green-400 ${isDropdownOpen ? "text-green-400" : ""
+                                    className={`mx-auto text-[2.5vw] ease-linear duration-100 hover:text-green-400 ${isDropdownOpen ? "text-green-400" : ""
                                         }`} />
                                 {isDropdownOpen && (
                                     <div className="absolute top-11 right-0 bg-white rounded-md shadow-md w-[15rem] text-gray-700">

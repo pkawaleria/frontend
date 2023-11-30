@@ -58,7 +58,7 @@ export default function UsersAuctions() {
     };
 
     return (
-        <div>
+        <div className="flex flex-col">
             <nav className="flex flex-col items-center justify-center w-[50%] bg-blue-500 dark:bg-neutral-600 text-white p-4 rounded-t-lg mx-auto">
                 <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
                     Dodaj ogłoszenie
@@ -123,8 +123,7 @@ export default function UsersAuctions() {
                         <Link
                             to={`/ogloszenie/${ad.id}`}
                             className="hover:scale-[1.01] ease-linear duration-100"
-                            key={ad.id}
-                        >
+                            key={ad.id}>
                             <div className="bg-white dark:bg-neutral-900 dark:text-neutral-100 border rounded-lg shadow-md p-4 flex justify-between">
                                 <div className="flex items-center">
                                     <img src={`data:image/jpeg;base64,${ad.thumbnail}`} alt={ad.name} className="w-200 h-200 object-cover" />
@@ -148,26 +147,32 @@ export default function UsersAuctions() {
                                         <p className="text-lg font-semibold mb-2">{formatPrice(ad.price)}</p>
                                     </div>
                                 </div>
-                                <div className="flex flex-col justify-between">
-                                    <span className="text-gray-600 dark:text-neutral-300">ID: {ad.id}</span>
-                                    <div className=" space-x-2">
+                                <div className="flex flex-col">
+                                    <span className="text-gray-600 dark:text-neutral-300 mb-4">ID: {ad.id}</span>
+                                    <div className="flex gap-3">
                                         <Link
-                                            className="text-blue-400 hover:text-blue-700"
                                             to={`/edytuj-ogloszenie/${ad.id}`}
                                             data-tooltip-id="editAdTooltip"
-                                            data-tooltip-content="Edytuj ogłoszenie"
-                                        >
-                                            <BsPencilSquare size={20} />
-                                            <Tooltip id="editAdTooltip" type="dark" effect="solid" delayShow={200} delayHide={100} />
+                                            data-tooltip-content="Edytuj ogłoszenie">
+                                            <BsPencilSquare className="ease-linear duration-100 text-blue-400 hover:text-blue-700" size={20}/>
+                                            <Tooltip
+                                                id="editAdTooltip"
+                                                type="dark"
+                                                effect="solid"
+                                                delayShow={50}
+                                                delayHide={50} />
                                         </Link>
                                         <Link
                                             onClick={() => openDeleteModal(ad.id)}
-                                            className="text-red-300 hover:text-red-700"
                                             data-tooltip-id="deleteAdTooltip"
-                                            data-tooltip-content="Usuń ogłoszenie"
-                                        >
-                                            <BsXCircle size={20} />
-                                            <Tooltip id="deleteAdTooltip" type="dark" effect="solid" delayShow={200} delayHide={100} />
+                                            data-tooltip-content="Usuń ogłoszenie">
+                                            <BsXCircle className="ease-linear duration-100 text-red-300 hover:text-red-700" size={20}/>
+                                            <Tooltip
+                                                id="deleteAdTooltip"
+                                                type="dark"
+                                                effect="solid"
+                                                delayShow={50}
+                                                delayHide={50} />
                                         </Link>
                                     </div>
                                 </div>
@@ -179,18 +184,17 @@ export default function UsersAuctions() {
                 {isDeleteModalOpen && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">
                         <div className="absolute inset-0 bg-black opacity-50"></div>
-                        <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                            <p className="text-lg font-semibold mb-4 text-center">Czy na pewno chcesz usunąć ogłoszenie?</p>
+                        <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                            <p className="text-lg dark:text-neutral-200 font-semibold mb-4 text-center">Czy na pewno chcesz usunąć ogłoszenie?</p>
                             <div className="flex justify-center space-x-4">
                                 <button
-                                    className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
+                                    className="text-white bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:hover:bg-red-700 ease-linear duration-100 py-2 px-4 rounded-md"
                                     onClick={handleDeleteAuction}>
                                     Usuń
                                 </button>
                                 <button
-                                    className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
-                                    onClick={closeDeleteModal}
-                                >
+                                    className="text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 py-2 px-4 rounded-md"
+                                    onClick={closeDeleteModal}>
                                     Anuluj
                                 </button>
                             </div>

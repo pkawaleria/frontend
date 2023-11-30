@@ -1,14 +1,11 @@
 import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { AiFillHome } from "react-icons/ai"
-
 import SubmitButton from "./form/SubmitButton"
 import Input from "./form/Input"
 import axios from "axios"
-
 import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical, validateFirstname, validateLastname, validatePhoneNumber } from "./utils/RegisterValidators"
 import { inputs } from "./utils/RegisterInputs"
-import { isSuperAdmin, canCreateAdminAccount } from "../utils/PermissionsCheck"
 
 export default function Register() {
     const [newUserData, setNewUserData] = useState({

@@ -16,7 +16,7 @@ export default function Input(props) {
                 className="text-gray-400 text-sm ml-3 mw-2xs:text-xs mh-xs:text-xs">{label}</label>
             <div className={`flex border-solid border-blue-500 dark:border-neutral-200 rounded-xl ${isDivFocused ? "border-2 shadow-2xl" : "border"}`}>
                 <input
-                    className="mw-xs:placeholder:text-sm w-10/12 p-4 pr-0 mx-0 placeholder-blue-600/50 dark:placeholder-neutral-300 text-blue-600 dark:text-neutral-100 bg-transparent outline-none mh-xs:p-3"
+                    className="mw-xs:placeholder:text-sm w-11/12 p-4 pr-0 mx-0 placeholder-blue-600/50 dark:placeholder-neutral-300 text-blue-600 dark:text-neutral-100 bg-transparent outline-none mh-xs:p-3"
                     {...inputProps} 
                     onChange={onChange}
                     onFocus={() => setIsDivFocused(true)}

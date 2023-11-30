@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
 import axios from "axios";
 import { formatPhoneNumber } from "./utils/ProfileInputFormat";
-import { isSuperAdmin, canAddPerms, canCreateAdminAccount, isAdmin, canBlockUsers } from "../utils/PermissionsCheck";
 
 export default function Profile() {
     const [userData, setUserData] = useState({
@@ -34,7 +33,7 @@ export default function Profile() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center p-5 gradient-bg-color-only h-screen mt-10">
+        <div className="flex flex-col items-center p-5 gradient-bg-color-only h-screen mt-10">
             <div className="w-[60%] max-w-screen-md bg-white dark:bg-neutral-500 rounded-lg shadow-xl p-6 relative">
                 <div className="flex">
                     <div className="flex-shrink-0">
