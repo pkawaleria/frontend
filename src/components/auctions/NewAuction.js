@@ -215,279 +215,267 @@ export default function NewAuction() {
     };
 
     return (
-        <>
-            <div className="items-center gradient-bg-color-only">
-                <h2 className="w-[55%] mx-auto text-2xl mb-4 text-white font-bold bg-blue-500 dark:bg-neutral-600 dark:border-white py-2 text-center rounded-lg border border-blue-500">
-                    Dodaj nowe ogłoszenie
-                </h2>
-                <div className="w-[60%] mx-auto mt-5 mb-5 bg-white dark:bg-neutral-600 rounded-lg shadow-md relative">
-                    <form className="bg-white dark:bg-neutral-600 py-3 px-8 border-0 w-2/3 self-center">
-                        <div className="mb-4">
-                            <MdTitle size={25} className="inline-block mr-2 dark:text-neutral-50" />
-                            <label
-                                htmlFor="title"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
-                                Tytuł ogłoszenia:
-                            </label>
-                            <input
-                                type="text"
-                                id="title"
-                                name="title"
-                                value={title}
-                                onChange={(e) => {
-                                    setTitle(e.target.value);
-                                    validateTitle();
-                                }}
-                                onBlur={validateTitle}
-                                className={`w-[80%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${titleError ? "border-red-500 dark:border-red-500" : ""
-                                    }`}
-                                required
-                            />
-                            {titleError && <p className="text-red-500">{titleError}</p>}
-                        </div>
-                        <div className="mb-4">
-                            <BiCategoryAlt size={25} className="inline-block mr-2 dark:text-neutral-50" />
-                            <label
-                                htmlFor="category"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
-                                Kategoria:
-                            </label>
-                            <Select
-                                value={selectedCategory}
-                                onChange={handleCategorySelectionChange}
-                                options={selectableCategories}
-                                placeholder="Kategoria"
-                                className="text-gray-700 flex-grow"
-                                isClearable />
-                        </div>
-                        <div className="mb-4">
-                            <GiMatterStates size={25} className="inline-block mr-2 dark:text-neutral-50" />
-                            <label
-                                htmlFor="condition"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
-                                Stan:
-                            </label>
-                            <select
-                                id="condition"
-                                name="condition"
-                                value={condition}
-                                onChange={(e) => {
-                                    setCondition(e.target.value);
-                                    validateCondition(e.target.value);
-                                }}
-                                onBlur={() => validateCondition(condition)}
-                                className={`w-[50%] p-2 border border-blue-500 focus:border-blue-500 dark:focus:border-blue-500 dark:border-neutral-200 rounded-md focus:outline-none ${conditionError ? "border-red-500 dark:border-red-500" : ""} `}
-                                required>
-                                <option value="" className="bg-gray-300 dark:bg-neutral-600">
-                                    Wybierz stan
-                                </option>
-                                <option value="NEW" className="bg-gray-300 dark:bg-neutral-600">
-                                    Nowy
-                                </option>
-                                <option value="USED" className="bg-gray-300 dark:bg-neutral-600">
-                                    Używany
-                                </option>
-                                <option value="DAMAGED" className="bg-gray-300 dark:bg-neutral-600">
-                                    Uszkodzony
-                                </option>
-                                <option value="NOT_APPLIED" className="bg-gray-300 dark:bg-neutral-600">
-                                    Nie dotyczy
-                                </option>
-                            </select>
-                            {conditionError && (
-                                <p className="text-red-500">{conditionError}</p>
-                            )}
-                        </div>
-                        <div className="mb-4">
-                            <BiPhotoAlbum size={25} className="inline-block mr-2 dark:text-neutral-50" />
-                            <label
-                                htmlFor="images"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
-                                Zdjęcia:
-                            </label>
-                            <input
-                                type="file"
-                                id="images"
-                                name="images"
-                                accept="image/jpeg, image/jpg, image/png"
-                                multiple
-                                onChange={handleImageUpload}
-                                className={`w-[60%] p-2 border border-blue-500 dark:border-neutral-50 rounded-md focus:outline-none `} />
-                            <div className="mt-2 flex flex-wrap">
-                                {imagePreviews.map((preview, index) => (
-                                    <div key={index} className="mr-2 mb-2">
-                                        {preview ? (
-                                            <img
-                                                src={preview}
-                                                alt={`Preview ${index + 1}`}
-                                                width="100"
-                                                height="100"
-                                                style={{
-                                                    objectFit: "cover",
-                                                    width: "100px",
-                                                    height: "100px",
-                                                }}
-                                            />
-                                        ) : (
-                                            <div className="w-[100px] h-[100px] border border-blue-500 dark:border-neutral-50 dark:bg-neutral-500 flex items-center justify-center text-gray-400 dark:text-neutral-200">
-                                                Zdjęcie {index + 1}
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <MdOutlineDescription size={25} className="inline-block mr-2 dark:text-neutral-50" />{" "}
-                            <label
-                                htmlFor="description"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
-                                Opis ogłoszenia:
-                            </label>
-                            <textarea
-                                id="description"
-                                name="description"
-                                value={description}
-                                onChange={(e) => {
-                                    setDescription(e.target.value);
-                                    validateDescription();
-                                }}
-                                onBlur={validateDescription}
-                                rows="4"
-                                className={`w-[90%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${descriptionError ? "border-red-500 dark:border-red-500" : ""
-                                    }`}
-                                required />
-                            {descriptionError && <p className="text-red-500">{descriptionError}</p>}
-                        </div>
-                        <div className="mb-4 relative">
-                            <FaMapMarkerAlt size={25} className="inline-block mr-2 dark:text-neutral-50" />
-                            <label
-                                htmlFor="city"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
-                                Miasto:
-                            </label>
-                            <Select
-                                value={selectedCityId}
-                                onChange={handleCitySelectionChange}
-                                onInputChange={handleCityInputChange}
-                                options={searchedCities}
-                                placeholder="Miasto"
-                                className="text-gray-700 react-select-container flex-grow"
-                                classNamePrefix="react-select"
-                                isClearable
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <AiOutlinePhone size={25} className="inline-block mr-2 dark:text-neutral-50" />
-                            <label
-                                htmlFor="phoneNumber"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2"
-                            >
-                                Numer telefonu:
-                            </label>
-                            <input
-                                type="tel"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                value={phoneNumber}
-                                onChange={(e) => {
-                                    setPhoneNumber(e.target.value);
-                                    validatePhoneNumber(e.target.value);
-                                }}
-                                onBlur={() => validatePhoneNumber(phoneNumber)}
-                                className={`w-[50%] p-2 border border-blue-500 dark:border-neutral-200 dark:focus:border-blue-500 rounded-md focus:outline-none ${phoneNumberError ? "border-red-500 dark:border-red-500" : ""
-                                    }`}
-                                required
-                            />
-                            {phoneNumberError && (
-                                <p className="text-red-500">{phoneNumberError}</p>
-                            )}
-                        </div>
-                        <div className="mb-4">
-                            <GrMoney size={25} className="inline-block mr-2 dark:text-neutral-50" />
-                            <label
-                                htmlFor="price"
-                                className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
-                                Cena:
-                            </label>
-                            <input
-                                type="number"
-                                id="price"
-                                name="price"
-                                value={price}
-                                onChange={(e) => {
-                                    setPrice(e.target.value);
-                                    validatePrice(e.target.value);
-                                }}
-                                onBlur={() => validatePrice(price)}
-                                className={`w-[50%] p-2 border border-blue-500 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${priceError ? "border-red-500 dark:border-red-500" : ""
-                                    }`}
-                                required
-                            />
-                            {priceError && <p className="text-red-500">{priceError}</p>}
-                        </div>
-                        <div className="flex justify-left space-x-4">
-                            <Link
-                                to="/twoje-ogloszenia"
-                                className="bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 text-white py-2 px-4 rounded-md hover:bg-blue-700 ease-linear duration-100"
-                            >
-                                Moje ogłoszenia
-                            </Link>
-                            <Link
-                                type="button"
-                                onClick={handleAddAuction}
-                                className={`bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${isFormValid() ? "" : "opacity-50 cursor-not-allowed"
-                                    }`}
-                                disabled={!isFormValid()}
-                            >
-                                Dodaj ogłoszenie
-                            </Link>
-                        </div>
-                    </form>
-                </div>
-                {isConfirmationModalOpen && (
-                    <div className="fixed inset-0 flex items-center justify-center z-50">
-                        <div className="absolute inset-0 bg-black opacity-50"></div>
-                        <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                            <p className="text-lg font-semibold mb-4 text-center">
-                                Czy na pewno chcesz dodać ogłoszenie?
-                            </p>
-                            <div className="flex justify-center space-x-4">
-                                <button
-                                    className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
-                                    onClick={confirmAddAuction}
-                                >
-                                    Tak, dodaj ogłoszenie
-                                </button>
-                                <button
-                                    className="text-white bg-gray-500 hover:bg-gray-700 py-2 px-4 rounded-md"
-                                    onClick={() => setIsConfirmationModalOpen(false)}
-                                >
-                                    Anuluj
-                                </button>
-                            </div>
+        <div className="items-center gradient-bg-color-only">
+            <h2 className="w-[55%] mx-auto text-2xl mb-4 text-white font-bold bg-blue-500 dark:bg-neutral-600 dark:border-white py-2 text-center rounded-lg border border-blue-500">
+                Dodaj nowe ogłoszenie
+            </h2>
+            <div className="w-[60%] mx-auto mt-5 mb-5 bg-white dark:bg-neutral-600 rounded-lg shadow-md relative">
+                <form className="bg-white dark:bg-neutral-600 py-3 px-8 border-0 w-2/3 self-center">
+                    <div className="mb-4">
+                        <MdTitle size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <label
+                            htmlFor="title"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Tytuł ogłoszenia:
+                        </label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={title}
+                            onChange={(e) => {
+                                setTitle(e.target.value);
+                                validateTitle();
+                            }}
+                            onBlur={validateTitle}
+                            className={`w-[80%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${titleError ? "border-red-500 dark:border-red-500" : ""
+                                }`}
+                            required
+                        />
+                        {titleError && <p className="text-red-500">{titleError}</p>}
+                    </div>
+                    <div className="mb-4">
+                        <BiCategoryAlt size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <label
+                            htmlFor="category"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Kategoria:
+                        </label>
+                        <Select
+                            value={selectedCategory}
+                            onChange={handleCategorySelectionChange}
+                            options={selectableCategories}
+                            placeholder="Kategoria"
+                            className="text-gray-700 flex-grow"
+                            isClearable />
+                    </div>
+                    <div className="mb-4">
+                        <GiMatterStates size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <label
+                            htmlFor="condition"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Stan:
+                        </label>
+                        <select
+                            id="condition"
+                            name="condition"
+                            value={condition}
+                            onChange={(e) => {
+                                setCondition(e.target.value);
+                                validateCondition(e.target.value);
+                            }}
+                            onBlur={() => validateCondition(condition)}
+                            className={`w-[50%] p-2 border border-blue-500 focus:border-blue-500 dark:focus:border-blue-500 dark:border-neutral-200 rounded-md focus:outline-none ${conditionError ? "border-red-500 dark:border-red-500" : ""} `}
+                            required>
+                            <option value="" className="bg-gray-300 dark:bg-neutral-600">
+                                Wybierz stan
+                            </option>
+                            <option value="NEW" className="bg-gray-300 dark:bg-neutral-600">
+                                Nowy
+                            </option>
+                            <option value="USED" className="bg-gray-300 dark:bg-neutral-600">
+                                Używany
+                            </option>
+                            <option value="DAMAGED" className="bg-gray-300 dark:bg-neutral-600">
+                                Uszkodzony
+                            </option>
+                            <option value="NOT_APPLIED" className="bg-gray-300 dark:bg-neutral-600">
+                                Nie dotyczy
+                            </option>
+                        </select>
+                        {conditionError && (
+                            <p className="text-red-500">{conditionError}</p>
+                        )}
+                    </div>
+                    <div className="mb-4">
+                        <BiPhotoAlbum size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <label
+                            htmlFor="images"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Zdjęcia:
+                        </label>
+                        <input
+                            type="file"
+                            id="images"
+                            name="images"
+                            accept="image/jpeg, image/jpg, image/png"
+                            multiple
+                            onChange={handleImageUpload}
+                            className={`w-[60%] p-2 border border-blue-500 dark:border-neutral-50 rounded-md focus:outline-none `} />
+                        <div className="mt-2 flex flex-wrap">
+                            {imagePreviews.map((preview, index) => (
+                                <div key={index} className="mr-2 mb-2">
+                                    {preview ? (
+                                        <img
+                                            src={preview}
+                                            alt={`Preview ${index + 1}`}
+                                            width="100"
+                                            height="100"
+                                            style={{
+                                                objectFit: "cover",
+                                                width: "100px",
+                                                height: "100px",
+                                            }}
+                                        />
+                                    ) : (
+                                        <div className="w-[100px] h-[100px] border border-blue-500 dark:border-neutral-50 dark:bg-neutral-500 flex items-center justify-center text-gray-400 dark:text-neutral-200">
+                                            Zdjęcie {index + 1}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
-                )}
-                {messagePopup.show && (
-                    <div className="fixed inset-0 flex items-center justify-center z-50">
-                        <div className="absolute inset-0 bg-black opacity-50"></div>
-                        <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                            <p className="text-lg font-semibold mb-4 text-center">
-                                ${messagePopup.message}
-                            </p>
-                            <div className="flex justify-center space-x-4">
-                                <button
-                                    className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
-                                    onClick={handlePopupClose}
-                                >
-                                    Ok
-                                </button>
-                            </div>
-                        </div>
+                    <div className="mb-4">
+                        <MdOutlineDescription size={25} className="inline-block mr-2 dark:text-neutral-50" />{" "}
+                        <label
+                            htmlFor="description"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Opis ogłoszenia:
+                        </label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={description}
+                            onChange={(e) => {
+                                setDescription(e.target.value);
+                                validateDescription();
+                            }}
+                            onBlur={validateDescription}
+                            rows="4"
+                            className={`w-[90%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${descriptionError ? "border-red-500 dark:border-red-500" : ""
+                                }`}
+                            required />
+                        {descriptionError && <p className="text-red-500">{descriptionError}</p>}
                     </div>
-                )}
+                    <div className="mb-4 relative">
+                        <FaMapMarkerAlt size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <label
+                            htmlFor="city"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Miasto:
+                        </label>
+                        <Select
+                            value={selectedCityId}
+                            onChange={handleCitySelectionChange}
+                            onInputChange={handleCityInputChange}
+                            options={searchedCities}
+                            placeholder="Miasto"
+                            className="text-gray-700 react-select-container flex-grow"
+                            classNamePrefix="react-select"
+                            isClearable />
+                    </div>
+                    <div className="mb-4">
+                        <AiOutlinePhone size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <label
+                            htmlFor="phoneNumber"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Numer telefonu:
+                        </label>
+                        <input
+                            type="tel"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            value={phoneNumber}
+                            onChange={(e) => {
+                                setPhoneNumber(e.target.value);
+                                validatePhoneNumber(e.target.value);
+                            }}
+                            onBlur={() => validatePhoneNumber(phoneNumber)}
+                            className={`w-[50%] p-2 border border-blue-500 dark:border-neutral-200 dark:focus:border-blue-500 rounded-md focus:outline-none ${phoneNumberError ? "border-red-500 dark:border-red-500" : ""
+                                }`}
+                            required />
+                        {phoneNumberError && <p className="text-red-500">{phoneNumberError}</p>}
+                    </div>
+                    <div className="mb-4">
+                        <GrMoney size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <label
+                            htmlFor="price"
+                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            Cena:
+                        </label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            value={price}
+                            onChange={(e) => {
+                                setPrice(e.target.value);
+                                validatePrice(e.target.value);
+                            }}
+                            onBlur={() => validatePrice(price)}
+                            className={`w-[50%] p-2 border border-blue-500 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${priceError ? "border-red-500 dark:border-red-500" : ""
+                                }`}
+                            required
+                        />
+                        {priceError && <p className="text-red-500">{priceError}</p>}
+                    </div>
+                    <div className="flex justify-left space-x-4">
+                        <Link
+                            to="/twoje-ogloszenia"
+                            className="bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 text-white py-2 px-4 rounded-md hover:bg-blue-700 ease-linear duration-100">
+                            Moje ogłoszenia
+                        </Link>
+                        <Link
+                            type="button"
+                            onClick={handleAddAuction}
+                            className={`bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${isFormValid() ? "" : "opacity-50 cursor-not-allowed"
+                                }`}
+                            disabled={!isFormValid()}>
+                            Dodaj ogłoszenie
+                        </Link>
+                    </div>
+                </form>
             </div>
-        </>
+            {isConfirmationModalOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                    <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                        <p className="text-lg dark:text-neutral-200 font-semibold mb-4 text-center">
+                            Czy na pewno chcesz dodać ogłoszenie?
+                        </p>
+                        <div className="flex justify-center space-x-4">
+                            <button
+                                className="text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 py-2 px-4 rounded-md"
+                                onClick={confirmAddAuction}>
+                                Tak, dodaj ogłoszenie
+                            </button>
+                            <button
+                                className="text-white bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:hover:bg-red-700 ease-linear duration-100 py-2 px-4 rounded-md"
+                                onClick={() => setIsConfirmationModalOpen(false)}>
+                                Anuluj
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {messagePopup.show && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                    <div className="absolute inset-0 bg-black opacity-50"></div>
+                    <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                        <p className="text-lg dark:text-neutral-200 font-semibold mb-4 text-center">
+                            ${messagePopup.message}
+                        </p>
+                        <div className="flex justify-center space-x-4">
+                            <button
+                                className="text-white dark:text-neutral-200 bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 py-2 px-4 rounded-md"
+                                onClick={handlePopupClose}>
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }

@@ -15,11 +15,11 @@ export function UsersAuctionsPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
-           <Navbar/>
-           <ScrollToTop/>
-           <ScrollToTopButton/>
-           <UsersAuctions/>
-           <Footer/>
+            <Navbar />
+            <ScrollToTop />
+            <ScrollToTopButton />
+            <UsersAuctions />
+            <Footer />
         </div>
     )
 }

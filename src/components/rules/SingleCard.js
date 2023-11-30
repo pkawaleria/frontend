@@ -5,7 +5,7 @@ export default function SingleCard({ point }) {
   return (
     <div className="card mb-4">
       <div className="card-body mb-3 d-flex align-items-stretch card-hover-shadow rounded-sm">
-        <p className="card-text p-1 italic">{point}</p>
+        <p className="card-text p-1 italic text-white">{point}</p>
       </div>
     </div>
   );

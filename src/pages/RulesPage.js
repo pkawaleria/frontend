@@ -6,7 +6,6 @@ import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 
 export function RulesPage() {
-
     const { fontSize } = useFontSize();
 
     const style = {

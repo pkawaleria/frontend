@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
-
 import LoginButton from "./form/LoginButton";
 import SwapToRegisterButton from "./form/SwapToRegisterButton";
 import SwapToLoginButton from "./form/SwapToLoginButton";
 import Input from "./form/Input";
-
 import { validateField } from "./utils/LoginValidators";
 import { inputs } from "./utils/LoginInputs";
 
@@ -116,9 +114,7 @@ export default function Login() {
                         hover:cursor-pointer transition-colors 
                         duration-200 mw-xs:text-3xl mh-xs:text-3xl"/>
                 </Link>
-                <span className="group-hover:scale-100 home-tooltip">
-                    Strona główna
-                </span>
+                <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form
                 className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
@@ -135,12 +131,8 @@ export default function Login() {
                             {...input}
                             value={loginData[input.name]}
                             onChange={handleInputChange}
-                            onKeyDown={handleEnterPress}
-                        />
-                        <span
-                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"
-                                }`}
-                        >
+                            onKeyDown={handleEnterPress}/>
+                        <span className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
                             {errors[input.name + "Error"]}
                         </span>
                     </React.Fragment>

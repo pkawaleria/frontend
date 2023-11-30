@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { isSuperAdmin, canBlockUsers } from "./utils/PermissionsCheck";
 import { BiBlock } from "react-icons/bi";
 import { BsInfoCircle } from "react-icons/bs";
 import { CgUnblock } from "react-icons/cg";
@@ -204,45 +203,42 @@ export default function UsersAdministration() {
             {isConfirmationModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
-                    <div className="relative bg-white w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                        <p className="text-lg font-semibold mb-4 text-center">
+                    <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                        <p className="text-lg dark:text-neutral-50 font-semibold mb-4 text-center">
                             Czy na pewno chcesz {actionType === "block" ? "zablokować" : "odblokować"} użytkownika?
                         </p>
                         <div className="mb-4">
-                            <label htmlFor="emailTitle" className="block text-gray-600 font-medium mb-2">Tytuł:</label>
+                            <label htmlFor="emailTitle" className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">Tytuł:</label>
                             <input
                                 type="text"
                                 id="emailTitle"
                                 name="emailTitle"
                                 value={emailTitle}
                                 onChange={(e) => setEmailTitle(e.target.value)}
-                                className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
-                                required
-                            />
+                                className="w-full p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 rounded-md focus:outline-none"
+                                required/>
                         </div>
                         <div className="mb-4">
-                            <label htmlFor="emailMessage" className="block text-gray-600 font-medium mb-2">Wiadomość:</label>
+                            <label htmlFor="emailMessage" className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">Wiadomość:</label>
                             <textarea
                                 id="emailMessage"
                                 name="emailMessage"
                                 value={emailMessage}
                                 onChange={(e) => setEmailMessage(e.target.value)}
                                 rows="4"
-                                className="w-full p-2 border border-blue-500 rounded-md focus:outline-none"
+                                className="w-full p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 rounded-md focus:outline-none"
                                 required
                             ></textarea>
                         </div>
                         <div className="flex justify-center space-x-4">
                             <button
-                                className="text-white bg-red-500 hover:bg-red-700 py-2 px-4 rounded-md"
-                                onClick={handleConfirmation}
-                            >
+                                className="text-white bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:hover:bg-red-700 ease-linear duration-100 py-2 px-4 rounded-md"
+                                onClick={handleConfirmation}>
                                 Tak
                             </button>
                             <button
-                                className="text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded-md"
-                                onClick={() => setIsConfirmationModalOpen(false)}
-                            >
+                                className="text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 py-2 px-4 rounded-md"
+                                onClick={() => setIsConfirmationModalOpen(false)}>
                                 Anuluj
                             </button>
                         </div>
