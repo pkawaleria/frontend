@@ -4,9 +4,9 @@ import { Link } from "react-router-dom"
 import { AiFillHome } from "react-icons/ai"
 
 import LoginButton from "./form/LoginButton"
-import SwapToRegisterButton from "./form/SwapToRegisterButton"
-import SwapToLoginButton from "./form/SwapToLoginButton"
 import Input from "./form/Input"
+import { ImArrowLeft } from "react-icons/im";
+import { Tooltip } from "react-tooltip";
 
 import { validateField } from "./utils/LoginValidators"
 import { inputs } from "./utils/LoginInputs"
@@ -78,6 +78,19 @@ export default function Login() {
                 className="bg-white py-5 px-8 rounded-md border-0 border-blue-600 w-96 
                     mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
                 onSubmit={handleSubmit}>
+                <Link
+                    data-tooltip-id="backToLogin"
+                    data-tooltip-content="Powrót do logowania"
+                    to="/logowanie">
+                    <Tooltip
+                        id="backToLogin"
+                        type="dark"
+                        effect="solid"
+                        delayShow={200}
+                        delayHide={100}
+                    />
+                    <ImArrowLeft size={30} z={100} className="w-1/12 text-2xl/3 my-auto pr-1 text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100" />
+                </Link>
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input

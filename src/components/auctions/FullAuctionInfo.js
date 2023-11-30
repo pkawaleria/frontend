@@ -236,10 +236,11 @@ export default function FullAuctionInfo() {
                                 Pokaż numer
                             </button>
                         )}
+                        {localStorage.getItem("accessToken") && 
                         <button className="bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] ease-linear duration-100"
                             onClick={sendMail}>
                             Wyślij wiadomość
-                        </button>
+                        </button>}
                     </div>
                     <div className="bg-white dark:bg-neutral-700/20 rounded-lg shadow-md dark:text-neutral-200">
                         <p className="text-[1vw] font-semibold m-4">

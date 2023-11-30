@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
+import { ImArrowLeft } from 'react-icons/im';
 import { validateUsername, validateEmail, validateFirstname, validateLastname, validatePhoneNumber } from '../authorization/utils/RegisterValidators';
 
 export default function EditProfile() {
@@ -118,6 +121,20 @@ export default function EditProfile() {
     return (
         <div className="flex items-center justify-center p-5 gradient-bg-color-only h-screen">
             <div className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
+            <Link
+                    data-tooltip-id="backToProfile"
+                    data-tooltip-content="Powrót do profilu"
+                    to="/profil"
+                    className="absolute top-1 left-1">
+                    <Tooltip
+                        id="backToProfile"
+                        type="dark"
+                        effect="solid"
+                        delayShow={200}
+                        delayHide={100}
+                    />
+                    <ImArrowLeft size={30} z={200} className="text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100" />
+                </Link>
                 <div className="flex-shrink-0">
                     <img
                         src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
