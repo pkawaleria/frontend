@@ -124,7 +124,6 @@ export default function Login() {
                 <div className="flex flex-col">
                     <SwapToUserLogin />
                     <SwapToLoginButton isOn={true} />
-                </div>
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input

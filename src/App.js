@@ -48,20 +48,11 @@ function App() {
                 <Route path="/regulamin" element={<RulesPage />} />
                 <Route path="/rejestracja" element={<RegisterPage />} />
                 <Route path="/o-stronie" element={<AboutPage />} />
-                <Route path="/wyloguj" element={<Logout />} />
-                <Route path="/edytuj-profil" element={<EditProfilePage />} />
-                <Route path="/profil" element={<ProfilePage />} />
-                <Route path="/zmien-haslo" element={<ChangePasswordPage />} />
                 <Route path="/ogloszenie/:id" element={<AdvertPage />} />
-                <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage />} />
                 <Route path="/ogloszenia-uzytkownika/:id" element={<OtherUsersAuctionPage />} />
-                <Route path="/nowe-ogloszenie" element={<NewAuctionPage />} />
-                <Route path="/edytuj-ogloszenie/:id" element={<EditAuctionPage />} />
                 <Route path="/kategorie" element={<GeneralCategoriesPage />} />
                 <Route path="/podkategorie/:id" element={<CategoryWithSubcategoriesPage />} />
                 <Route path="/aukcje/search" element={<SearchAuctionsPage />} />
-                <Route path="/ogloszenia-uzytkownika/:id" element={<OtherUsersAuctionPage />} />
-                <Route path="/ogloszenie/:id" element={<AdvertPage />} />
                 <Route path="/wyloguj" element={<Logout />} />
 
                 {/* USER'S PROTECTED ROUTES */}
@@ -70,11 +61,13 @@ function App() {
                 {decodedToken && decodedToken.roles.includes('USER') && <Route path="/zmien-haslo" element={<ChangePasswordPage />} />}
                 {decodedToken && decodedToken.roles.includes('USER') && <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage />} />}
                 {decodedToken && decodedToken.roles.includes('USER') && <Route path="/nowe-ogloszenie" element={<NewAuctionPage />} />}
+                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/edytuj-ogloszenie/:id" element={<EditAuctionPage />} />}
                 <Route path="/edytuj-profil" element={<Navigate replace to="/logowanie" />} />
                 <Route path="/profil" element={<Navigate replace to="/logowanie" />} />
                 <Route path="/zmien-haslo" element={<Navigate replace to="/logowanie" />} />
                 <Route path="/twoje-ogloszenia" element={<Navigate replace to="/logowanie" />} />
                 <Route path="/nowe-ogloszenie" element={<Navigate replace to="/logowanie" />} />
+                <Route path="/edytuj-ogloszenie/:id" element={<Navigate replace to="/logowanie" />} />
 
                 {/* ADMIN SECTION */}
                 <Route path="/logowanie/admin" element={<AdminLoginPage />} />
