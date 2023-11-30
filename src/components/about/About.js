@@ -3,7 +3,7 @@ import { FaSearch, FaComment, FaAd, FaUserShield, FaShoppingCart, FaShieldAlt } 
 
 export default function About() {
     return (
-        <div className="gradient-bg-color-only h-[100vh] mt-4">
+        <div className="gradient-bg-color-only h-screen mt-8">
             <div className="bg-white dark:bg-neutral-900/25 dark:border-2 dark:border-neutral-100 border-2 border-blue-500 rounded-lg max-w-6xl mx-auto py-8 px-6 sm:px-12 my-4">
                 <h2 className="text-4xl font-bold text-gray-800 dark:text-neutral-100 mb-6">O Nas</h2>
                 <div className="grid grid-cols-3 gap-8">
