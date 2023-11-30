@@ -48,7 +48,6 @@ function App() {
                 <Route path="/regulamin" element={<RulesPage />} />
                 <Route path="/rejestracja" element={<RegisterPage />} />
                 <Route path="/o-stronie" element={<AboutPage />} />
-                <Route path="/wyloguj" element={<Logout />} />
                 <Route path="/ogloszenie/:id" element={<AdvertPage />} />
                 <Route path="/ogloszenia-uzytkownika/:id" element={<OtherUsersAuctionPage />} />
                 <Route path="/kategorie" element={<GeneralCategoriesPage />} />
