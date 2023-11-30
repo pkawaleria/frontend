@@ -124,21 +124,22 @@ export default function Login() {
                 <div className="flex flex-col">
                     <SwapToUserLogin />
                     <SwapToLoginButton isOn={true} />
-                {inputs.map((input) => (
-                    <React.Fragment key={input.id}>
-                        <Input
-                            key={input.id}
-                            {...input}
-                            value={loginData[input.name]}
-                            onChange={handleInputChange}
-                            onKeyDown={handleEnterPress}/>
-                        <span className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>
-                            {errors[input.name + "Error"]}
-                        </span>
-                    </React.Fragment>
-                ))}
-                <div className="flex space-x-4 mt-5">
-                    <LoginButton />
+                    {inputs.map((input) => (
+                        <React.Fragment key={input.id}>
+                            <Input
+                                key={input.id}
+                                {...input}
+                                value={loginData[input.name]}
+                                onChange={handleInputChange}
+                                onKeyDown={handleEnterPress} />
+                            <span className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>
+                                {errors[input.name + "Error"]}
+                            </span>
+                        </React.Fragment>
+                    ))}
+                    <div className="flex space-x-4 mt-5">
+                        <LoginButton />
+                    </div>
                 </div>
             </form>
         </div>
