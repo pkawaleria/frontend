@@ -58,8 +58,8 @@ export default function UsersAuctions() {
     };
 
     return (
-        <div className="flex flex-col">
-            <nav className="flex flex-col items-center justify-center w-[50%] bg-blue-500 dark:bg-neutral-600 text-white p-4 rounded-t-lg mx-auto">
+        <div className="flex flex-col h-full">
+            <nav className="flex flex-col items-center justify-center w-[70%] bg-blue-500 dark:bg-neutral-600 text-white p-4 rounded-t-lg mx-auto">
                 <Link to="/nowe-ogloszenie" className="text-xl font-semibold hover:underline">
                     Dodaj ogłoszenie
                 </Link>
@@ -117,7 +117,7 @@ export default function UsersAuctions() {
                     </button>
                 </div>
             </nav>
-            <div className="flex items-center justify-center gradient-bg-color-only p-6 mt-2">
+            <div className="flex items-center justify-center gradient-bg-color-only p-6 mt-2 min-h-[60vh]">
                 <div className="grid grid-cols-1 gap-6 w-2/3">
                     {auctionsData.map((ad) => (
                         <Link
