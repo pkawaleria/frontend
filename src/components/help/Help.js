@@ -66,7 +66,7 @@ export default function Help() {
 
     return (
         <div className="flex justify-center linear gradient-bg-color-only mt-5 min-h-[80vh]">
-            <form className="bg-white py-3 px-8 mb-5 rounded-md border-0 w-96 min-h-72 max-h-[720px] self-center" onSubmit={handleSubmit}>
+            <form className="bg-white py-3 px-8 mb-5 rounded-md border-0 w-50 sm:w-96 min-h-72 max-h-[720px] self-center" onSubmit={handleSubmit}>
                 <h1 className="text-center text-xl font-semibold">Potrzebujesz pomocy?</h1>
                 <h1 className="text-center text-xl font-semibold">Napisz do nas :)</h1>
                 <Input
