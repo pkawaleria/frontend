@@ -119,13 +119,14 @@ export default function EditProfile() {
     };
 
     return (
-        <div className="flex items-center justify-center p-5 gradient-bg-color-only h-screen">
-            <div className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
-            <Link
+        <div className="flex items-center justify-center p-5 gradient-bg-color-only">
+            <div className="w-50 max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex flex-col relative mt-5">
+                <Link
                     data-tooltip-id="backToProfile"
                     data-tooltip-content="Powrót do profilu"
                     to="/profil"
-                    className="absolute top-1 left-1">
+                    className="absolute top-1 left-1"
+                >
                     <Tooltip
                         id="backToProfile"
                         type="dark"
@@ -133,16 +134,19 @@ export default function EditProfile() {
                         delayShow={200}
                         delayHide={100}
                     />
-                    <ImArrowLeft size={30} z={200} className="text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100" />
+                    <ImArrowLeft
+                        size={30}
+                        className="text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100"
+                    />
                 </Link>
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 mx-auto mb-4">
                     <img
-                        src='https://cdn-icons-png.flaticon.com/512/1053/1053244.png'
+                        src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png"
                         alt="User Avatar"
                         className="w-32 h-32 rounded-full object-cover"
                     />
                 </div>
-                <div className="ml-6 dark:text-neutral-300">
+                <div className="mx-auto dark:text-neutral-300">
                     <div className="mb-4">
                         <label className="text-lg font-medium">Nazwa użytkownika:</label>
                         <input
@@ -220,7 +224,7 @@ export default function EditProfile() {
                 {isConfirmationModalOpen && (
                     <div className="fixed inset-0 flex items-center justify-center z-50">
                         <div className="absolute inset-0 bg-black opacity-50"></div>
-                        <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                        <div className="relative bg-white dark:bg-neutral-600 w-full md:w-1/2 lg:w-1/3 rounded-lg shadow-md p-8 opacity-100">
                             <p className="text-lg dark:text-neutral-200 font-semibold mb-4 text-center">Czy na pewno chcesz zaktualizować dane?</p>
                             <div className="flex justify-center space-x-4">
                                 <button

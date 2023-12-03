@@ -57,7 +57,7 @@ export default function AdminPanel() {
 
     return (
         <div className="flex gradient-bg-color-only mt-4 h-full">
-            <div className="w-1/6 m-2 p-3 border-2 border-white rounded">
+            <div className="w-1/5 m-2 p-3 border-2 border-white rounded">
                 <Button
                     className={`w-full border border-white rounded mb-3
                   bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500 

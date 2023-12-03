@@ -87,10 +87,8 @@ export default function DeletingPermissions() {
 
     return (
         <div className="flex flex-col items-center p-5 h-screen">
-            <span
-                className="text-white dark:text-neutral-200 text-[45px] font-bold mb-4 text-center">USUWANIE UPRAWNIEŃ</span>
-            <div
-                className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
+            <span className="text-white dark:text-neutral-200 text-[45px] font-bold mb-4 text-center">USUWANIE UPRAWNIEŃ</span>
+            <div className="w-[90%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
                 <div className="flex-shrink-0">
                     <img
                         src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png"
@@ -107,8 +105,8 @@ export default function DeletingPermissions() {
                                 onChange={handleAdminChange}>
                                 <option value="" className="dark:bg-neutral-600/50">Wybierz admina</option>
                                 {admins.map((admin) => (
-                                    <option
-                                        key={admin.id}
+                                    <option 
+                                        key={admin.id} 
                                         value={admin.id}
                                         className="dark:bg-neutral-600/50">
                                         {admin.username}

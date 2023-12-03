@@ -217,9 +217,10 @@ export default function SearchBar({
 
     return (
         <div className="bg-blue-500/20 dark:bg-neutral-900/60 pt-5 pb-7 sm:pb-8">
-            <form
-                className="search-form dark:bg-neutral-700 max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl px-4 pt-4 pb-0 flex flex-wrap justify-between gap-2"
-                style={{width: '90%'}}>
+      <form
+        className="search-form dark:bg-neutral-700 max-w-6xl mx-auto bg-white border-2 border-white rounded-md shadow-3xl px-4 pt-4 pb-0 flex flex-wrap gap-2"
+        style={{ width: '90%' }}
+      >
                 {/* Pole wpisania nazwy aukcji */}
                 <div className="w-full flex items-center">
                     <MdOutlineTitle className="text-white text-3xl mr-2"/>
