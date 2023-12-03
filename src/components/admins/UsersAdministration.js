@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { BiBlock } from "react-icons/bi";
 import { BsInfoCircle } from "react-icons/bs";
 import { CgUnblock } from "react-icons/cg";
 import { Tooltip } from "react-tooltip";
 import LoadingSpinner from "../spinner/LoadingSpinner";
+import accountMsApi from "../../services/accountMsApi";
+import {successToast} from "../../services/toastService";
 
 export default function UsersAdministration() {
     const token = localStorage.getItem("accessToken");
@@ -19,15 +20,7 @@ export default function UsersAdministration() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(
-                `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_USERS}`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const response = await accountMsApi.get('/admin/get_all_users');
             setUsersData(response.data);
             setLoading(false);
         } catch (error) {
@@ -54,42 +47,21 @@ export default function UsersAdministration() {
     const handleConfirmation = async () => {
         try {
             if (selectedUserId && actionType === "block") {
-                await axios.get(
-                    `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_BLOCK_USER}/${selectedUserId}`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                await accountMsApi.get(`/admin/block_user/${selectedUserId}`);
+                successToast('Użytkownik został zablokowany')
             } else if (selectedUserId && actionType === "unblock") {
-                await axios.get(
-                    `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_UNBLOCK_USER}/${selectedUserId}`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                await accountMsApi.get(`/admin/unblock_user/${selectedUserId}`);
+                successToast('Użytkownik został odblokowany')
             }
-            await axios.post(
-                process.env.REACT_APP_ACCOUNTING_MS_ADMINS_SEND_MAIL,
+            await accountMsApi.post(`/admin/send_mail`,
                 {
                     id: usersData.find((user) => user.id === selectedUserId)?.id,
                     subject: emailTitle,
                     message: emailMessage,
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+                });
 
-            window.location = "/zarzadzaj-uzytkownikami";
+            successToast('Wysłano wiadomość mailową z powiadomieniem do użytkownika')
+
         } catch (error) {
             console.error("Wystąpił błąd:", error);
         }

@@ -3,6 +3,7 @@ import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 
 import { useFontSize } from "../components/themes/FontSizeContext"
+import {ToastContainer} from "react-toastify";
 
 export function LoginPage() {
     const { fontSize } = useFontSize();
@@ -13,6 +14,7 @@ export function LoginPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
+            <ToastContainer/>
             <ScrollToTop />
             <ScrollToTopButton />
             <Login />

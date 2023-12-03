@@ -1,11 +1,14 @@
 import auctionMsApi from './auctionMsApi';
+import {errorToast, successToast} from "./toastService";
 
 export const createAuction = async (payload) => {
     try {
         const response = await auctionMsApi.post(`/auction-service/auctions`, payload);
+        successToast('Pomyślnie utworzono aukcje')
         return response.data;
     } catch (error) {
         console.error("Error adding new auction", error);
+        errorToast(error);
         throw error;
     }
 };
@@ -19,7 +22,9 @@ export const deleteAuction = async (auctionId, token) => {
                 Authorization: `Bearer ${token}`,
             },
         })
+        successToast('Pomyślnie usunięto aukcje')
     } catch (error) {
+        errorToast(error);
         console.error("Error deleting auction:", error);
         throw error;
     }
@@ -30,6 +35,7 @@ export const getAuctionImages = async (auctionId) => {
         const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images`);
         return response.data.imageIDs;
     } catch (error) {
+        errorToast(error);
         console.error("Error getting auction images", error);
         throw error;
     }
@@ -40,6 +46,7 @@ export const getAuctionImage = async (auctionId, imageId) => {
         const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images/${imageId}`, {responseType: 'blob'});
         return response.data;
     } catch (error) {
+        errorToast(error);
         console.error(`Error getting image of id ${imageId} for auction:`, error);
         throw error;
     }
@@ -54,8 +61,10 @@ export const addImagesToAuction = async (auctionId, payload) => {
                 }
             }
         );
+        successToast('Dodano obrazy do aukcji')
         return response.data;
     } catch (error) {
+        errorToast(error);
         console.error("Error adding images to auction", error);
         throw error;
     }
@@ -66,6 +75,7 @@ export const fetchAuctionInfo = async (auctionId) => {
         const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}`)
         return response.data;
     } catch (error) {
+        errorToast(error);
         console.error("Error fetching auction details", error);
         throw error;
     }
@@ -81,6 +91,7 @@ export const fetchUserAuctions = async (status, token) => {
         });
         return response.data;
     } catch (error) {
+        errorToast(error);
         console.error("Error fetching all auctions:", error);
         throw error;
     }
@@ -91,6 +102,7 @@ export const fetchAllAuctions = async (pageNumber, pageSize) => {
         const response = await auctionMsApi.get(`/auction-service/auctions/search?page=${pageNumber}&pageSize=${pageSize}`);
         return response.data;
     } catch (error) {
+        errorToast(error);
         console.error("Error fetching all auctions:", error);
         throw error;
     }
@@ -106,6 +118,7 @@ export const searchAuctions = async (pageNumber, pageSize, filters) => {
         const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
         return response.data;
     } catch (error) {
+        errorToast(error);
         console.error("Error searching auctions:", error);
         throw error;
     }
@@ -117,6 +130,7 @@ export const searchAuctionsWithFullQueryParams = async (pagingAndFilters) => {
         const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
         return response.data;
     } catch (error) {
+        errorToast(error);
         console.error("Error searching auctions:", error);
         throw error;
     }

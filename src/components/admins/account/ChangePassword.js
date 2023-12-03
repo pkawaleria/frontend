@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { ImArrowLeft } from 'react-icons/im';
 import { arePasswordsIdentical, validatePassword } from '../authorization/utils/RegisterValidators';
+import accountMsApi from "../../../services/accountMsApi";
+import {successToast} from "../../../services/toastService";
 
 export default function ChangePassword() {
     const [passwordData, setPasswordData] = useState({
@@ -62,11 +63,12 @@ export default function ChangePassword() {
             Authorization: `Bearer ${accessToken}`,
         };
 
-        axios.post(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_CHANGE_PASSWORD, passwordData, { headers })
+        accountMsApi.post('/admin/changepasswd', passwordData, { headers })
             .then(() => {
                 setIsConfirmationModalOpen(false);
                 localStorage.removeItem('accessToken');
                 window.location = '/';
+                successToast("Zmiana hasła zakończona sukcesem")
             })
             .catch((error) => {
                 console.error('Błąd aktualizacji hasła:', error);

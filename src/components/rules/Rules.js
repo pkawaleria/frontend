@@ -1,6 +1,5 @@
 import React from 'react';
 import SingleCard from './SingleCard';
-import Backimg from '../../assets/images/background.jpg'
 import '../../assets/styles/rules/rules.css'
 import { rulesPoints } from './utils/RulesPoints';
 

@@ -4,6 +4,7 @@ import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
 import Navbar from "../components/navbar/Navbar"
+import {ToastContainer} from "react-toastify";
 
 export function AdminUsersAdministrationPage() {
     const { fontSize } = useFontSize();
@@ -14,6 +15,7 @@ export function AdminUsersAdministrationPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
+            <ToastContainer/>
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { isSuperAdmin, canAddPerms } from "./utils/PermissionsCheck";
+import React, {useEffect, useState} from "react";
 import jwtDecode from "jwt-decode";
+import accountMsApi from "../../services/accountMsApi";
+import {successToast} from "../../services/toastService";
 
 export default function AdminPermissionsForm() {
     const [admins, setAdmins] = useState([]);
@@ -11,8 +11,8 @@ export default function AdminPermissionsForm() {
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_ADMINS)
+        accountMsApi
+            .get('/admin/get_all_admins')
             .then((response) => {
                 setAdmins(response.data);
             })
@@ -20,8 +20,8 @@ export default function AdminPermissionsForm() {
                 console.error("Błąd podczas pobierania adminów:", error);
             });
 
-        axios
-            .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_PERMISSIONS)
+        accountMsApi
+            .get('/admin/permissions')
             .then((response) => {
                 setPermissions(response.data.permissions);
             })
@@ -50,17 +50,17 @@ export default function AdminPermissionsForm() {
                 Authorization: `Bearer ${accessToken}`,
             };
 
-            axios
-                .post(
-                    `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS}/${selectedAdminId}/permissions/${selectedPermissionId}`,
+            accountMsApi
+                .post(`/admin/${selectedAdminId}/permissions/${selectedPermissionId}`,
                     null,
-                    { headers }
+                    {headers}
                 )
                 .then((response) => {
                     console.log(
                         "Sukces! Uprawnienie zostało przypisane do admina.",
                         response.data
                     );
+                    successToast('Uprawnienie zostało przypisane do admina.')
                     const currentToken = localStorage.getItem("accessToken");
                     if (response.data.access_token) {
                         const newToken = response.data.access_token;
@@ -73,8 +73,6 @@ export default function AdminPermissionsForm() {
                             localStorage.setItem("accessToken", newToken);
                         }
                     }
-
-                    window.location = "/profil/admin";
                 })
                 .catch((error) => {
                     console.error("Błąd podczas przypisywania uprawnienia:", error);
@@ -87,7 +85,8 @@ export default function AdminPermissionsForm() {
     return (
         <div className="flex flex-col items-center p-5 h-screen">
             <span className="text-white dark:text-neutral-200 text-[45px] font-bold mb-4 text-center">DODAWANIE UPRAWNIEŃ</span>
-            <div className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
+            <div
+                className="w-[50%] max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex relative">
                 <div className="flex-shrink-0">
                     <img
                         src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png"
@@ -106,7 +105,7 @@ export default function AdminPermissionsForm() {
                                 <option value="" className="dark:bg-neutral-600/50">Wybierz admina</option>
                                 {admins.map((admin) => (
                                     <option
-                                        key={admin.id} 
+                                        key={admin.id}
                                         value={admin.id}
                                         className="dark:bg-neutral-600/50">
                                         {admin.username}
@@ -122,8 +121,8 @@ export default function AdminPermissionsForm() {
                                 onChange={handlePermissionChange}>
                                 <option value="" className="dark:bg-neutral-600/50">Wybierz uprawnienie</option>
                                 {permissions.map((permission) => (
-                                    <option 
-                                        key={permission.id} 
+                                    <option
+                                        key={permission.id}
                                         value={permission.id}
                                         className="dark:bg-neutral-600/50">
                                         {permission.description_short}

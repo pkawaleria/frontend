@@ -15,6 +15,8 @@ import {
     createAuction,
 } from "../../services/auctionsService";
 import { useNavigate } from "react-router-dom";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function NewAuction() {
     const navigate = useNavigate();
@@ -168,6 +170,7 @@ export default function NewAuction() {
                 "To może potrwać do kilku minut. Przejdź do moich ogłoszeń.",
                 "success"
             );
+            navigate("/twoje-ogloszenia")
         } catch (error) {
             console.error("Error during auction process:", error);
             showPopupMessage("Wystąpił błąd podczas dodawania ogłoszenia.", "error");
@@ -216,6 +219,7 @@ export default function NewAuction() {
 
     return (
         <div className="items-center gradient-bg-color-only">
+            <ToastContainer/>
             <h2 className="w-[55%] mx-auto text-2xl mb-4 text-white font-bold bg-blue-500 dark:bg-neutral-600 dark:border-white py-2 text-center rounded-lg border border-blue-500">
                 Dodaj nowe ogłoszenie
             </h2>
@@ -464,7 +468,7 @@ export default function NewAuction() {
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
                         <p className="text-lg dark:text-neutral-200 font-semibold mb-4 text-center">
-                            ${messagePopup.message}
+                            {messagePopup.message}
                         </p>
                         <div className="flex justify-center space-x-4">
                             <button

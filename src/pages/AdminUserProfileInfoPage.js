@@ -4,6 +4,7 @@ import Footer from "../components/footer/Footer"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
+import {ToastContainer} from "react-toastify";
 
 export function AdminUserProfileInfoPage() {
 
@@ -15,6 +16,7 @@ export function AdminUserProfileInfoPage() {
 
     return (
         <div className="h-screen flex flex-col" style={style}>
+            <ToastContainer/>
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />

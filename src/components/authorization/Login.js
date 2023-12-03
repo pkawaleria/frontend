@@ -8,6 +8,7 @@ import SwapToLoginButton from "./form/SwapToLoginButton";
 import Input from "./form/Input";
 import { validateField } from "./utils/LoginValidators";
 import { inputs } from "./utils/LoginInputs";
+import {loginUser} from "../../services/userService";
 
 export default function Login() {
     const [loginData, setLoginData] = useState({
@@ -61,27 +62,9 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const requestData = {
-            email: loginData.login,
-            password: loginData.password,
-        };
-
-        try {
-            const response = await axios.post(
-                process.env.REACT_APP_ACCOUNTING_MS_USERS_LOGIN,
-                requestData
-            );
-
-            if (response.status === 200) {
-                const token = response.data.access_token;
-                localStorage.setItem("accessToken", token);
-                window.location.href = "/";
-            } else {
-                console.error("Błąd logowania");
-            }
-        } catch (error) {
-            console.error("Błąd żądania logowania:", error);
+        const success = await loginUser(loginData.login, loginData.password)
+        if (success) {
+            window.location.href = "/";
         }
     };
 

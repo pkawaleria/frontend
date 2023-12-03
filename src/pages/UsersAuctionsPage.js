@@ -4,6 +4,7 @@ import UsersAuctions from "../components/auctions/UsersAuctions"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/themes/FontSizeContext"
+import {ToastContainer} from "react-toastify";
 
 export function UsersAuctionsPage() {
 
@@ -15,6 +16,7 @@ export function UsersAuctionsPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
+            <ToastContainer/>
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
