@@ -18,7 +18,6 @@ import { FontSizeProvider } from "./components/fontSize/FontSizeContext";
 import { GeneralCategoriesPage } from "./pages/GeneralCategoriesPage";
 import { CategoryWithSubcategoriesPage } from "./pages/CategoryWithSubcategoriesPage";
 
-import { AdminRegisterPage } from "./pages/AdminRegisterPage";
 import { AdminLoginPage } from './pages/AdminLoginPage';
 import { AdminProfilePage } from './pages/AdminProfilePage';
 import { AdminChangePasswordPage } from './pages/AdminChangePasswordPage';
@@ -73,7 +72,6 @@ function App() {
                 <Route path="/logowanie/admin" element={<AdminLoginPage />} />
 
                 {/* ADMIN'S PROTECTED ROUTES */}
-                {((decodedToken && decodedToken.roles.includes('ADMIN') && canCreateAdminAccount()) || (decodedToken && isSuperAdmin())) && <Route path="/rejestracja/admin" element={<AdminRegisterPage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/profil/admin" element={<AdminProfilePage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/edytuj-profil/admin" element={<AdminEditProfilePage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage />} />}

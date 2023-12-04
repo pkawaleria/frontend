@@ -87,12 +87,12 @@ export default function ChangePassword() {
                         id="backToProfile"
                         type="dark"
                         effect="solid"
-                        delayShow={200}
-                        delayHide={100}
+                        delayShow={50}
+                        delayHide={50}
                     />
                     <ImArrowLeft
                         size={30}
-                        className="text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100"
+                        className="text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100 m-1"
                     />
                 </Link>
                 <div className="flex-shrink-0 mx-auto mb-4">

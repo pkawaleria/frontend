@@ -14,7 +14,7 @@ export function ProfilePage() {
     };
 
     return (
-        <div className="h-screen flex flex-col" style={style}>
+        <div className="flex flex-col" style={style}>
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
