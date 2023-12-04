@@ -4,7 +4,7 @@ import Logo from "../../assets/images/logo.png";
 import { BiFontSize } from "react-icons/bi";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
-import { useFontSize } from "../themes/FontSizeContext";
+import { useFontSize } from "../fontSize/FontSizeContext";
 import { FiAlignLeft, FiAlignRight, FiLogIn } from "react-icons/fi";
 import { BiSolidCategory, BiSolidCategoryAlt } from "react-icons/bi";
 import { PiSunFill } from "react-icons/pi";

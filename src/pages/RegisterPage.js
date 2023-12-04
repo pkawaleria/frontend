@@ -1,7 +1,7 @@
 import Register from "../components/authorization/Register"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
-import { useFontSize } from "../components/themes/FontSizeContext"
+import { useFontSize } from "../components/fontSize/FontSizeContext"
 
 export function RegisterPage() {
 

@@ -14,7 +14,7 @@ import { EditAuctionPage } from "./pages/EditAuctionPage";
 import { AboutPage } from './pages/AboutPage';
 import { ChangePasswordPage } from './pages/ChangePasswordPage';
 import { EditProfilePage } from './pages/EditProfilePage';
-import { FontSizeProvider } from "./components/themes/FontSizeContext";
+import { FontSizeProvider } from "./components/fontSize/FontSizeContext";
 import { GeneralCategoriesPage } from "./pages/GeneralCategoriesPage";
 import { CategoryWithSubcategoriesPage } from "./pages/CategoryWithSubcategoriesPage";
 

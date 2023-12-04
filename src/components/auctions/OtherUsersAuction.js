@@ -5,10 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 
-
-
 export default function OtherUsersAuction() {
-    const token = localStorage.getItem("accessToken");
     const { id } = useParams();
     const [auctionsData, setAuctionsData] = useState([]);
     const [loading, setLoading] = useState(true);

@@ -3,7 +3,7 @@ import Footer from "../components/footer/Footer"
 import AdminPanel from "../components/admins/AdminPanel"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
-import { useFontSize } from "../components/themes/FontSizeContext"
+import { useFontSize } from "../components/fontSize/FontSizeContext"
 
 export function AdminPanelPage() {
     const { fontSize } = useFontSize();
