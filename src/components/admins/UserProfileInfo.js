@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import LoadingSpinner from "../spinner/LoadingSpinner";
+import accountMsApi from "../../services/accountMsApi";
 
 export default function UserProfileInfo() {
     const token = localStorage.getItem("accessToken");
@@ -12,15 +12,7 @@ export default function UserProfileInfo() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(
-                    `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_USER}/${id}`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
+                const response = await accountMsApi.get(`/admin/get_user/${id}`);
 
                 setUserData(response.data);
                 setLoading(false);

@@ -8,6 +8,7 @@ import SwapToUserLogin from "./form/SwapToUserLoginButton"
 import Input from "./form/Input"
 import { validateField } from "./utils/LoginValidators"
 import { inputs } from "./utils/LoginInputs"
+import accountMsApi from "../../../services/accountMsApi";
 
 export default function Login() {
     const [loginData, setLoginData] = useState({
@@ -68,10 +69,7 @@ export default function Login() {
         };
 
         try {
-            const response = await axios.post(
-                process.env.REACT_APP_ACCOUNTING_MS_ADMINS_LOGIN,
-                requestData
-            );
+            const response = await accountMsApi.post('/admin/login', requestData);
 
             if (response.status === 200) {
                 const token = response.data.access_token;

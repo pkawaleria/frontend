@@ -5,6 +5,7 @@ import ScrollToTop from '../components/functions/ScrollToTop'
 import {useFontSize} from "../components/fontSize/FontSizeContext"
 import CategoryWithSubcategories from "../components/categories/CategoryWithSubcategories";
 import {useParams} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
 export function CategoryWithSubcategoriesPage() {
 
@@ -17,6 +18,7 @@ export function CategoryWithSubcategoriesPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
+            <ToastContainer/>
             <Navbar/>
             <ScrollToTop/>
             <ScrollToTopButton/>

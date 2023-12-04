@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Tooltip } from 'react-tooltip';
-import { ImArrowLeft } from 'react-icons/im';
-import { validateUsername, validateEmail, validateFirstname, validateLastname, validatePhoneNumber } from '../authorization/utils/RegisterValidators'
+import React, {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import {Tooltip} from 'react-tooltip';
+import {ImArrowLeft} from 'react-icons/im';
+import {
+    validateEmail,
+    validateFirstname,
+    validateLastname,
+    validatePhoneNumber,
+    validateUsername
+} from '../authorization/utils/RegisterValidators'
+import accountMsApi from "../../../services/accountMsApi";
+import {successToast} from "../../../services/toastService";
 
 export default function EditProfile() {
     const [userData, setUserData] = useState({
@@ -41,7 +48,7 @@ export default function EditProfile() {
             Authorization: `Bearer ${accessToken}`,
         };
 
-        axios.get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_ACCOUNT, { headers })
+        accountMsApi.get('/admin/account_info', {headers})
             .then((response) => {
                 const data = response.data;
                 setUserData(data);
@@ -54,7 +61,7 @@ export default function EditProfile() {
     }, []);
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setUpdatedUserData({
             ...updatedUserData,
             [name]: value,
@@ -106,9 +113,10 @@ export default function EditProfile() {
             Authorization: `Bearer ${accessToken}`,
         };
 
-        axios.post(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_ACCOUNT, updatedUserData, { headers })
+        accountMsApi.post('/admin/account_info', updatedUserData, {headers})
             .then((response) => {
                 console.log('Dane zaktualizowane pomyślnie:', response.data);
+                successToast('Dane konta zaktualizowane pomyślnie')
                 setUserData(updatedUserData);
                 setIsConfirmationModalOpen(false);
                 window.location = "/profil/admin";

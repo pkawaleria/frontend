@@ -16,7 +16,7 @@ import {
     getAuctionImage,
     getAuctionImages,
 } from "../../services/auctionsService";
-import { getUserShortInfo } from "../../services/accountsService";
+import { getUserShortInfo } from "../../services/userService";
 
 import "../../assets/styles/imageGallery/style.css";
 import Lightbox from "react-image-lightbox";

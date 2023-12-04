@@ -4,6 +4,7 @@ import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import {useFontSize} from "../components/fontSize/FontSizeContext"
 import GeneralCategories from "../components/categories/GeneralCategories";
+import {ToastContainer} from "react-toastify";
 
 export function GeneralCategoriesPage() {
 
@@ -15,6 +16,7 @@ export function GeneralCategoriesPage() {
 
     return (
         <div className="h-full flex flex-col" style={style}>
+            <ToastContainer/>
             <Navbar/>
             <ScrollToTop/>
             <ScrollToTopButton/>

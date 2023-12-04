@@ -3,7 +3,8 @@ import { resolveUserType } from "../../services/userResolverService";
 import UnloggedUserNavbar from "./UnloggedUserNavbar";
 import LoggedInUserNavbar from "./LoggedInUserNavbar";
 import AdminNavbar from "./AdminNavbar";
-import { getAdminFullInfo, getUserFullInfo } from "../../services/accountsService";
+import { getAdminFullInfo } from "../../services/adminService";
+import {getUserFullInfo} from "../../services/userService";
 
 export default function Navbar() {
     const [userFirstName, setUserFirstName] = useState(null);

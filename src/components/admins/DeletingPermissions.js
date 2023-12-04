@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { isSuperAdmin, canAddPerms } from "./utils/PermissionsCheck";
+import React, {useEffect, useRef, useState} from "react";
 import jwtDecode from "jwt-decode";
+import accountMsApi from "../../services/accountMsApi";
+import {successToast} from "../../services/toastService";
 
 export default function DeletingPermissions() {
     const [admins, setAdmins] = useState([]);
@@ -12,8 +12,8 @@ export default function DeletingPermissions() {
     const selectedAdminIdRef = useRef("");
 
     useEffect(() => {
-        axios
-            .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_GET_ALL_ADMINS)
+        accountMsApi
+            .get('/admin/get_all_admins')
             .then((response) => {
                 setAdmins(response.data);
             })
@@ -26,10 +26,8 @@ export default function DeletingPermissions() {
         selectedAdminIdRef.current = event.target.value;
 
         if (event.target.value) {
-            axios
-                .get(
-                    `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS}/${event.target.value}/permissions`
-                )
+            accountMsApi
+                .get(`admin/${event.target.value}/permissions`)
                 .then((response) => {
                     setPermissions(response.data.permissions);
                     console.log(response.data.permissions);
@@ -60,16 +58,13 @@ export default function DeletingPermissions() {
                 Authorization: `Bearer ${accessToken}`,
             };
 
-            axios
-                .delete(
-                    `${process.env.REACT_APP_ACCOUNTING_MS_ADMINS}/${adminId}/permissions/${selectedPermissionId}`,
-                    { headers }
+            accountMsApi
+                .delete(`/admin/${adminId}/permissions/${selectedPermissionId}`,
+                    {headers}
                 )
                 .then((response) => {
-                    console.log(
-                        "Sukces! Uprawnienie zostało usunięte.",
-                        response.data
-                    );
+                    successToast('Uprawnienie zostało usunięte.');
+                    console.log("Sukces! Uprawnienie zostało usunięte.", response.data);
                     const currentToken = localStorage.getItem("accessToken");
                     if (response.data.access_token) {
                         const newToken = response.data.access_token;
@@ -82,8 +77,6 @@ export default function DeletingPermissions() {
                             localStorage.setItem("accessToken", newToken);
                         }
                     }
-
-                    window.location = "/profil/admin";
                 })
                 .catch((error) => {
                     console.error("Błąd podczas usuwania uprawnienia:", error);

@@ -3,8 +3,8 @@ import { FaEdit } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import { BiLogOut } from "react-icons/bi";
-import axios from "axios";
 import { formatPhoneNumber } from "./utils/ProfileInputFormat";
+import accountMsApi from "../../../services/accountMsApi";
 
 export default function Profile() {
     const [userData, setUserData] = useState({
@@ -20,8 +20,8 @@ export default function Profile() {
         const headers = {
             Authorization: `Bearer ${accessToken}`,
         };
-        axios
-            .get(process.env.REACT_APP_ACCOUNTING_MS_ADMINS_ACCOUNT, { headers })
+        accountMsApi
+            .get('/admin/account_info', { headers })
             .then((response) => {
                 const data = response.data;
                 const formattedPhoneNumber = formatPhoneNumber(data.phone_number);

@@ -1,12 +1,10 @@
-import Navbar from "../components/navbar/Navbar"
-import Footer from "../components/footer/Footer"
-import Profile from "../components/account/Profile"
+import AdminRegister from "../components/admins/authorization/AdminRegister"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
-import { useFontSize } from "../components/fontSize/FontSizeContext"
+import { useFontSize } from "../components/themes/FontSizeContext"
 import {ToastContainer} from "react-toastify";
 
-export function ProfilePage() {
+export function AdminRegisterPage() {
 
     const { fontSize } = useFontSize();
 
@@ -15,13 +13,12 @@ export function ProfilePage() {
     };
 
     return (
-        <div className="flex flex-col" style={style}>
+        <div className="h-full flex flex-col" style={style}>
             <ToastContainer/>
-            <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
-            <Profile />
-            <Footer />
+            <AdminRegister />
         </div>
+
     )
 }

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom"
 import { AiFillHome } from "react-icons/ai"
 import SubmitButton from "./form/SubmitButton"
 import Input from "./form/Input"
-import axios from "axios"
 import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical, validateFirstname, validateLastname, validatePhoneNumber } from "./utils/RegisterValidators"
 import { inputs } from "./utils/RegisterInputs"
+import accountMsApi from "../../../services/accountMsApi";
 
 export default function AdminRegister() {
     const [newUserData, setNewUserData] = useState({
@@ -117,10 +117,7 @@ export default function AdminRegister() {
         }
 
         try {
-            const response = await axios.post(
-                process.env.REACT_APP_ACCOUNTING_MS_ADMINS_REGISTER,
-                requestData
-            );
+            const response = await accountMsApi.post('/admin/register', requestData);
 
             if (response.status === 200) {
                 window.location.href = "/logowanie";

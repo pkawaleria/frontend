@@ -4,6 +4,7 @@ import Profile from "../components/admins/account/Profile"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/fontSize/FontSizeContext"
+import {ToastContainer} from "react-toastify";
 
 export function AdminProfilePage() {
 
@@ -15,6 +16,7 @@ export function AdminProfilePage() {
 
     return (
         <div className="flex flex-col" style={style}>
+            <ToastContainer/>
             <Navbar />
             <ScrollToTop />
             <ScrollToTopButton />
