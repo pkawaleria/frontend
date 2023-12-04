@@ -117,11 +117,11 @@ export default function UsersAuctions() {
                     </button>
                 </div>
             </nav>
-            <div className="flex items-center justify-center gradient-bg-color-only p-6 mt-2 min-h-[60vh]">
+            <div className="flex justify-center gradient-bg-color-only p-6 mt-2 min-h-[60vh]">
                 <div className="grid grid-cols-1 gap-6 w-2/3">
                     {auctionsData.map((ad) => (
                         <Link
-                            to={`/ogloszenie/${ad.id}`}
+                            to={ad.status === 'ACCEPTED' ? `/ogloszenie/${ad.id}` : `/prywatne-ogloszenie/${ad.id}`}
                             className="hover:scale-[1.01] ease-linear duration-100"
                             key={ad.id}>
                             <div className="bg-white dark:bg-neutral-900 dark:text-neutral-100 border rounded-lg shadow-md p-4 flex justify-between">

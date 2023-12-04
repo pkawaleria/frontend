@@ -7,6 +7,7 @@ import { RulesPage } from "./pages/RulesPage";
 import { HomePage } from "./pages/HomePage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { AdvertPage } from "./pages/AdvertPage";
+import { AdvertPrivatePage } from "./pages/AdvertPrivatePage"
 import { UsersAuctionsPage } from "./pages/UsersAuctionsPage";
 import { OtherUsersAuctionPage } from "./pages/OtherUsersAuctionPage";
 import { NewAuctionPage } from './pages/NewAuctionPage';
@@ -32,7 +33,7 @@ import SearchAuctionsPage from "./components/auctions/SearchAuctionsPage";
 import { NotFoundPage } from './pages/NotFoundPage'
 import { NoPermissionPage } from './pages/NoPermissionPage'
 import jwtDecode from "jwt-decode";
-import { isSuperAdmin, canAddPerms, canBlockUsers, canCreateAdminAccount } from './components/admins/utils/PermissionsCheck'
+import { isSuperAdmin, canAddPerms, canBlockUsers } from './components/admins/utils/PermissionsCheck'
 
 function App() {
     const accessToken = localStorage.getItem("accessToken")
@@ -60,6 +61,7 @@ function App() {
                 {decodedToken && decodedToken.roles.includes('USER') && <Route path="/zmien-haslo" element={<ChangePasswordPage />} />}
                 {decodedToken && decodedToken.roles.includes('USER') && <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage />} />}
                 {decodedToken && decodedToken.roles.includes('USER') && <Route path="/nowe-ogloszenie" element={<NewAuctionPage />} />}
+                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/prywatne-ogloszenie/:id" element={<AdvertPrivatePage />} />}
                 {decodedToken && decodedToken.roles.includes('USER') && <Route path="/edytuj-ogloszenie/:id" element={<EditAuctionPage />} />}
                 <Route path="/edytuj-profil" element={<Navigate replace to="/logowanie" />} />
                 <Route path="/profil" element={<Navigate replace to="/logowanie" />} />

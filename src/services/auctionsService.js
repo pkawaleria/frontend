@@ -81,6 +81,22 @@ export const fetchAuctionInfo = async (auctionId) => {
     }
 }
 
+export const fetchPrivateAuctionInfo = async (auctionId, token) => {
+    try {
+        const response = await auctionMsApi.get(`/auction-service/active-auctioneer/private/auctions/${auctionId}`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        return response.data;
+    } catch (error) {
+        errorToast(error);
+        console.error("Error fetching private auction details", error);
+        throw error;
+    }
+}
+
 export const fetchUserAuctions = async (status, token) => {
     try {
         const response = await auctionMsApi.get(`/auction-service/active-auctioneer/${status}?pageSize=1000`, {

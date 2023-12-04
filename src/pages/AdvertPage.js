@@ -6,7 +6,6 @@ import ScrollToTop from '../components/functions/ScrollToTop'
 import { useFontSize } from "../components/fontSize/FontSizeContext"
 
 export function AdvertPage() {
-
     const { fontSize } = useFontSize();
 
     const style = {
