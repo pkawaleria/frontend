@@ -123,6 +123,16 @@ export default function FullAuctionInfo() {
         setIsConfirmationModalOpen(true);
     };
 
+    const formatPrice = (price) => {
+        const parts = price.toFixed(2).toString().split('.');
+        const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        const decimalPart = parts[1] === '00' ? '' : `.${parts[1]}`;
+        const formattedPrice = `${integerPart}${decimalPart} zł`;
+
+        return formattedPrice;
+    };
+
+
     if (loading) {
         return <LoadingSpinner />;
     }
@@ -199,7 +209,7 @@ export default function FullAuctionInfo() {
                             {auctionInfo.name}
                         </h2>
                         <p className="text-[1.8vw] font-semibold mb-10">
-                            {auctionInfo.price} zł
+                            {formatPrice(auctionInfo.price)}
                         </p>
                         <p className="text-[1.5vw] font-bold mb-5">OPIS</p>
                         <p className="text-[1.25vw] text-gray-600 dark:text-neutral-400">
