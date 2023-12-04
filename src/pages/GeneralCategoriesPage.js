@@ -2,7 +2,7 @@ import Navbar from "../components/navbar/Navbar"
 import Footer from "../components/footer/Footer"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
-import {useFontSize} from "../components/themes/FontSizeContext"
+import {useFontSize} from "../components/fontSize/FontSizeContext"
 import GeneralCategories from "../components/categories/GeneralCategories";
 import {ToastContainer} from "react-toastify";
 

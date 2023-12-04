@@ -83,7 +83,7 @@ export const fetchAuctionInfo = async (auctionId) => {
 
 export const fetchUserAuctions = async (status, token) => {
     try {
-        const response = await auctionMsApi.get(`/auction-service/active-auctioneer/${status}`, {
+        const response = await auctionMsApi.get(`/auction-service/active-auctioneer/${status}?pageSize=1000`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,

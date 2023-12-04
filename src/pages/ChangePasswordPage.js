@@ -3,7 +3,7 @@ import Navbar from '../components/navbar/Navbar'
 import Footer from '../components/footer/Footer'
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
-import { useFontSize } from "../components/themes/FontSizeContext"
+import { useFontSize } from "../components/fontSize/FontSizeContext"
 import {ToastContainer} from "react-toastify";
 
 export function ChangePasswordPage() {
@@ -15,7 +15,7 @@ export function ChangePasswordPage() {
     };
 
     return (
-        <div className="h-screen flex flex-col" style={style}>
+        <div className="flex flex-col" style={style}>
             <ToastContainer/>
             <Navbar />
             <ScrollToTop />

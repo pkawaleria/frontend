@@ -63,6 +63,38 @@ export default function AdminRegister() {
         }
     }
 
+    const handleEnterPress = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            if (isFormValid()) {
+                handleSubmit(e);
+            } else {
+                setErrors({
+                    usernameError: validateUsername(newUserData.username),
+                    emailError: validateEmail(newUserData.email),
+                    passwordError: validatePassword(newUserData.password),
+                    confirmPasswordError: validatePassword(newUserData.confirmPassword),
+                    firstnameError: validateFirstname(newUserData.firstname),
+                    lastnameError: validateLastname(newUserData.lastname),
+                    phone_numberError: validatePhoneNumber(newUserData.phone_number),
+                });
+            }
+        }
+    };
+
+    const isFormValid = () => {
+        return (
+            newUserData.username &&
+            newUserData.email &&
+            newUserData.password &&
+            newUserData.confirmPassword &&
+            newUserData.firstname &&
+            newUserData.lastname &&
+            newUserData.phone_number &&
+            arePasswordsIdentical(newUserData.password, newUserData.confirmPassword)
+        );
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -97,29 +129,24 @@ export default function AdminRegister() {
     };
 
     return (
-        <div className="flex items-center mt-10 pb-3 justify-center gradient-bg-color-only">
-            <div className="group">
-                <Link to="/">
-                    <AiFillHome
-                        className="absolute top-6 left-8 text-5xl rounded text-white bg-blue-600/15 hover:bg-transparent hover:border-b-4 hover:cursor-pointer transition-colors duration-200
-                                mw-xs:text-3xl mh-xs:text-3xl"/>
-                </Link>
-                <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
-            </div>
+        <div className="flex flex-col items-center justify-center my-5">
+            <span className="text-white dark:text-neutral-200 text-[45px] font-bold mb-4 text-center">REJESTRACJA NOWEGO ADMINISTRATORA</span>
             <form
-                className="bg-white py-5 px-8 rounded-md border-0 w-96 
-                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3"
+                className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2
+                py-5 px-8 rounded-md border-0 w-96 mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3"
                 onSubmit={handleSubmit}>
-                
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input
                             key={input.id}
                             {...input}
                             value={newUserData[input.name]}
-                            onChange={handleInputChange} />
+                            onChange={handleInputChange}
+                            onKeyDown={handleEnterPress} />
                         <span
-                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>{errors[input.name + "Error"]}</span>
+                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>
+                            {errors[input.name + "Error"]}
+                        </span>
                     </React.Fragment>
                 ))}
                 <div className="flex space-x-4 mt-5 mw-2xs:mt-3">

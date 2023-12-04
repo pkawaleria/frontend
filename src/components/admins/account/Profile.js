@@ -33,7 +33,7 @@ export default function Profile() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center p-5 gradient-bg-color-only mt-10">
+        <div className="flex flex-col items-center p-5 gradient-bg-color-only min-h-screen">
             <div className="w-50 max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex flex-col relative mt-2">
                 <div className="flex flex-col md:flex-row">
                     <div className="flex-shrink-0 mx-auto mb-4 md:mb-0">

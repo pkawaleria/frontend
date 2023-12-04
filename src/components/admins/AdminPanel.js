@@ -5,7 +5,7 @@ import AddingPermissions from "./AddingPermissions";
 import DeletingPermissions from './DeletingPermissions';
 import UsersAdministration from './UsersAdministration';
 import GeneralCategories from "../categories/GeneralCategories"
-import AdminRegister from "./authorization/AdminRegister";
+import AdminRegister from './authorization/AdminRegister';
 
 export default function AdminPanel() {
     const [selectedOption, setSelectedOption] = useState('statistics');
@@ -23,8 +23,8 @@ export default function AdminPanel() {
                 return <UsersAdministration />;
             case 'categories':
                 return <GeneralCategories />;
-            case 'addNewAdmin':
-                return <AdminRegister/>;
+            case 'newAdmin':
+                return <AdminRegister />;
             default:
                 return null;
         }
@@ -101,12 +101,12 @@ export default function AdminPanel() {
                 <Button
                     className={`w-full border border-white rounded mb-3 
                     bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500 
-                    ${selectedOption === 'addNewAdmin' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
+                    ${selectedOption === 'newAdmin' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
                     onClick={() => {
                         setPermissionsExpanded(false);
-                        setSelectedOption('addNewAdmin')
+                        setSelectedOption('newAdmin')
                     }}>
-                    Dodaj administratora
+                    Nowy administrator
                 </Button>
             </div>
             <div className="w-5/6 items-center my-2 mr-8 p-2 border-2 border-white rounded">

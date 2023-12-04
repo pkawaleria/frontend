@@ -3,7 +3,7 @@ import Footer from "../components/footer/Footer"
 import EditAuction from "../components/auctions/EditAuction"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
-import { useFontSize } from "../components/themes/FontSizeContext"
+import { useFontSize } from "../components/fontSize/FontSizeContext"
 import {ToastContainer} from "react-toastify";
 
 export function EditAuctionPage() {

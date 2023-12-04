@@ -166,8 +166,8 @@ export default function Register() {
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form
-                className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 w-96 
-            mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3"
+                className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2 
+                py-5 px-8 rounded-md border-0 w-96 mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3"
                 onSubmit={handleSubmit}>
                 <div className="flex">
                     <SwapToRegisterButton isOn={true} />
@@ -183,8 +183,7 @@ export default function Register() {
                             onKeyDown={handleEnterPress}
                         />
                         <span
-                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"
-                                }`}>
+                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
                             {errors[input.name + "Error"]}
                         </span>
                     </React.Fragment>
