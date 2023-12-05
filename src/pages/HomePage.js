@@ -22,15 +22,9 @@ export function HomePage() {
         fetchData();
     }, []);
 
-    const baseUserPage = () => (
-        <div className="h-full flex flex-col">
-            <CurrentUserAuctionsPage/> ;
-        </div>);
+    const baseUserPage = () => <CurrentUserAuctionsPage/>;
+    const adminHomepage = () => <AuctionsSearchPage/>;
 
-    const adminHomepage = () => (
-        <div className="h-full flex flex-col">
-            <AuctionsSearchPage/>
-        </div>);
 
 
     if (resolvedUser === "loggedInUser" || resolvedUser === "anonymous" ) {

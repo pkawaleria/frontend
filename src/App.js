@@ -23,13 +23,11 @@ import { AdminLoginPage } from './pages/AdminLoginPage';
 import { AdminProfilePage } from './pages/AdminProfilePage';
 import { AdminChangePasswordPage } from './pages/AdminChangePasswordPage';
 import { AdminEditProfilePage } from './pages/AdminEditProfilePage';
-import { AdminAddingPermissionsPage } from "./pages/AdminAddingPermissionsPage";
 import { AdminDeletingPermissionsPage } from './pages/AdminDeletingPermissions';
 import { AdminStatisticsPage } from "./pages/AdminStatisticsPage";
 import { AdminUsersAdministrationPage } from './pages/AdminUsersAdministrationPage';
 import { AdminUserProfileInfoPage } from './pages/AdminUserProfileInfoPage';
 import { AdminPanelPage } from "./pages/AdminPanelPage";
-import SearchAuctionsPage from "./components/auctions/SearchAuctionsPage";
 import { NotFoundPage } from './pages/NotFoundPage'
 import { NoPermissionPage } from './pages/NoPermissionPage'
 import jwtDecode from "jwt-decode";
@@ -84,7 +82,6 @@ function App() {
                 {isAdmin() && <Route path="/profil/admin" element={<AdminProfilePage />} />}
                 {isAdmin() && <Route path="/edytuj-profil/admin" element={<AdminEditProfilePage />} />}
                 {isAdmin() && <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage />} />}
-                {((isAdmin() && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage />} />}
                 {((isAdmin() && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage />} />}
                 {isAdmin() && <Route path="/statystyki-serwisu" element={<AdminStatisticsPage />} />}
                 {((isAdmin() && canBlockUsers()) || (decodedToken && isSuperAdmin())) && <Route path="/zarzadzaj-uzytkownikami" element={<AdminUsersAdministrationPage />} />}
