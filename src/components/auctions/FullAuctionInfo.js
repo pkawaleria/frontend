@@ -59,7 +59,6 @@ export default function FullAuctionInfo() {
         }
     };
 
-
     const deleteAuction = async () => {
         try {
             const token = localStorage.getItem("accessToken");

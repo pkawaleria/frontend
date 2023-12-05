@@ -196,7 +196,7 @@ export default function UsersAuctions() {
                     <div className="fixed inset-0 flex items-center justify-center z-50">
                         <div className="absolute inset-0 bg-black opacity-50"></div>
                         <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                            <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 dark:text-neutral-200 font-semibold mb-4 text-center`}>Czy na pewno chcesz usunąć ogłoszenie?</p>
+                            <p className={`${isFontLarge ? "text-3xl" : "text-lg"} ease-linear duration-100 dark:text-neutral-200 font-semibold mb-4 text-center`}>Czy na pewno chcesz usunąć ogłoszenie?</p>
                             <div className="flex justify-center space-x-4">
                                 <button
                                     className={`${isFontLarge ? "text-2xl" : "text-base"} text-white bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:hover:bg-red-700 ease-linear duration-100 py-2 px-4 rounded-md`}
