@@ -152,7 +152,7 @@ export default function AdminNavbar({ adminFirstName }) {
                     </Link>
                 </div>
 
-                <h1 className={`text-white font-bold ${isFontLarge ? "text-[3vw]" : "text-[2.5vw]"} w-[50%] text-center`}>
+                <h1 className={`text-white font-bold ${isFontLarge ? "text-[3vw]" : "text-[2.5vw]"} ease-linear duration-100 w-[50%] text-center`}>
                     Ogłoszeniowo
                 </h1>
 

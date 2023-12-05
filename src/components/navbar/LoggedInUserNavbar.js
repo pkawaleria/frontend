@@ -152,7 +152,7 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                     </Link>
                 </div>
 
-                <h1 className={`text-white font-bold ${isFontLarge ? "text-[3vw]" : "text-[2.5vw]"} w-[50%] text-center`}>
+                <h1 className={`text-white font-bold ${isFontLarge ? "text-[3vw]" : "text-[2.5vw]"} ease-linear duration-100 w-[50%] text-center`}>
                     Ogłoszeniowo
                 </h1>
 
@@ -204,7 +204,7 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                                 className={`text-white ${isFontLarge ? "text-2xl" : "text-base"}`}
                                 data-tooltip-id="newAd"
                                 data-tooltip-content="Dodaj ogłoszenie">
-                                <RiMenuAddFill className={`mx-auto text-[2.5vw] ease-linear duration-100"
+                                <RiMenuAddFill className={`mx-auto ease-linear duration-100
                                 ${isFontLarge ? "text-[3vw] hover:text-blue-500" : "text-[2.5vw] hover:text-blue-500"}`} />
                                 <Tooltip
                                     id="newAd"

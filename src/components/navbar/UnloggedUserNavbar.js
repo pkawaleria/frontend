@@ -94,13 +94,13 @@ export default function UnloggedUserNavbar() {
                         onMouseEnter={() => setHoveredAds(true)}
                         onMouseLeave={() => setHoveredAds(false)}>
                         <FiAlignLeft
-                            className={`text-[3vw] transition-transform transform-gpu 
+                            className={`text-[3vw] transition-transform transform-gpu ease-linear duration-100
                             ${isHoveredAds ? "opacity-0 text-white" : "opacity-100 text-white"}
-                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"}`} />
+                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"} ease-linear duration-100`} />
                         <FiAlignRight
-                            className={`text-[3vw] text-white absolute top-0 transition-transform transform-gpu 
+                            className={`text-[3vw] text-white absolute top-0 transition-transform transform-gpu ease-linear duration-100
                             ${isHoveredAds ? "opacity-100 text-white" : "opacity-0"}
-                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"}`} />
+                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"} ease-linear duration-100`} />
                         <Tooltip
                             id="advertisements"
                             type="dark"
@@ -117,13 +117,13 @@ export default function UnloggedUserNavbar() {
                         onMouseEnter={() => setHoveredCat(true)}
                         onMouseLeave={() => setHoveredCat(false)}>
                         <BiSolidCategory
-                            className={`text-[3vw] text-white transition-transform transform-gpu 
+                            className={`text-[3vw] text-white transition-transform transform-gpu ease-linear duration-100 
                             ${isHoveredCat ? "opacity-0 text-white" : "opacity-100 text-white"}
-                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"}`} />
+                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"} ease-linear duration-100`} />
                         <BiSolidCategoryAlt
-                            className={`text-[3vw] text-white mx-auto absolute top-0 transition-transform transform-gpu 
+                            className={`text-[3vw] text-white mx-auto absolute top-0 transition-transform transform-gpu ease-linear duration-100 
                             ${isHoveredCat ? "opacity-100 text-white" : "opacity-0 text-white"}
-                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"}`} />
+                            ${isFontLarge ? "text-[4vw]" : "text-[3vw]"} ease-linear duration-100`} />
                         <Tooltip
                             id="categories"
                             type="dark"
@@ -133,7 +133,7 @@ export default function UnloggedUserNavbar() {
                     </Link>
                 </div>
 
-                <h1 className={`text-white font-bold ${isFontLarge ? "text-[3vw]" : "text-[2.5vw]"} w-[50%] text-center`}>
+                <h1 className={`text-white font-bold ${isFontLarge ? "text-[3vw]" : "text-[2.5vw]"} ease-linear duration-100 w-[50%] text-center`}>
                     Ogłoszeniowo
                 </h1>
 
