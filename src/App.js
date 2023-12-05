@@ -34,10 +34,16 @@ import { NotFoundPage } from './pages/NotFoundPage'
 import { NoPermissionPage } from './pages/NoPermissionPage'
 import jwtDecode from "jwt-decode";
 import { isSuperAdmin, canAddPerms, canBlockUsers } from './components/admins/utils/PermissionsCheck'
+import {CurrentUserAuctionsPage} from "./pages/CurrentUserAuctionsPage";
+import {AuctionsSearchPage} from "./pages/AuctionsSearchPage";
 
 function App() {
     const accessToken = localStorage.getItem("accessToken")
     const decodedToken = accessToken ? jwtDecode(accessToken) : null;
+
+    const isUser = () => decodedToken && decodedToken.roles.includes('USER');
+
+    const isAdmin = () => decodedToken && decodedToken.roles.includes('ADMIN');
 
     return (
         <FontSizeProvider>
@@ -52,17 +58,18 @@ function App() {
                 <Route path="/ogloszenia-uzytkownika/:id" element={<OtherUsersAuctionPage />} />
                 <Route path="/kategorie" element={<GeneralCategoriesPage />} />
                 <Route path="/podkategorie/:id" element={<CategoryWithSubcategoriesPage />} />
-                <Route path="/aukcje/search" element={<SearchAuctionsPage />} />
+                <Route path="/aukcje/szukaj" element={<AuctionsSearchPage/>} />
+                <Route path="/moje-wyswietlenia" element={<CurrentUserAuctionsPage/>} />
                 <Route path="/wyloguj" element={<Logout />} />
 
                 {/* USER'S PROTECTED ROUTES */}
-                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/edytuj-profil" element={<EditProfilePage />} />}
-                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/profil" element={<ProfilePage />} />}
-                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/zmien-haslo" element={<ChangePasswordPage />} />}
-                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage />} />}
-                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/nowe-ogloszenie" element={<NewAuctionPage />} />}
-                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/prywatne-ogloszenie/:id" element={<AdvertPrivatePage />} />}
-                {decodedToken && decodedToken.roles.includes('USER') && <Route path="/edytuj-ogloszenie/:id" element={<EditAuctionPage />} />}
+                {isUser() && <Route path="/edytuj-profil" element={<EditProfilePage />} />}
+                {isUser() && <Route path="/profil" element={<ProfilePage />} />}
+                {isUser() && <Route path="/zmien-haslo" element={<ChangePasswordPage />} />}
+                {isUser() && <Route path="/twoje-ogloszenia" element={<UsersAuctionsPage />} />}
+                {isUser() && <Route path="/nowe-ogloszenie" element={<NewAuctionPage />} />}
+                {isUser() && <Route path="/prywatne-ogloszenie/:id" element={<AdvertPrivatePage />} />}
+                {isUser() && <Route path="/edytuj-ogloszenie/:id" element={<EditAuctionPage />} />}
                 <Route path="/edytuj-profil" element={<Navigate replace to="/logowanie" />} />
                 <Route path="/profil" element={<Navigate replace to="/logowanie" />} />
                 <Route path="/zmien-haslo" element={<Navigate replace to="/logowanie" />} />
@@ -74,15 +81,15 @@ function App() {
                 <Route path="/logowanie/admin" element={<AdminLoginPage />} />
 
                 {/* ADMIN'S PROTECTED ROUTES */}
-                {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/profil/admin" element={<AdminProfilePage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/edytuj-profil/admin" element={<AdminEditProfilePage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN') && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN') && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/statystyki-serwisu" element={<AdminStatisticsPage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN') && canBlockUsers()) || (decodedToken && isSuperAdmin())) && <Route path="/zarzadzaj-uzytkownikami" element={<AdminUsersAdministrationPage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/uzytkownik/:id" element={<AdminUserProfileInfoPage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/panel-administratora" element={<AdminPanelPage />} />}
+                {isAdmin() && <Route path="/profil/admin" element={<AdminProfilePage />} />}
+                {isAdmin() && <Route path="/edytuj-profil/admin" element={<AdminEditProfilePage />} />}
+                {isAdmin() && <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage />} />}
+                {((isAdmin() && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage />} />}
+                {((isAdmin() && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage />} />}
+                {isAdmin() && <Route path="/statystyki-serwisu" element={<AdminStatisticsPage />} />}
+                {((isAdmin() && canBlockUsers()) || (decodedToken && isSuperAdmin())) && <Route path="/zarzadzaj-uzytkownikami" element={<AdminUsersAdministrationPage />} />}
+                {isAdmin() && <Route path="/uzytkownik/:id" element={<AdminUserProfileInfoPage />} />}
+                {isAdmin() && <Route path="/panel-administratora" element={<AdminPanelPage />} />}
 
                 <Route path="/rejestracja/admin" element={<Navigate replace to="/brak-uprawnien" />} />
                 <Route path="/profil/admin" element={<Navigate replace to="/brak-uprawnien" />} />

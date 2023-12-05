@@ -1,24 +1,50 @@
-import Navbar from "../components/navbar/Navbar"
-import Footer from "../components/footer/Footer"
-import ScrollToTopButton from "../components/functions/ScrollToTopButton"
-import ScrollToTop from '../components/functions/ScrollToTop'
-import { useFontSize } from "../components/fontSize/FontSizeContext"
-import SearchAuctionsPage from "../components/auctions/SearchAuctionsPage";
+import {useFontSize} from "../components/fontSize/FontSizeContext"
+import React, {useEffect, useState} from "react";
+import {resolveUserType} from "../services/userResolverService";
+import {CurrentUserAuctionsPage} from "./CurrentUserAuctionsPage";
+import {AuctionsSearchPage} from "./AuctionsSearchPage";
 
 export function HomePage() {
-    const { fontSize } = useFontSize();
+    const {fontSize} = useFontSize();
 
     const style = {
         fontSize: fontSize === 'small' ? '16px' : fontSize === 'medium' ? '24px' : '24px',
     };
 
-    return (
+    const [resolvedUser, setResolvedUser] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = localStorage.getItem("accessToken");
+            if (token !== null) {
+                try {
+                    const userType = resolveUserType(token)
+                    setResolvedUser(userType)
+                } catch (error) {
+                    console.error("Błąd podczas pobierania informacji o użytkowniku:", error);
+                }
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const baseUserPage = () => (
         <div className="h-full flex flex-col" style={style}>
-            <Navbar />
-            <ScrollToTop />
-            <ScrollToTopButton />
-            <SearchAuctionsPage />
-            <Footer />
-        </div>
-    )
+            <CurrentUserAuctionsPage/> ;
+        </div>);
+
+    const adminHomepage = () => (
+        <div className="h-full flex flex-col" style={style}>
+            <AuctionsSearchPage/>
+        </div>);
+
+
+    if (resolvedUser === "loggedInUser" || resolvedUser === "anonymous" ) {
+        return baseUserPage();
+    } else if (resolvedUser === "adminUser") {
+        return adminHomepage();
+    } else {
+        return baseUserPage();
+    }
 }

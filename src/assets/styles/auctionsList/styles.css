@@ -1,0 +1,10 @@
+.header {
+    text-align: center;
+    background-color: #292d38;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+.header h4 {
+    margin: 0;
+}

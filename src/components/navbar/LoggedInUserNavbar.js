@@ -121,7 +121,7 @@ export default function LoggedInUserNavbar({ userFirstName }) {
                 <div className="flex justify-evenly w-[15%]">
                     <Link
                         className="text-center mx-auto relative"
-                        to="/"
+                        to="/aukcje/szukaj"
                         data-tooltip-id="advertisements"
                         data-tooltip-content="Ogłoszenia"
                         onMouseEnter={() => setHoveredAds(true)}
