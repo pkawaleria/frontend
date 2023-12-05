@@ -1,13 +1,11 @@
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai"
 import { useState } from "react";
-import { useFontSize } from "../../fontSize/FontSizeContext";
 
 export default function Input(props) {
-    const { label, onChange, id, type, ...inputProps } = props
+    const { label, onChange, id, type, isFontLarge, ...inputProps } = props
     const [isPasswordVisible, setPasswordVisibility] = useState(false);
     const [isDivFocused, setIsDivFocused] = useState(false)
 
-    const {isFontLarge} = useFontSize();
 
     const handleTogglePasswordVisibility = () => {
         setPasswordVisibility(!isPasswordVisible);
@@ -16,7 +14,12 @@ export default function Input(props) {
     return (
         <div className="mt-4 mh-xs:mt-2 mw-2xs:mt-0">
             <label
-                className={`dark:text-neutral-300 text-gray-400 ${isFontLarge ? "text-lg ml-2" : "text-sm"} ml-3 mw-2xs:text-xs mh-xs:text-xs`}>{label}</label>
+                className={`
+                ${isFontLarge ? "text-lg ml-2" : "text-sm"}
+                dark:text-neutral-300 text-gray-400  ease-linear 
+                duration-100 ml-3 mw-2xs:text-xs mh-xs:text-xs`}>
+                {label}
+            </label>
             <div className={`flex border-solid border-blue-500 dark:border-neutral-200 rounded-xl ${isDivFocused ? "border-2 shadow-2xl" : "border"}`}>
                 <input
                     className={`${isFontLarge ? "text-lg" : "text-sm"} mw-xs:placeholder:text-sm w-11/12 p-4 pr-0 mx-0 placeholder-blue-600/50 dark:placeholder-neutral-300 text-blue-600 dark:text-neutral-100 bg-transparent outline-none mh-xs:p-3`}

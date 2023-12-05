@@ -168,7 +168,7 @@ export default function Register() {
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form
-                className={`${isFontLarge ? "text-xl" : "text-base"} bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
+                className={`${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100 bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
                 mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mb-12`}
                 onSubmit={handleSubmit}>
                 <div className="flex">
@@ -178,16 +178,15 @@ export default function Register() {
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input
+                            isFontLarge={isFontLarge}
                             key={input.id}
                             {...input}
                             value={newUserData[input.name]}
                             onChange={handleInputChange}
-                            onKeyDown={handleEnterPress}
-                        />
-                        <span
-                            className={`${isFontLarge ? "text-lg" : "text-sm"} mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
+                            onKeyDown={handleEnterPress}/>
+                        <p className={`${isFontLarge ? "text-lg" : "text-sm"} ease-linear duration-100 mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
                             {errors[input.name + "Error"]}
-                        </span>
+                        </p>
                     </React.Fragment>
                 ))}
                 <div className="flex space-x-4 mt-5 mw-2xs:mt-3">

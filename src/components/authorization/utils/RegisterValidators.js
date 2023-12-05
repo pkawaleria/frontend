@@ -83,7 +83,7 @@ export const validatePhoneNumber = (phone) => {
     let error = "";
 
     if (phone === "") {
-        error = "Telefon nie może być puste";
+        error = "Telefon nie może być pusty";
     } else if (!phoneRegex.test(phone)) {
         error = "Numer telefonu może się składać jedynie z 9 cyfr";
     }

@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import accountMsApi from "../../services/accountMsApi";
+import { useFontSize } from "../fontSize/FontSizeContext";
 
 export default function UserProfileInfo() {
     const token = localStorage.getItem("accessToken");
     const { id } = useParams();
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const {isFontLarge} = useFontSize();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -44,15 +47,15 @@ export default function UserProfileInfo() {
                             className="w-32 h-32 rounded-full object-cover"/>
                     </div>
                     <div className="ml-6 dark:text-neutral-100">
-                        <h2 className="text-3xl font-semibold mb-2">{userData.username}</h2>
-                        <p className="text-lg font-medium">Adres e-mail: {userData.email}</p>
-                        <p className="text-lg font-medium">Imię: {userData.firstname}</p>
-                        <p className="text-lg font-medium">Nazwisko: {userData.lastname}</p>
-                        <p className="text-lg font-medium">Numer telefonu: {userData.phone_number}</p>
+                        <p className={`${isFontLarge ? "text-5xl" : "text-3xl"} ease-linear duration-100 font-semibold mb-2`}>{userData.username}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Adres e-mail: {userData.email}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Imię: {userData.firstname}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Nazwisko: {userData.lastname}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Numer telefonu: {userData.phone_number}</p>
                         {userData.isBanned === false ? (
-                            <p className="text-lg font-medium text-green-600">Czy zablokowany: Nie</p>
+                            <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium text-green-600 dark:text-green-400`}>Czy zablokowany: Nie</p>
                         ) : (
-                            <p className="text-lg font-medium text-red-600">Czy zablokowany: Tak</p>
+                            <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium text-red-600 dark:text-red-400`}>Czy zablokowany: Tak</p>
                         )}
                     </div>
                 </div>

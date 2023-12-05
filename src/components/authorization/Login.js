@@ -8,7 +8,7 @@ import Input from "./form/Input";
 import { validateField } from "./utils/LoginValidators";
 import { inputs } from "./utils/LoginInputs";
 import { loginUser } from "../../services/userService";
-import { useFontSize } from "../fontSize/FontSizeContext";
+import { useFontSize } from "../fontSize/FontSizeContext"
 
 export default function Login() {
     const [loginData, setLoginData] = useState({

@@ -20,12 +20,12 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
             <div className="absolute top-0 right-0 mt-2 mr-2">
                 <VscListOrdered
                     onClick={navigateToAuctions}
-                    className="text-blue-500 dark:text-white hover:dark:text-neutral-400 text-3xl cursor-pointer hover:text-blue-600"/>
+                    className={`${isFontLarge ? "text-5xl" : "text-3xl"} text-blue-500 dark:text-white hover:dark:text-neutral-400 ease-linear duration-100 cursor-pointer hover:text-blue-600`}/>
             </div>
             {/* Wyświetlenie ścieżki */}
             <div className="mb-2 flex items-center space-x-2">
                 <button
-                    className={`${isFontLarge ? "text-xl" : " text-base"} flex items-center space-x-1 bg-gray-100 dark:bg-neutral-100 hover:dark:bg-neutral-300 px-3 py-1 rounded-l-md cursor-pointer hover:bg-blue-100`}
+                    className={`${isFontLarge ? "text-xl" : " text-base"} ease-linear duration-100 flex items-center space-x-1 bg-gray-100 dark:bg-neutral-100 hover:dark:bg-neutral-300 px-3 py-1 rounded-l-md cursor-pointer hover:bg-blue-100`}
                     onClick={(e) => {
                         e.stopPropagation();
                         navigate(`/kategorie`);
@@ -38,7 +38,7 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
                 {categoryData.path.path.map((pathItem, index, array) => (
                     <React.Fragment key={pathItem.id}>
                         <button
-                            className={`${isFontLarge ? "text-xl" : "text-base"} flex items-center space-x-1 bg-gray-100 dark:bg-neutral-100 hover:dark:bg-neutral-300 px-3 py-1 rounded-l-md ${pathItem.id === parentCategoryId ? 'text-gray-400 cursor-not-allowed' : 'cursor-pointer hover:bg-blue-100'}`}
+                            className={`${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100 flex items-center space-x-1 bg-gray-100 dark:bg-neutral-100 hover:dark:bg-neutral-300 px-3 py-1 rounded-l-md ${pathItem.id === parentCategoryId ? 'text-gray-400 cursor-not-allowed' : 'cursor-pointer hover:bg-blue-100'}`}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 if (pathItem.id !== parentCategoryId) {
@@ -60,7 +60,6 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
                 <p className={`${isFontLarge ? "text-3xl" : "text-xl"} font-semibold mb-2 dark:text-neutral-50`}>{categoryData.name}</p>
                 <p className={`${isFontLarge ? "text-xl" : "text-base"} text-gray-600 dark:text-neutral-300`}>{categoryData.description}</p>
             </div>
-
         </div>
     );
 };

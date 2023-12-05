@@ -38,7 +38,7 @@ export default function Profile() {
         <div className="flex flex-col items-center p-5 gradient-bg-color-only min-h-screen">
             <nav className="flex flex-col justify-center w-50 md:w-[50%] bg-blue-500 dark:bg-neutral-600 text-white p-4 rounded-t-lg mb-4">
                 <Link to="/twoje-ogloszenia" 
-                    className={`${isFontLarge ? "text-3xl" : "text-xl"} font-semibold hover:underline`}>Moje ogłoszenia</Link>
+                    className={`${isFontLarge ? "text-3xl" : "text-xl"} ease-linear duration-100 font-semibold hover:underline`}>Moje ogłoszenia</Link>
             </nav>
             <div className="w-50 max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex flex-col relative mt-2">
                 <div className="flex flex-col md:flex-row">
@@ -49,11 +49,11 @@ export default function Profile() {
                             className="w-32 h-32 rounded-full object-cover" />
                     </div>
                     <div className="mx-auto md:ml-6 dark:text-neutral-100">
-                        <p className={`${isFontLarge ? "text-5xl" : "text-3xl"} font-semibold mb-2`}>{userData.username}</p>
-                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} font-medium`}>Adres e-mail: {userData.email}</p>
-                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} font-medium`}>Imię: {userData.firstname}</p>
-                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} font-medium`}>Nazwisko: {userData.lastname}</p>
-                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} font-medium`}>Numer telefonu: {userData.phone_number}</p>
+                        <p className={`${isFontLarge ? "text-5xl" : "text-3xl"} ease-linear duration-100 font-semibold mb-2`}>{userData.username}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Adres e-mail: {userData.email}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Imię: {userData.firstname}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Nazwisko: {userData.lastname}</p>
+                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Numer telefonu: {userData.phone_number}</p>
                     </div>
                 </div>
                 <div className="flex items-center self-center mt-4">
@@ -62,10 +62,10 @@ export default function Profile() {
                         ${isFontLarge ? "text-2xl" : "text-base"}
                         nav-link bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700
                         text-white py-2 px-3 rounded-full hover:bg-blue-600 
-                        easy-linear duration-200 focus:outline-none mr-2`}
+                        easy-linear duration-100 focus:outline-none mr-2`}
                         data-tooltip-id='editProfileTooltip'
                         data-tooltip-content="Edytuj dane konta">
-                        <FaEdit className={`${isFontLarge ? "text-3xl" : "text-lg"}`}/>
+                        <FaEdit className={`${isFontLarge ? "text-3xl" : "text-lg"} ease-linear duration-100`}/>
                         <Tooltip 
                             id="editProfileTooltip" 
                             type="dark" 
@@ -75,7 +75,7 @@ export default function Profile() {
                     </Link>
                     <Link to="/zmien-haslo"
                         className={`${isFontLarge ? "text-xl" : "text-sm"} nav-link bg-yellow-500 dark:bg-yellow-700 dark:hover:bg-yellow-600
-                        text-white py-2 px-3 rounded-full hover:bg-yellow-600 easy-linear duration-200 
+                        text-white py-2 px-3 rounded-full hover:bg-yellow-600 easy-linear duration-100 
                         focus:outline-none mr-2`} >
                         Zmień hasło
                     </Link>
@@ -84,7 +84,7 @@ export default function Profile() {
                         ${isFontLarge ? "text-2xl" : "text-base"}
                         nav-link bg-red-500 dark:bg-red-900 dark:hover:bg-red-800 
                         text-white py-2 pr-3 pl-2 rounded-full hover:bg-red-800 easy-linear 
-                        duration-200 focus:outline-none`} 
+                        duration-100 focus:outline-none`} 
                         data-tooltip-id='logoutTooltip' 
                         data-tooltip-content="Wyloguj się">
                         <BiLogOut className={`${isFontLarge ? "text-3xl" : "text-lg"}`}/>

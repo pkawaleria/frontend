@@ -50,17 +50,17 @@ const CategoryWithSubcategories = () => {
                 <p className={`${isFontLarge ? "text-xl" : "text-lg"} text-gray-600 dark:text-neutral-200 mb-2`}>{currentCategory.description}</p>
                 <button
                     onClick={navigateToAuctions}
-                    className={`${isFontLarge ? "text-xl" : "text-lg"} bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800 text-white py-1 px-3 rounded mr-2 hover:bg-blue-700`}>
+                    className={`${isFontLarge ? "text-xl" : "text-lg"} bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800 text-white py-1 px-3 rounded mr-2 ease-linear duration-100 hover:bg-blue-700`}>
                     Pokaż aukcje
                 </button>
                 {isAdmin && (
                     <>
-                        <button className={`${isFontLarge ? "text-xl" : "text-lg"} bg-red-600 text-white py-1 px-3 rounded mr-2 hover:bg-red-700`}>Usuń</button>
-                        <button className={`${isFontLarge ? "text-xl" : "text-lg"} bg-blue-400 text-white py-1 px-3 rounded hover:bg-blue-500`}>Wyświetl szczegóły</button>
+                        <button className={`${isFontLarge ? "text-xl" : "text-lg"} bg-red-800 dark:bg-red-400 dark:hover:bg-red-600 text-white py-1 px-3 rounded mr-2 hover:bg-red-500 ease-linear duration-100`}>Usuń</button>
+                        <button className={`${isFontLarge ? "text-xl" : "text-lg"} bg-blue-400 text-white py-1 px-3 rounded hover:bg-blue-500 ease-linear duration-100`}>Wyświetl szczegóły</button>
                     </>
                 )}
                 <div className="mt-2">
-                    <p className={`${isFontLarge ? "text-lg" : "text-sm"} text-gray-400 dark:text-neutral-300`}>
+                    <p className={`${isFontLarge ? "text-lg" : "text-sm"} ease-linear duration-100 text-gray-400 dark:text-neutral-300`}>
                         Liczba podkategorii: {currentCategory.subcategories.length}
                     </p>
                 </div>

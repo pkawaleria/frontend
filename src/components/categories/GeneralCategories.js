@@ -22,8 +22,8 @@ const GeneralCategories = () => {
                     key={category.id}
                     className="w-full sm:w-full md:w-full lg:w-full xl:w-full bg-gray-200 dark:bg-neutral-600 dark:text-neutral-200 p-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300 cursor-pointer"
                     onClick={() => navigate(`/podkategorie/${category.id}`)}>
-                    <p className={`${isFontLarge ? "text-3xl" : "text-xl"} font-semibold mb-2`}>{category.name}</p>
-                    <p className={`${isFontLarge ? "text-xl" : "text-lg"} text-gray-600 dark:text-neutral-200`}>{category.description}</p>
+                    <p className={`${isFontLarge ? "text-3xl" : "text-xl"} ease-linear duration-100 font-semibold mb-2`}>{category.name}</p>
+                    <p className={`${isFontLarge ? "text-xl" : "text-lg"} ease-linear duration-100 text-gray-600 dark:text-neutral-200`}>{category.description}</p>
                 </div>
             ))}
         </div>

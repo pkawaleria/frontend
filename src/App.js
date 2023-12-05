@@ -23,7 +23,6 @@ import { AdminLoginPage } from './pages/AdminLoginPage';
 import { AdminProfilePage } from './pages/AdminProfilePage';
 import { AdminChangePasswordPage } from './pages/AdminChangePasswordPage';
 import { AdminEditProfilePage } from './pages/AdminEditProfilePage';
-import { AdminAddingPermissionsPage } from "./pages/AdminAddingPermissionsPage";
 import { AdminDeletingPermissionsPage } from './pages/AdminDeletingPermissions';
 import { AdminStatisticsPage } from "./pages/AdminStatisticsPage";
 import { AdminUsersAdministrationPage } from './pages/AdminUsersAdministrationPage';
@@ -77,7 +76,6 @@ function App() {
                 {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/profil/admin" element={<AdminProfilePage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/edytuj-profil/admin" element={<AdminEditProfilePage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/zmien-haslo/admin" element={<AdminChangePasswordPage />} />}
-                {((decodedToken && decodedToken.roles.includes('ADMIN') && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/dodaj-uprawnienia" element={<AdminAddingPermissionsPage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN') && canAddPerms()) || (decodedToken && isSuperAdmin())) && <Route path="/usun-uprawnienia" element={<AdminDeletingPermissionsPage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN'))) && <Route path="/statystyki-serwisu" element={<AdminStatisticsPage />} />}
                 {((decodedToken && decodedToken.roles.includes('ADMIN') && canBlockUsers()) || (decodedToken && isSuperAdmin())) && <Route path="/zarzadzaj-uzytkownikami" element={<AdminUsersAdministrationPage />} />}

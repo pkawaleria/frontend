@@ -315,17 +315,17 @@ export default function FullAuctionInfo() {
                 {(isSuperAdmin() || canDeleteAuctions()) && (
                     <div className="bg-white dark:bg-neutral-700/20 rounded-lg shadow-md p-[1vw]">
                         <Link
+                            className={`${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100`}
                             data-tooltip-id="deleteAd"
                             data-tooltip-content="Usuń ogłoszenie"
                             onClick={deleteAuction}>
+                            <BsXCircle className={`${isFontLarge ? "text-3xl" : "text-lg"} text-red-400 hover:text-red-600 ease-linear duration-100`} />
                             <Tooltip
                                 id="deleteAd"
                                 type="dark"
                                 effect="solid"
-                                delayShow={200}
-                                delayHide={100}
-                            />
-                            <BsXCircle size={20} z={100} className="text-red-400 hover:text-red-600 ease-linear duration-100" />
+                                delayShow={50}
+                                delayHide={50} />
                         </Link>
                     </div>
                 )}
