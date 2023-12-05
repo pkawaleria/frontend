@@ -142,7 +142,7 @@ export default function FullAuctionInfo() {
 
     function navigateToAuctions(name, id) {
         let category = formatToUrlOption(name, id);
-        navigate(`/?selectedCategory=${category}`);
+        navigate(`/aukcje/szukaj/?selectedCategory=${category}`);
     }
 
     if (loading) {

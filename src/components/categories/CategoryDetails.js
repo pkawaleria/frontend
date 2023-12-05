@@ -11,7 +11,7 @@ const CategoryDetails = ({parentCategoryId, categoryData}) => {
 
     function navigateToAuctions() {
         let category = formatToUrlOption(categoryData.name, categoryData.id);
-        navigate(`/?selectedCategory=${category}`);
+        navigate(`/aukcje/szukaj/?selectedCategory=${category}`);
     }
 
     return (

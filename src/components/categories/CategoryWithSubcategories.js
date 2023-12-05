@@ -40,7 +40,7 @@ const CategoryWithSubcategories = () => {
 
     function navigateToAuctions() {
         let category = formatToUrlOption(currentCategory.name, currentCategory.id);
-        navigate(`/?selectedCategory=${category}`);
+        navigate(`/aukcje/szukaj/?selectedCategory=${category}`);
     }
 
     return (
