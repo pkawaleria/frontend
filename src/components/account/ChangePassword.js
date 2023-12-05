@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import { ImArrowLeft } from 'react-icons/im';
 import { arePasswordsIdentical, validatePassword } from '../authorization/utils/RegisterValidators';
+import { useFontSize } from "../fontSize/FontSizeContext"
 
 export default function ChangePassword() {
     const [passwordData, setPasswordData] = useState({
@@ -17,6 +18,8 @@ export default function ChangePassword() {
     });
 
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+    const { isFontLarge } = useFontSize();
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -82,64 +85,67 @@ export default function ChangePassword() {
         <div className="flex items-center justify-center p-5 gradient-bg-color-only min-h-screen">
             <div className="w-50 max-w-screen-md bg-white dark:bg-neutral-600 rounded-lg shadow-xl p-6 flex flex-col relative">
                 <Link
-                    data-tooltip-id="backToProfile"
-                    data-tooltip-content="Powrót do profilu"
                     to="/profil"
-                    className="absolute top-1 left-1"
-                >
+                    className={`${isFontLarge ? "text-2xl" : "text-lg"} absolute top-2 left-2`}
+                    data-tooltip-id="backToProfile"
+                    data-tooltip-content="Powrót do profilu">
+                    <ImArrowLeft
+                        className={`${isFontLarge ? "text-4xl" : "text-3xl"} text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100 m-1`} />
                     <Tooltip
                         id="backToProfile"
                         type="dark"
                         effect="solid"
                         delayShow={50}
-                        delayHide={50}
-                    />
-                    <ImArrowLeft
-                        size={30}
-                        className="text-blue-500 hover:cursor-pointer hover:text-blue-700 ease-linear duration-100 m-1"
-                    />
+                        delayHide={50} />
                 </Link>
                 <div className="flex-shrink-0 mx-auto mb-4">
                     <img
                         src="https://cdn-icons-png.flaticon.com/512/1053/1053244.png"
                         alt="User Avatar"
-                        className="w-32 h-32 rounded-full object-cover"
-                    />
+                        className="w-32 h-32 rounded-full object-cover" />
                 </div>
                 <div className="mx-auto dark:text-neutral-300">
                     <div className="mb-4">
-                        <label className="text-lg font-medium">Nowe hasło:</label>
+                        <label className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Nowe hasło:</label>
                         <input
                             type="password"
                             name="new_password"
                             value={passwordData.new_password}
                             onChange={handleInputChange}
-                            className="border p-2 rounded-lg w-full outline-none border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
-                        />
+                            className={`
+                            ${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100
+                            border p-2 rounded-lg w-full outline-none 
+                            border-gray-500 focus:border-2 dark:border-neutral-100
+                            dark:bg-neutral-300/30 dark:text-neutral-100`} />
                     </div>
                     {errors.new_passwordError && (
-                        <span className="text-red-500 text-lg">{errors.new_passwordError}</span>
+                        <span className={`${isFontLarge ? "text-xl" : "text-lg"} ease-linear duration-100 text-red-500`}>{errors.new_passwordError}</span>
                     )}
                     <div className="mb-4">
-                        <label className="block text-lg font-medium">Powtórz nowe hasło:</label>
+                        <label className={`${isFontLarge ? "text-2xl" : "text-lg"} ease-linear duration-100 font-medium`}>Powtórz nowe hasło:</label>
                         <input
                             type="password"
                             name="new_password_confirm"
                             value={passwordData.new_password_confirm}
                             onChange={handleInputChange}
-                            className="border p-2 rounded-lg w-full outline-none border-gray-500 focus:border-2 dark:border-neutral-100 dark:bg-neutral-300/30 dark:text-neutral-100"
-                        />
+                            className={`
+                            ${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100
+                            border p-2 rounded-lg w-full outline-none 
+                            border-gray-500 focus:border-2 dark:border-neutral-100
+                            dark:bg-neutral-300/30 dark:text-neutral-100`} />
                         {errors.new_password_confirmError && (
-                            <span className="text-red-500 text-lg">{errors.new_password_confirmError}</span>
+                            <span className={`${isFontLarge ? "text-xl" : "text-lg"} ease-linear duration-100 text-red-500`}>{errors.new_password_confirmError}</span>
                         )}
                     </div>
                 </div>
-
-                <div className="flex justify-center mt-4">
+                <div className="flex justify-end w-full">
                     <button
-                        className="bg-green-500 dark:bg-green-800 dark:hover:bg-green-700 text-white py-3 px-6 rounded-full hover:bg-green-600 easy-linear duration-200 focus:outline-none"
-                        onClick={handleUpdatePassword}
-                    >
+                        className={`
+                        ${isFontLarge ? "text-2xl" : "text-base"}
+                        bg-green-500 dark:bg-green-800 dark:hover:bg-green-700
+                         text-white py-3 px-6 rounded-full hover:bg-green-600 
+                         easy-linear duration-100 focus:outline-none`}
+                        onClick={handleUpdatePassword}>
                         Zmień hasło
                     </button>
                 </div>

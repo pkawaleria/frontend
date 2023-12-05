@@ -139,21 +139,20 @@ export default function Register() {
     const userTheme = localStorage.getItem("theme");
     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    const themeCheck = () => {
-        if (userTheme === "dark" || (!userTheme && systemTheme)) {
-            document.documentElement.classList.add("dark");
-            document.body.style.backgroundColor = "rgb(38 38 38)";
-            localStorage.setItem("theme", "dark")
-            return;
-        }
-        document.body.style.backgroundColor = "rgb(25, 70, 113)";
-        localStorage.setItem("theme", "light")
-    }
-
     useEffect(() => {
-        themeCheck()
-    }, [])
+        const themeCheck = () => {
+            if (userTheme === "dark" || (!userTheme && systemTheme)) {
+                document.documentElement.classList.add("dark");
+                document.body.style.backgroundColor = "rgb(38 38 38)";
+                localStorage.setItem("theme", "dark")
+                return;
+            }
+            document.body.style.backgroundColor = "rgb(25, 70, 113)";
+            localStorage.setItem("theme", "light")
+        }
 
+        themeCheck()
+    }, [userTheme, systemTheme])
 
     return (
         <div className="flex items-center justify-center min-h-screen linear gradient-bg-color-only mt-12">

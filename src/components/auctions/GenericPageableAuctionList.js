@@ -44,7 +44,8 @@ export default function GenericPageableAuctionList({
                         <img
                             src={`data:image/jpeg;base64,${auction.thumbnail}`}
                             alt={auction.name}
-                            className="object-cover"/>
+                            className="object-cover"
+                            style={{width: "300px", height: "300px"}}/>
                         <div className="w-[100%] px-3 py-2 flex flex-col">
                             <div className="flex h-1/5">
                                 <p className={`${isFontLarge ? "text-3xl" : "text-xl"} font-semibold w-[50%] text-left`}>
@@ -68,7 +69,6 @@ export default function GenericPageableAuctionList({
                                         : ''
                                     }
                                 </p>
-
                             </div>
                             <p className={`text-gray-600 dark:text-neutral-300 ${isFontLarge ? "text-2xl mt-1" : "text-lg"} h-3/5`}>
                                 Cena: {formatPrice(auction.price)}
