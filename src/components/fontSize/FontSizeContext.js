@@ -1,23 +1,21 @@
-// FontSizeContext.js
-
 import React, { createContext, useContext, useState } from 'react';
 
 const FontSizeContext = createContext();
 
 export function FontSizeProvider({ children }) {
-  const [fontSize, setFontSize] = useState('small'); // Domyślny rozmiar czcionki
+    const [isFontLarge, setIsFontLarge] = useState(false);
 
-  const toggleFontSize = () => {
-    setFontSize((prevSize) => (prevSize === 'small' ? 'medium' : 'small'));
-  };
+    const toggleFont = () => {
+        setIsFontLarge((prevValue) => !prevValue);
+    };
 
-  return (
-    <FontSizeContext.Provider value={{ fontSize, toggleFontSize }}>
-      {children}
-    </FontSizeContext.Provider>
-  );
+    return (
+        <FontSizeContext.Provider value={{ isFontLarge, toggleFont }}>
+            {children}
+        </FontSizeContext.Provider>
+    );
 }
 
-export function useFontSize() {
-  return useContext(FontSizeContext);
+export const useFontSize = () => {
+    return useContext(FontSizeContext);
 }

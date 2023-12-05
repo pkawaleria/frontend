@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export default function SwapToLogin({isOn}) {
+export default function SwapToLogin({isOn, isFontLarge}) {
     return (
         <Link to="/logowanie" className="w-full mh-xs:w-1/2">
             {isOn === true ? (
@@ -8,7 +8,7 @@ export default function SwapToLogin({isOn}) {
                     LOGOWANIE
                 </button>
             ) : (
-                <button className="swap-button hover:ease-linear hover:text-lg duration-75 mw-2xs:hover:text-sm">
+                <button className={`${isFontLarge ? "hover:text-2xl" : "hover:text-lg"} swap-button hover:ease-linear duration-75 mw-2xs:hover:text-sm`}>
                     LOGOWANIE
                 </button>
             )}

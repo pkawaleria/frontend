@@ -5,6 +5,7 @@ import GenericPageableAuctionsList from "./GenericPageableAuctionList";
 import {useSearchParams} from 'react-router-dom';
 import {Alert, Button, Typography} from '@mui/material';
 import LoadingSpinner from "../spinner/LoadingSpinner";
+import { useFontSize } from '../fontSize/FontSizeContext';
 
 export default function SearchAuctionsPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -23,6 +24,8 @@ export default function SearchAuctionsPage() {
 
     const [isLoading, setIsLoading] = useState(true)
     const [currentlyAppliedFilters, setCurrentlyAppliedFilters] = useState({})
+
+    const {isFontLarge} = useFontSize();
 
 
     useEffect(() => {
@@ -204,11 +207,19 @@ export default function SearchAuctionsPage() {
                     />
 
                     {pagedAuctions && pagedAuctions.pageCount === 0 ? (
-                        <div className="w-4/5 mx-auto text-center mt-3">
-                            <Alert severity="error" sx={{mb: 2}}>
+                        <div className="w-4/5 mx-auto text-center mt-3 min-h-screen">
+                            <Alert severity="error" 
+                                sx={{
+                                    mb: 2,
+                                    fontSize: isFontLarge ? "20px" : "16px"
+                                }}>
                                 Nie znaleziono aukcji, wprowadź inne kryteria wyszukiwania i ponów próbę.
                             </Alert>
-                            <Button variant="outlined" onClick={clearFilters} sx={{mb: 2}}>
+                            <Button variant="outlined" onClick={clearFilters} 
+                                sx={{
+                                    mb: 2,
+                                    fontSize: isFontLarge ? "20px" : "16px"
+                                }}>
                                 Wyczyść filtry
                             </Button>
                         </div>
@@ -221,17 +232,16 @@ export default function SearchAuctionsPage() {
                                     color: "white",
                                     marginBottom: "0px",
                                     marginTop: "10px",
-                                    fontWeight: "bold"
+                                    fontWeight: "bold",
+                                    fontSize: isFontLarge ? "20px": "16px"
                                 }}
                                 gutterBottom>
                                 Liczba wyników wyszukiwania: {pagedAuctions?.totalAuctionsCount}
                             </Typography>
                             <GenericPageableAuctionsList
                                 pagedAuctions={pagedAuctions}
-                                onPageChange={newPageNumber => onPageChange(newPageNumber)}
-                            />
+                                onPageChange={newPageNumber => onPageChange(newPageNumber)}/>
                         </div>
-
                     )}
                 </div>
             )}

@@ -4,7 +4,7 @@ import { BiCategoryAlt, BiPhotoAlbum } from "react-icons/bi";
 import { MdOutlineDescription, MdTitle } from "react-icons/md";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { AiOutlinePhone } from "react-icons/ai";
-import {TbMoneybag} from "react-icons/tb";
+import { TbMoneybag } from "react-icons/tb";
 import { GiMatterStates } from "react-icons/gi";
 import Select from "react-select";
 import { searchCities } from "../../services/citiesService";
@@ -17,6 +17,7 @@ import {
     getAuctionImage
 } from "../../services/auctionsService";
 import { useNavigate } from "react-router-dom"
+import { useFontSize } from "../fontSize/FontSizeContext";
 
 export default function EditAuction() {
     const navigate = useNavigate();
@@ -48,6 +49,8 @@ export default function EditAuction() {
         message: "",
         type: "",
     });
+
+    const { isFontLarge } = useFontSize();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -251,17 +254,16 @@ export default function EditAuction() {
 
     return (
         <div className="items-center gradient-bg-color-only">
-            <h2 className="w-[55%] mx-auto text-2xl mb-4 text-white font-bold bg-blue-500 dark:bg-neutral-600 dark:border-white py-2 text-center rounded-lg border border-blue-500">
+            <p className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 w-[55%] mx-auto mb-4 text-white font-bold bg-blue-500 dark:bg-neutral-600 dark:border-white py-2 text-center rounded-lg border border-blue-500`}>
                 Edytuj aukcję
-            </h2>
+            </p>
             <div className="w-[60%] mx-auto mt-5 mb-5 bg-white dark:bg-neutral-600 rounded-lg shadow-md relative">
                 <form className="bg-white dark:bg-neutral-600 py-3 px-8 border-0 w-2/3 self-center">
                     <div className="mb-4">
-                        <MdTitle size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <MdTitle className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="title"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2"
-                        >
+                            className={`${isFontLarge ? "text-xl ml-2" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Tytuł ogłoszenia:
                         </label>
                         <input
@@ -274,18 +276,19 @@ export default function EditAuction() {
                                 validateTitle();
                             }}
                             onBlur={validateTitle}
-                            className={`w-[80%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 rounded-md focus:outline-none focus:border-blue-500 ${titleError ? "border-red-500 dark:border-red-500" : ""
-                                }`}
-                            required
-                        />
+                            className={`
+                            w-[80%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50
+                            dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none 
+                            ${titleError ? "border-red-500 dark:border-red-500" : ""}
+                            ${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100`}
+                            required />
                         {titleError && <p className="text-red-500">{titleError}</p>}
                     </div>
                     <div className="mb-4">
-                        <BiCategoryAlt size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <BiCategoryAlt className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="category"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2"
-                        >
+                            className={`${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Kategoria:
                         </label>
                         <Select
@@ -293,16 +296,14 @@ export default function EditAuction() {
                             onChange={handleCategorySelectionChange}
                             options={selectableCategories}
                             placeholder="Kategoria"
-                            className="text-gray-700 flex-grow"
-                            isClearable
-                        />
+                            className={`${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100 text-gray-700 flex-grow`}
+                            isClearable />
                     </div>
                     <div className="mb-4">
-                        <GiMatterStates size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <GiMatterStates className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="condition"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2"
-                        >
+                            className={`${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Stan:
                         </label>
                         <select
@@ -314,9 +315,11 @@ export default function EditAuction() {
                                 validateCondition(e.target.value);
                             }}
                             onBlur={() => validateCondition(condition)}
-                            className={`w-[50%] p-2 border border-blue-500 focus:border-blue-500 dark:focus:border-blue-500 dark:border-neutral-200 rounded-md focus:outline-none ${conditionError ? "border-red-500 dark:border-red-500" : ""} `}
-                            required
-                        >
+                            className={`w-[50%] p-2 border border-blue-500 focus:border-blue-500
+                            dark:focus:border-blue-500 dark:border-neutral-200 rounded-md focus:outline-none 
+                            ${conditionError ? "border-red-500 dark:border-red-500" : ""} 
+                            ${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100`}
+                            required>
                             <option value="" className="bg-gray-300 dark:bg-neutral-600">
                                 Wybierz stan
                             </option>
@@ -338,10 +341,10 @@ export default function EditAuction() {
                         )}
                     </div>
                     <div className="mb-4">
-                        <BiPhotoAlbum size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <BiPhotoAlbum className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="images"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            className={`${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Zdjęcia:
                         </label>
                         <input
@@ -351,7 +354,9 @@ export default function EditAuction() {
                             accept="image/jpeg, image/jpg, image/png"
                             multiple
                             onChange={handleImageUpload}
-                            className={`w-[60%] p-2 border border-blue-500 dark:border-neutral-50 rounded-md focus:outline-none `} />
+                            className={`
+                            ${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100
+                            w-[80%] p-2 border border-blue-500 dark:border-neutral-50 rounded-md focus:outline-none `} />
                         <div className="mt-2 flex flex-wrap">
                             {imagePreviews.map((preview, index) => (
                                 <div key={index} className="mr-2 mb-2">
@@ -359,16 +364,19 @@ export default function EditAuction() {
                                         <img
                                             src={preview}
                                             alt={`Preview ${index + 1}`}
-                                            width="100"
-                                            height="100"
+                                            width={`${isFontLarge ? "150" : "100"}`}
+                                            height={`${isFontLarge ? "150" : "100"}`}
                                             style={{
                                                 objectFit: "cover",
-                                                width: "100px",
-                                                height: "100px",
-                                            }}
-                                        />
+                                                width: `${isFontLarge ? "150" : "100"}`,
+                                                height: `${isFontLarge ? "150" : "100"}`,
+                                            }} />
                                     ) : (
-                                        <div className="w-[100px] h-[100px] border border-blue-500 dark:border-neutral-50 dark:bg-neutral-500 flex items-center justify-center text-gray-400 dark:text-neutral-200">
+                                        <div className={`
+                                        ${isFontLarge ? "text-xl" : "text-base"} ease-linear duration-100
+                                        w-[100px] h-[100px] border border-blue-500 dark:border-neutral-50
+                                        dark:bg-neutral-500 flex items-center justify-center 
+                                        text-gray-400 dark:text-neutral-200`}>
                                             Zdjęcie {index + 1}
                                         </div>
                                     )}
@@ -377,11 +385,10 @@ export default function EditAuction() {
                         </div>
                     </div>
                     <div className="mb-4">
-                        <MdOutlineDescription size={25} className="inline-block mr-2 dark:text-neutral-50" />{" "}
+                        <MdOutlineDescription className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="description"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2"
-                        >
+                            className={`${isFontLarge ? "text-xl ml-1" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Opis ogłoszenia:
                         </label>
                         <textarea
@@ -394,16 +401,20 @@ export default function EditAuction() {
                             }}
                             onBlur={validateDescription}
                             rows="4"
-                            className={`w-[90%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${descriptionError ? "border-red-500 dark:border-red-500" : ""
-                                }`}
+                            className={`
+                            w-[90%] p-2 border border-blue-500 dark:bg-neutral-300/30
+                            dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 
+                            focus:border-blue-500 rounded-md focus:outline-none
+                            ${descriptionError ? "border-red-500 dark:border-red-500" : ""}
+                            ${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100`}
                             required />
                         {descriptionError && <p className="text-red-500">{descriptionError}</p>}
                     </div>
                     <div className="mb-4 relative">
-                        <FaMapMarkerAlt size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <FaMapMarkerAlt className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="city"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            className={`${isFontLarge ? "text-xl ml-1" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Miasto:
                         </label>
                         <Select
@@ -412,16 +423,17 @@ export default function EditAuction() {
                             onInputChange={handleCityInputChange}
                             options={searchedCities}
                             placeholder="Miasto"
-                            className="text-gray-700 react-select-container flex-grow"
+                            className={`
+                            ${isFontLarge ? "text-xl" : "text-base"}
+                            text-gray-700 react-select-container flex-grow`}
                             classNamePrefix="react-select"
                             isClearable />
                     </div>
-
                     <div className="mb-4">
-                        <AiOutlinePhone size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <AiOutlinePhone className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="phoneNumber"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            className={`${isFontLarge ? "text-xl ml-1" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Numer telefonu:
                         </label>
                         <input
@@ -434,16 +446,19 @@ export default function EditAuction() {
                                 validatePhoneNumber(e.target.value);
                             }}
                             onBlur={() => validatePhoneNumber(phoneNumber)}
-                            className={`w-[50%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 rounded-md focus:outline-none ${phoneNumberError ? "border-red-500 dark:border-red-500" : ""
-                                }`}
+                            className={`
+                            w-[50%] p-2 border border-blue-500 dark:text-neutral-50 dark:border-neutral-200 dark:bg-neutral-300/30
+                            dark:focus:border-blue-500 rounded-md focus:outline-none 
+                            ${phoneNumberError ? "border-red-500 dark:border-red-500" : ""}
+                            ${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100`}
                             required />
                         {phoneNumberError && <p className="text-red-500">{phoneNumberError}</p>}
                     </div>
                     <div className="mb-4">
-                        <TbMoneybag size={25} className="inline-block mr-2 dark:text-neutral-50" />
+                        <TbMoneybag className={`${isFontLarge ? "text-4xl" : "text-2xl"} ease-linear duration-100 inline-block mr-2 dark:text-neutral-50`} />
                         <label
                             htmlFor="price"
-                            className="block text-gray-600 dark:text-neutral-300 font-medium mb-2">
+                            className={`${isFontLarge ? "text-xl ml-1" : "text-base"} ease-linear duration-100 block text-gray-600 dark:text-neutral-300 font-medium mb-2`}>
                             Cena:
                         </label>
                         <input
@@ -456,24 +471,26 @@ export default function EditAuction() {
                                 validatePrice(e.target.value);
                             }}
                             onBlur={() => validatePrice(price)}
-                            className={`w-[50%] p-2 border border-blue-500 dark:bg-neutral-300/30 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 focus:border-blue-500 rounded-md focus:outline-none ${priceError ? "border-red-500 dark:border-red-500" : ""
-                                }`}
+                            className={`
+                            w-[50%] p-2 border border-blue-500 dark:text-neutral-50 dark:border-neutral-200 dark:focus:border-blue-500 dark:bg-neutral-300/30
+                            focus:border-blue-500 rounded-md focus:outline-none 
+                            ${priceError ? "border-red-500 dark:border-red-500" : ""}
+                            ${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100`}
                             required/>
                         {priceError && <p className="text-red-500">{priceError}</p>}
                     </div>
                     <div className="flex justify-left space-x-4">
                         <Link
                             to="/twoje-ogloszenia"
-                            className="bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 text-white py-2 px-4 rounded-md hover:bg-blue-700 ease-linear duration-100">
+                            className={`${isFontLarge ? "text-2xl" : "text-base"} bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 text-white py-2 px-4 rounded-md hover:bg-blue-700 ease-linear duration-100`}>
                             Moje ogłoszenia
                         </Link>
                         <Link
                             type="button"
                             onClick={handleEditAuction}
-                            className={`bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${isFormValid() ? "" : "opacity-50 cursor-not-allowed"
-                                }`}
+                            className={`${isFontLarge ? "text-2xl" : "text-base"} bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${isFormValid() ? "" : "opacity-50 cursor-not-allowed"}`}
                             disabled={!isFormValid()}>
-                            Aktualizuj ogłoszenie
+                            Dodaj ogłoszenie
                         </Link>
                     </div>
                 </form>
@@ -482,17 +499,17 @@ export default function EditAuction() {
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                        <p className="text-lg dark:text-neutral-200 font-semibold mb-4 text-center">
-                            Czy na pewno chcesz zaktualizować aukcję?
+                    <p className={`${isFontLarge ? "text-3xl" : "text-lg"} dark:text-neutral-200 font-semibold mb-4 text-center`}>
+                            Czy na pewno chcesz zaktualizować ogłoszenie?
                         </p>
                         <div className="flex justify-center space-x-4">
                             <button
-                                className="text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 py-2 px-4 rounded-md"
+                                className={`${isFontLarge ? "text-2xl" : "text-base"} text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 py-2 px-4 rounded-md`}
                                 onClick={confirmEditAuction}>
                                 Tak, zaktualizuj aukcję
                             </button>
                             <button
-                                className="text-white bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:hover:bg-red-700 ease-linear duration-100 py-2 px-4 rounded-md"
+                                className={`${isFontLarge ? "text-2xl" : "text-base"} text-white bg-red-400 hover:bg-red-600 dark:bg-red-400 dark:hover:bg-red-700 ease-linear duration-100 py-2 px-4 rounded-md`}
                                 onClick={() => setIsConfirmationModalOpen(false)}>
                                 Anuluj
                             </button>
@@ -504,12 +521,12 @@ export default function EditAuction() {
                 <div className="fixed inset-0 flex items-center justify-center z-50">
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                     <div className="relative bg-white dark:bg-neutral-600 w-1/2 rounded-lg shadow-md p-8 opacity-100">
-                        <p className="text-lg dark:text-neutral-200 font-semibold mb-4 text-center">
+                        <p className={`${isFontLarge ? "text-3xl" : "text-lg"} dark:text-neutral-200 font-semibold mb-4 text-center`}>
                             ${messagePopup.message}
                         </p>
                         <div className="flex justify-center space-x-4">
                             <button
-                                className="text-white dark:text-neutral-200 bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 py-2 px-4 rounded-md"
+                                 className={`${isFontLarge ? "text-2xl" : "text-base"} text-white dark:text-neutral-200 bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 py-2 px-4 rounded-md`}
                                 onClick={handlePopupClose}>
                                 Ok
                             </button>

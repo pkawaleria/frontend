@@ -1,16 +1,9 @@
-import {useFontSize} from "../components/fontSize/FontSizeContext"
 import React, {useEffect, useState} from "react";
 import {resolveUserType} from "../services/userResolverService";
 import {CurrentUserAuctionsPage} from "./CurrentUserAuctionsPage";
 import {AuctionsSearchPage} from "./AuctionsSearchPage";
 
 export function HomePage() {
-    const {fontSize} = useFontSize();
-
-    const style = {
-        fontSize: fontSize === 'small' ? '16px' : fontSize === 'medium' ? '24px' : '24px',
-    };
-
     const [resolvedUser, setResolvedUser] = useState(null);
 
     useEffect(() => {
@@ -30,12 +23,12 @@ export function HomePage() {
     }, []);
 
     const baseUserPage = () => (
-        <div className="h-full flex flex-col" style={style}>
+        <div className="h-full flex flex-col">
             <CurrentUserAuctionsPage/> ;
         </div>);
 
     const adminHomepage = () => (
-        <div className="h-full flex flex-col" style={style}>
+        <div className="h-full flex flex-col">
             <AuctionsSearchPage/>
         </div>);
 
