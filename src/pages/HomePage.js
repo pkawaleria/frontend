@@ -25,8 +25,6 @@ export function HomePage() {
     const baseUserPage = () => <CurrentUserAuctionsPage/>;
     const adminHomepage = () => <AuctionsSearchPage/>;
 
-
-
     if (resolvedUser === "loggedInUser" || resolvedUser === "anonymous" ) {
         return baseUserPage();
     } else if (resolvedUser === "adminUser") {

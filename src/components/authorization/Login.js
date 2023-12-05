@@ -112,6 +112,7 @@ export default function Login() {
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input
+                            isFontLarge={isFontLarge}
                             key={input.id}
                             {...input}
                             value={loginData[input.name]}

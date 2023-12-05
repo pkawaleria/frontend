@@ -1,10 +1,11 @@
 .header {
     text-align: center;
-    background-color: #292d38;
+    background-color: rgba(18, 36, 87, 0.5);
     padding: 20px;
     border-radius: 12px;
     margin-bottom: 20px;
 }
+
 .header h4 {
     margin: 0;
 }
