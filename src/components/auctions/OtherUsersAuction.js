@@ -4,9 +4,11 @@ import { BiCategoryAlt } from 'react-icons/bi'
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import LoadingSpinner from "../spinner/LoadingSpinner";
+import { useFontSize } from "../fontSize/FontSizeContext";
 
 export default function OtherUsersAuction() {
     const { id } = useParams();
+    const { isFontLarge } = useFontSize();
     const [auctionsData, setAuctionsData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -44,7 +46,7 @@ export default function OtherUsersAuction() {
     if (loading) {
         return (
             <div className="text-center">
-                <LoadingSpinner/>
+                <LoadingSpinner />
             </div>
         );
     }
@@ -56,34 +58,32 @@ export default function OtherUsersAuction() {
                     auctionsData.map((ad) => (
                         <Link
                             to={`/ogloszenie/${ad.id}`}
-                            className="hover:scale-[1.01] ease-linear duration-100"
-                            key={ad.id}>
-                            <div className="bg-white dark:bg-neutral-900 dark:text-neutral-100 border rounded-lg shadow-md p-4 flex justify-between">
-                                <div className="flex items-center">
-                                    <img src={`data:image/jpeg;base64,${ad.thumbnail}`} alt={ad.name} className="w-200 h-200 object-cover" />
-                                    <div className="ml-4">
-                                        <h3 className="text-xl font-semibold mb-2">{ad.name}</h3>
-                                        <div className="flex items-center space-x-2 mb-2">
-                                            <BiCategoryAlt size={20} />
-                                            <p className="text-gray-600 dark:text-neutral-400 mb-2">{ad.category.name}</p>
-                                        </div>
-                                        <div className="flex items-center space-x-2 mb-2">
-                                            <FaMapMarkerAlt size={18} />
-                                            <p className="text-gray-600 dark:text-neutral-400">{ad.cityName}</p>
-                                        </div>
-                                        {/* TODO ZWRACANIE DATY KOŃCOWEJ */}
-                                        {/* <div className="flex items-center space-x-2 mb-2">
+                            key={ad.id}
+                            className="overflow-hidden bg-white dark:bg-neutral-900 dark:text-neutral-100 border rounded-lg shadow-md p-4 flex justify-between hover:bg-neutral-300 dark:hover:bg-neutral-800 duration-100 ease-linear">
+                            <div className="flex items-center">
+                                <img src={`data:image/jpeg;base64,${ad.thumbnail}`} alt={ad.name} className="object-cover" />
+                                <div className="ml-4">
+                                    <p className={`${isFontLarge ? "text-3xl" : "text-xl"} font-semibold mb-2`}>{ad.name}</p>
+                                    <div className="flex items-center space-x-2 mb-2">
+                                        <BiCategoryAlt size={20} />
+                                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} text-gray-600 dark:text-neutral-400 mb-2`}>{ad.category.name}</p>
+                                    </div>
+                                    <div className="flex items-center space-x-2 mb-2">
+                                        <FaMapMarkerAlt size={18} />
+                                        <p className={`${isFontLarge ? "text-2xl" : "text-lg"} text-gray-600 dark:text-neutral-400`}>{ad.cityName}</p>
+                                    </div>
+                                    {/* TODO ZWRACANIE DATY KOŃCOWEJ */}
+                                    {/* <div className="flex items-center space-x-2 mb-2">
                                             <FaRegCalendarAlt size={18} />
                                             <p className="text-gray-600">
                                                 {ad.startDate} - {ad.endDate}
                                             </p>
                                         </div> */}
-                                        <p className="text-lg font-semibold mb-2">{formatPrice(ad.price)}</p>
-                                    </div>
+                                    <p className={`${isFontLarge ? "text-2xl" : "text-lg"} font-semibold mb-2`}>{formatPrice(ad.price)}</p>
                                 </div>
-                                <div className="flex flex-col justify-between">
-                                    <span className="text-gray-600 dark:text-neutral-400">ID: {ad.id}</span>
-                                </div>
+                            </div>
+                            <div className="flex flex-col justify-between">
+                                <p className={`${isFontLarge ? "text-xl" : "text-lg"} text-gray-600 dark:text-neutral-400`}>ID: {ad.id}</p>
                             </div>
                         </Link>
                     ))

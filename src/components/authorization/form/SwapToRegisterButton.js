@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export default function SwapToRegister({isOn}) {
+export default function SwapToRegister({isOn, isFontLarge}) {
     return (
         <Link to="/rejestracja" className="w-full mh-xs:w-1/2">
             {isOn === true ? (
@@ -8,7 +8,7 @@ export default function SwapToRegister({isOn}) {
                     REJESTRACJA
                 </button>
             ) : (
-                <button className="swap-button hover:ease-linear hover:text-blue-500 dark:hover:text-neutral-100 hover:text-lg duration-75 mw-2xs:hover:text-sm">
+                <button className={`${isFontLarge ? "hover:text-2xl" : "hover:text-lg"} swap-button hover:ease-linear hover:text-blue-500 dark:hover:text-neutral-100 duration-75 mw-2xs:hover:text-sm`}>
                     REJESTRACJA
                 </button>
             )

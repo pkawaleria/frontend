@@ -2,11 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { BiChevronsLeft, BiChevronsRight } from "react-icons/bi";
 import "../../assets/styles/index.css";
+import { useFontSize } from "../fontSize/FontSizeContext"
 
 export default function GenericPageableAuctionList({
     pagedAuctions,
     onPageChange
 }) {
+    const {isFontLarge} = useFontSize();
+    
     const handlePreviousPage = () => {
         if (pagedAuctions.pageNumber > 0) {
             onPageChange(pagedAuctions.pageNumber - 1);
@@ -41,16 +44,15 @@ export default function GenericPageableAuctionList({
                         <img
                             src={`data:image/jpeg;base64,${auction.thumbnail}`}
                             alt={auction.name}
-                            className="object-cover"
-                        />
+                            className="object-cover"/>
                         <div className="w-[100%] px-3 py-2 flex flex-col">
                             <div className="flex h-1/5">
-                                <p className="text-xl font-semibold w-[50%] text-left">
+                                <p className={`${isFontLarge ? "text-3xl" : "text-xl"} font-semibold w-[50%] text-left`}>
                                     {auction.name.length > 30
                                         ? auction.name.slice(0, 27) + "..."
                                         : auction.name}
                                 </p>
-                                <p className="w-[50%] text-right italic">
+                                <p className={`w-[50%] text-right italic ${isFontLarge ? "text-xl" : "text-base"}`}>
                                     {auction.categoryPath.pathElements.length > 0
                                         ? (
                                             <>
@@ -68,14 +70,14 @@ export default function GenericPageableAuctionList({
                                 </p>
 
                             </div>
-                            <p className="text-gray-600 dark:text-neutral-300 text-lg h-3/5">
+                            <p className={`text-gray-600 dark:text-neutral-300 ${isFontLarge ? "text-2xl mt-1" : "text-lg"} h-3/5`}>
                                 Cena: {formatPrice(auction.price)}
                             </p>
                             <div className="flex">
-                                <p className="text-base h-1/5 w-[50%] text-left">
+                                <p className={`${isFontLarge ? "text-xl" : "text-base"} h-1/5 w-[50%] text-left`}>
                                     {auction.province.charAt(0).toUpperCase() + auction.province.slice(1)} / {auction.cityName}
                                 </p>
-                                <p className="text-base h-1/5 w-[50%] text-right">
+                                <p className={`${isFontLarge ? "text-xl" : "text-base"} h-1/5 w-[50%] text-right`}>
                                     Wyświetlenia: {auction.viewCounter}
                                 </p>
                             </div>
@@ -90,7 +92,7 @@ export default function GenericPageableAuctionList({
                     onClick={handlePreviousPage}
                     disabled={pagedAuctions.pageNumber === 0}
                 />
-                <span className="my-auto text-xl">
+                <span className={`my-auto ${isFontLarge ? "text-3xl" : "text-xl"}`}>
                     Strona {pagedAuctions.pageNumber + 1} z {pagedAuctions.pageCount}
                 </span>
                 <BiChevronsRight

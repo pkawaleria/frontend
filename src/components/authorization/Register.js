@@ -16,6 +16,7 @@ import {
     validatePhoneNumber,
 } from "./utils/RegisterValidators";
 import { inputs } from "./utils/RegisterInputs";
+import { useFontSize } from "../fontSize/FontSizeContext";
 
 export default function Register() {
     const [newUserData, setNewUserData] = useState({
@@ -37,6 +38,8 @@ export default function Register() {
         lastnameError: "",
         phone_numberError: "",
     });
+
+    const { isFontLarge } = useFontSize();
 
     const handleInputChange = (e) => {
         setNewUserData({ ...newUserData, [e.target.name]: e.target.value });
@@ -153,7 +156,7 @@ export default function Register() {
 
 
     return (
-        <div className="flex items-center justify-center h-screen linear gradient-bg-color-only">
+        <div className="flex items-center justify-center min-h-screen linear gradient-bg-color-only mt-12">
             <div className="group">
                 <Link to="/">
                     <AiFillHome
@@ -166,12 +169,12 @@ export default function Register() {
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form
-                className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2 
-                py-5 px-8 rounded-md border-0 w-96 mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3"
+                className={`${isFontLarge ? "text-xl" : "text-base"} bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
+                mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mb-12`}
                 onSubmit={handleSubmit}>
                 <div className="flex">
                     <SwapToRegisterButton isOn={true} />
-                    <SwapToLoginButton />
+                    <SwapToLoginButton isFontLarge={isFontLarge} />
                 </div>
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
@@ -183,7 +186,7 @@ export default function Register() {
                             onKeyDown={handleEnterPress}
                         />
                         <span
-                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
+                            className={`${isFontLarge ? "text-lg" : "text-sm"} mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
                             {errors[input.name + "Error"]}
                         </span>
                     </React.Fragment>

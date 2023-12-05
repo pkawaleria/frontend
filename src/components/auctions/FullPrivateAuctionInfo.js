@@ -74,9 +74,6 @@ export default function FullPrivateAuctionInfo() {
             setCurrentCategory(responseAuctionInfo.category)
             setCurrentMainCategory(responseAuctionInfo.categoryPath.pathElements[0])
 
-            console.log(responseAuctionInfo.category)
-            console.log(responseAuctionInfo.categoryPath.pathElements[0])
-
             try {
                 const auctioneerInfoResponse = await getUserShortInfo(
                     responseAuctionInfo.auctioneerId

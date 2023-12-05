@@ -6,6 +6,7 @@ import "react-image-lightbox/style.css";
 import { FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
 import axios from "axios";
 import { formatToUrlOption } from '../../services/formattingUtils';
+import { useFontSize } from "../fontSize/FontSizeContext"
 
 import {
     canDeleteAuctions,
@@ -37,6 +38,8 @@ export default function FullAuctionInfo() {
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
     const [currentCategory, setCurrentCategory] = useState(null);
     const [currentMainCategory, setCurrentMainCategory] = useState(null);
+
+    const { isFontLarge } = useFontSize();
 
     useEffect(() => {
         handleFetchUserAndAuctionInfo();
@@ -155,7 +158,7 @@ export default function FullAuctionInfo() {
                     {auctionInfo.categoryPath.pathElements.length > 0 ? (
                         <>
                             <button
-                                className="hover:text-gray-600 dark:hover:text-neutral-400 ease-linear duration-100"
+                                className={`${isFontLarge ? "text-4xl" : "text-2xl"} hover:text-gray-600 dark:hover:text-neutral-400 ease-linear duration-100`}
                                 onClick={() => {
                                     navigateToAuctions(currentMainCategory.name, currentMainCategory.id);
                                 }}>
@@ -164,9 +167,9 @@ export default function FullAuctionInfo() {
 
                             {auctionInfo.categoryPath.pathElements.length > 2 ? (
                                 <>
-                                    {' / ... / '}
+                                    <span>{' / ... / '}</span>
                                     <button
-                                        className="hover:text-gray-600 dark:hover:text-neutral-400 ease-linear duration-100"
+                                        className={`${isFontLarge ? "text-4xl" : "text-2xl"} hover:text-gray-600 dark:hover:text-neutral-400 ease-linear duration-100`}
                                         onClick={() => {
                                             navigateToAuctions(currentCategory.name, currentCategory.id);
                                         }}>
@@ -175,9 +178,9 @@ export default function FullAuctionInfo() {
                                 </>
                             ) : auctionInfo.categoryPath.pathElements.length > 1 ? (
                                 <>
-                                    {' / '}
+                                    <span className={`${isFontLarge ? "text-4xl" : "text-2xl"}`}>{' / '}</span>
                                     <button
-                                        className="hover:text-gray-600 dark:hover:text-neutral-400 ease-linear duration-100"
+                                        className={`${isFontLarge ? "text-4xl" : "text-2xl"} hover:text-gray-600 dark:hover:text-neutral-400 ease-linear duration-100`}
                                         onClick={() => {
                                             navigateToAuctions(currentCategory.name, currentCategory.id);
                                         }}>
@@ -246,20 +249,19 @@ export default function FullAuctionInfo() {
                     </div>
                 )}
                 <div className="bg-white dark:bg-neutral-700/20 rounded-lg shadow-md p-4 md:w-1/3 dark:text-neutral-100">
-                    <h2 className="text-[2.2vw] font-normal mb-5">
+                    <p className={`${isFontLarge ? "text-[3vw]" : "text-[2.2vw]"} font-normal mb-5`}>
                         {auctionInfo.name}
-                    </h2>
-                    <p className="text-[1.8vw] font-semibold mb-10">
+                    </p>
+                    <p className={`${isFontLarge ? "text-[2.1vw]" : "text-[1.8vw]"} font-semibold mb-10`}>
                         {formatPrice(auctionInfo.price)}
                     </p>
-                    <p className="text-[1.5vw] font-bold mb-5">OPIS</p>
-                    <p className="text-[1.25vw] text-gray-600 dark:text-neutral-400 break-words">
+                    <p className={`${isFontLarge ? "text-[1.4vw]" : "text-[1.25vw]"} text-gray-600 dark:text-neutral-400 break-words`}>
                         {auctionInfo.description}
                     </p>
                     <hr className="border-0 h-[1px] my-3 bg-slate-500 font-bold" />
                     <div className="flex">
-                        <p className="w-[50%] text-left">ID: {auctionInfo.id}</p>
-                        <p className="w-[50%] text-right">
+                        <p className={`${isFontLarge ? "text-[1.5vw]" : "text-[1vw]"} w-[50%] text-left`}>ID: {auctionInfo.id}</p>
+                        <p className={`${isFontLarge ? "text-[1.5vw]" : "text-[1vw]"} w-[50%] text-right`}>
                             Wyświetlenia: {auctionInfo.viewCount}
                         </p>
                     </div>
@@ -270,35 +272,44 @@ export default function FullAuctionInfo() {
             <div
                 className="mt-3 flex flex-col w-[20%] max-w-screen-md bg-white dark:bg-neutral-800 rounded-lg shadow-md p-4 space-y-4 self-start">
                 <div className="bg-white dark:bg-neutral-700/20 rounded-lg shadow-md p-[1vw] grid">
-                    <h3 className="text-[1.2vw] font-semibold text-center dark:text-neutral-200">Dane użytkownika</h3>
+                    <p className={`${isFontLarge ? "text-[1.8vw]" : "text-[1.2vw]"} font-semibold text-center dark:text-neutral-200`}>Dane użytkownika</p>
                     <Link
                         to={`/ogloszenia-uzytkownika/${userData.id}`}
-                        className="bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 text-white text-center py-[0.5vw] px-[1vw] mt-2 rounded-md hover:bg-blue-600 text-[1vw] ease-linear duration-100">
+                        className={`bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 
+                        text-white text-center py-[0.5vw] px-[1vw] mt-2 rounded-md 
+                        hover:bg-blue-600 ease-linear duration-100 
+                        ${isFontLarge ? "text-[1.3vw]" : "text-[1vw]"}`}>
                         Sprzedający: {userData.username}
                     </Link>
                     {showPhoneNumber ? (
-                        <p className="mb-1 text-[1vw] text-center mt-5 dark:text-neutral-200">
+                        <p className={`mb-1 ${isFontLarge ? "text-[1.4vw]" : "text-[1vw]"} text-center mt-5 dark:text-neutral-200`}>
                             Numer telefonu: {formatPhoneNumber(auctionInfo.phoneNumber)}
                         </p>
                     ) : (
                         <button
                             onClick={togglePhoneNumber}
-                            className="bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] mr-1 ease-linear duration-100">
+                            className={`bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 
+                            text-white py-[0.5vw] px-[1vw] rounded-md mt-2 
+                            hover:bg-blue-600 mr-1 ease-linear duration-100
+                            ${isFontLarge ? "text-[1.3vw]" : "text-[1vw]"}`}>
                             Pokaż numer
                         </button>
                     )}
                     {localStorage.getItem("accessToken") &&
-                        <button className="bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 text-white py-[0.5vw] px-[1vw] rounded-md mt-2 hover:bg-blue-600 text-[1vw] ease-linear duration-100"
+                        <button className={`bg-blue-500 dark:bg-neutral-700 dark:hover:bg-neutral-500 
+                        text-white py-[0.5vw] px-[1vw] rounded-md mt-2
+                        hover:bg-blue-600 ease-linear duration-100
+                        ${isFontLarge ? "text-[1.3vw]" : "text-[1vw]"}`}
                             onClick={sendMail}>
                             Wyślij wiadomość
                         </button>
                     }
                 </div>
                 <div className="bg-white dark:bg-neutral-700/20 rounded-lg shadow-md dark:text-neutral-200">
-                    <p className="text-[1vw] font-semibold m-4">
+                    <p className={`${isFontLarge ? "text-[1.3vw]" : "text-[1vw]"} font-semibold m-4`}>
                         Województwo: {auctionInfo.province.charAt(0).toUpperCase() + auctionInfo.province.slice(1)}
                     </p>
-                    <p className="text-[1vw] font-semibold m-4">
+                    <p className={`${isFontLarge ? "text-[1.3vw]" : "text-[1vw]"} font-semibold m-4`}>
                         Miejscowość: {auctionInfo.cityName}
                     </p>
                 </div>
@@ -339,7 +350,7 @@ export default function FullAuctionInfo() {
                                     value={emailTitle}
                                     onChange={(e) => setEmailTitle(e.target.value)}
                                     className="w-full p-2 border dark:text-neutral-300 border-blue-500 dark:bg-neutral-500 dark:border-neutral-200 rounded-md focus:outline-none"
-                                    required/>
+                                    required />
                             </div>
                             <div className="mb-4">
                                 <label
@@ -354,7 +365,7 @@ export default function FullAuctionInfo() {
                                     onChange={(e) => setEmailMessage(e.target.value)}
                                     rows="4"
                                     className="w-full p-2 border dark:text-neutral-300 border-blue-500 dark:bg-neutral-500 dark:border-neutral-200 rounded-md focus:outline-none"
-                                    required/>
+                                    required />
                             </div>
                             <div className="flex justify-center space-x-4">
                                 <button
