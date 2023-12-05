@@ -6,25 +6,28 @@ import DeletingPermissions from './DeletingPermissions';
 import UsersAdministration from './UsersAdministration';
 import GeneralCategories from "../categories/GeneralCategories"
 import AdminRegister from './authorization/AdminRegister';
+import { useFontSize } from '../fontSize/FontSizeContext';
 
 export default function AdminPanel() {
     const [selectedOption, setSelectedOption] = useState('statistics');
     const [permissionsExpanded, setPermissionsExpanded] = useState(false);
 
+    const {isFontLarge} = useFontSize();
+
     const renderContent = () => {
         switch (selectedOption) {
             case 'statistics':
-                return <Statistics />;
+                return <Statistics isFontLarge={isFontLarge}/>;
             case 'addPermissions':
-                return <AddingPermissions />;
+                return <AddingPermissions isFontLarge={isFontLarge}/>;
             case 'deletePermissions':
-                return <DeletingPermissions />;
+                return <DeletingPermissions isFontLarge={isFontLarge}/>;
             case 'userAccounts':
-                return <UsersAdministration />;
+                return <UsersAdministration isFontLarge={isFontLarge}/>;
             case 'categories':
                 return <GeneralCategories />;
             case 'newAdmin':
-                return <AdminRegister />;
+                return <AdminRegister isFontLarge={isFontLarge}/>;
             default:
                 return null;
         }
@@ -36,7 +39,8 @@ export default function AdminPanel() {
                 <Button
                     className={`w-full border border-white rounded mb-3
                     bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500  
-                    ${selectedOption === 'addPermissions' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
+                    ${selectedOption === 'addPermissions' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}
+                    ${isFontLarge ? "text-xl" : "text-base"}`}
                     onClick={() => {
                         setSelectedOption('addPermissions');
                     }}>
@@ -45,7 +49,8 @@ export default function AdminPanel() {
                 <Button
                     className={`w-full border border-white rounded
                     bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500  
-                    ${selectedOption === 'deletePermissions' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
+                    ${selectedOption === 'deletePermissions' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}
+                    ${isFontLarge ? "text-xl" : "text-base"}`}
                     onClick={() => {
                         setSelectedOption('deletePermissions');
                     }}>
@@ -61,7 +66,8 @@ export default function AdminPanel() {
                 <Button
                     className={`w-full border border-white rounded mb-3
                   bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500 
-                    ${selectedOption === 'statistics' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
+                    ${selectedOption === 'statistics' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}
+                    ${isFontLarge ? "text-2xl" : "text-base"}`}
                     onClick={() => {
                         setPermissionsExpanded(false);
                         setSelectedOption('statistics');
@@ -69,7 +75,7 @@ export default function AdminPanel() {
                     Statystyki
                 </Button>
                 <Button
-                    className='w-full border border-white rounded mb-3 bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500'
+                    className={`${isFontLarge ? "text-2xl" : "text-base"} w-full border border-white rounded mb-3 bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500`}
                     onClick={() => {
                         if (selectedOption === 'addPermissions' || selectedOption === 'deletePermissions') return
                         setPermissionsExpanded(!permissionsExpanded);
@@ -81,7 +87,8 @@ export default function AdminPanel() {
                     className={`w-full border border-white rounded mb-3
                     bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500 
                     ${permissionsExpanded ? 'my-3' : ""} 
-                    ${selectedOption === 'userAccounts' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
+                    ${selectedOption === 'userAccounts' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}
+                    ${isFontLarge ? "text-2xl" : "text-base"}`}
                     onClick={() => {
                         setPermissionsExpanded(false);
                         setSelectedOption('userAccounts')
@@ -91,7 +98,8 @@ export default function AdminPanel() {
                 <Button
                     className={`w-full border border-white rounded mb-3 
                     bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500 
-                    ${selectedOption === 'categories' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
+                    ${selectedOption === 'categories' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}
+                    ${isFontLarge ? "text-2xl" : "text-base"}`}
                     onClick={() => {
                         setPermissionsExpanded(false);
                         setSelectedOption('categories')
@@ -101,7 +109,8 @@ export default function AdminPanel() {
                 <Button
                     className={`w-full border border-white rounded mb-3 
                     bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500 
-                    ${selectedOption === 'newAdmin' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}`}
+                    ${selectedOption === 'newAdmin' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}
+                    ${isFontLarge ? "text-2xl" : "text-base"}`}
                     onClick={() => {
                         setPermissionsExpanded(false);
                         setSelectedOption('newAdmin')

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import LoginButton from "./form/LoginButton";
@@ -8,7 +7,8 @@ import SwapToLoginButton from "./form/SwapToLoginButton";
 import Input from "./form/Input";
 import { validateField } from "./utils/LoginValidators";
 import { inputs } from "./utils/LoginInputs";
-import {loginUser} from "../../services/userService";
+import { loginUser } from "../../services/userService";
+import { useFontSize } from "../fontSize/FontSizeContext"
 
 export default function Login() {
     const [loginData, setLoginData] = useState({
@@ -20,6 +20,8 @@ export default function Login() {
         loginError: "",
         passwordError: "",
     });
+
+    const {isFontLarge} = useFontSize();
 
     const handleInputChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -71,20 +73,20 @@ export default function Login() {
     const userTheme = localStorage.getItem("theme");
     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    const themeCheck = () => {
-        if (userTheme === "dark" || (!userTheme && systemTheme)) {
-            document.documentElement.classList.add("dark");
-            document.body.style.backgroundColor = "rgb(38 38 38)";
-            localStorage.setItem("theme", "dark")
-            return;
-        }
-        document.body.style.backgroundColor = "rgb(25, 70, 113)";
-        localStorage.setItem("theme", "light")
-    }
-
     useEffect(() => {
+        const themeCheck = () => {
+            if (userTheme === "dark" || (!userTheme && systemTheme)) {
+                document.documentElement.classList.add("dark");
+                document.body.style.backgroundColor = "rgb(38 38 38)";
+                localStorage.setItem("theme", "dark")
+                return;
+            }
+            document.body.style.backgroundColor = "rgb(25, 70, 113)";
+            localStorage.setItem("theme", "light")
+        }
+
         themeCheck()
-    }, [])
+    }, [userTheme, systemTheme])
 
     return (
         <div className="flex items-center justify-center h-screen linear gradient-bg-color-only">
@@ -100,11 +102,11 @@ export default function Login() {
                 <span className="group-hover:scale-100 home-tooltip">Strona główna</span>
             </div>
             <form
-                className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
-                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4"
+                className={`${isFontLarge ? "text-xl" : "text-base"} bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
+                    mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4`}
                 onSubmit={handleSubmit}>
                 <div className="flex">
-                    <SwapToRegisterButton />
+                    <SwapToRegisterButton isFontLarge={isFontLarge} />
                     <SwapToLoginButton isOn={true} />
                 </div>
                 {inputs.map((input) => (
@@ -115,7 +117,7 @@ export default function Login() {
                             value={loginData[input.name]}
                             onChange={handleInputChange}
                             onKeyDown={handleEnterPress}/>
-                        <span className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
+                        <span className={`${isFontLarge ? "text-lg" : "text-sm"} mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
                             {errors[input.name + "Error"]}
                         </span>
                     </React.Fragment>

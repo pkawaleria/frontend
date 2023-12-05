@@ -1,13 +1,11 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
-import { AiFillHome } from "react-icons/ai"
 import SubmitButton from "./form/SubmitButton"
 import Input from "./form/Input"
 import { validateUsername, validateEmail, validatePassword, arePasswordsIdentical, validateFirstname, validateLastname, validatePhoneNumber } from "./utils/RegisterValidators"
 import { inputs } from "./utils/RegisterInputs"
 import accountMsApi from "../../../services/accountMsApi";
 
-export default function AdminRegister() {
+export default function AdminRegister({ isFontLarge }) {
     const [newUserData, setNewUserData] = useState({
         username: "",
         email: "",
@@ -130,23 +128,26 @@ export default function AdminRegister() {
 
     return (
         <div className="flex flex-col items-center justify-center my-5">
-            <span className="text-white dark:text-neutral-200 text-[45px] font-bold mb-4 text-center">REJESTRACJA NOWEGO ADMINISTRATORA</span>
+            <p className={`text-white dark:text-neutral-200 font-bold mb-4 text-center
+            ${isFontLarge ? "text-[55px]" : "text-[40px]"} ease-linear duration-100`}>
+                REJESTRACJA NOWEGO ADMINISTRATORA
+            </p>
             <form
-                className="bg-white dark:bg-neutral-800 dark:border-white dark:border-2
-                py-5 px-8 rounded-md border-0 w-96 mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mw-2xs:p-3"
+                className={`${isFontLarge ? "text-xl" : "text-base"} bg-white dark:bg-neutral-800 dark:border-white dark:border-2 py-5 px-8 rounded-md border-0 border-blue-600 w-96
+                mw-2xs:text-xs mh-xs:text-xs mh-xs:w-60 mh-xs:p-4 mb-12`}
                 onSubmit={handleSubmit}>
                 {inputs.map((input) => (
                     <React.Fragment key={input.id}>
                         <Input
+                            isFontLarge={isFontLarge}
                             key={input.id}
                             {...input}
                             value={newUserData[input.name]}
                             onChange={handleInputChange}
                             onKeyDown={handleEnterPress} />
-                        <span
-                            className={`text-sm mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? 'block' : 'hidden'}`}>
+                        <p className={`${isFontLarge ? "text-lg" : "text-sm"} mt-1 ml-3 font-semibold text-red-500 ${errors[input.name + "Error"] ? "block" : "hidden"}`}>
                             {errors[input.name + "Error"]}
-                        </span>
+                        </p>
                     </React.Fragment>
                 ))}
                 <div className="flex space-x-4 mt-5 mw-2xs:mt-3">

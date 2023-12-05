@@ -3,19 +3,11 @@ import Footer from "../components/footer/Footer"
 import Profile from "../components/account/Profile"
 import ScrollToTopButton from "../components/functions/ScrollToTopButton"
 import ScrollToTop from '../components/functions/ScrollToTop'
-import { useFontSize } from "../components/fontSize/FontSizeContext"
 import {ToastContainer} from "react-toastify";
 
 export function ProfilePage() {
-
-    const { fontSize } = useFontSize();
-
-    const style = {
-        fontSize: fontSize === 'small' ? '16px' : fontSize === 'medium' ? '24px' : '24px',
-    };
-
     return (
-        <div className="flex flex-col" style={style}>
+        <div className="h-full flex flex-col">
             <ToastContainer/>
             <Navbar />
             <ScrollToTop />
