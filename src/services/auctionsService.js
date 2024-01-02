@@ -1,5 +1,5 @@
 import auctionMsApi from './auctionMsApi';
-import {errorToast, successToast} from "./toastService";
+import { errorToast, successToast } from "./toastService";
 
 export const createAuction = async (payload) => {
     try {
@@ -13,6 +13,21 @@ export const createAuction = async (payload) => {
     }
 };
 
+export const updateAuction = async (auctionId, payload, token) => {
+    try {
+        await auctionMsApi.put(`/auction-service/auctions/${auctionId}`, payload, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        successToast('Pomyślnie zaktualizowano aukcję')
+    } catch (error) {
+        errorToast(error);
+        console.error("Error updating auction", error);
+        throw error;
+    }
+};
 
 export const deleteAuction = async (auctionId, token) => {
     try {
@@ -43,7 +58,7 @@ export const getAuctionImages = async (auctionId) => {
 
 export const getAuctionImage = async (auctionId, imageId) => {
     try {
-        const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images/${imageId}`, {responseType: 'blob'});
+        const response = await auctionMsApi.get(`/auction-service/auctions/${auctionId}/images/${imageId}`, { responseType: 'blob' });
         return response.data;
     } catch (error) {
         errorToast(error);
@@ -131,7 +146,7 @@ export const searchAuctions = async (pageNumber, pageSize, filters) => {
         queryParams.page = pageNumber;
         queryParams.pageSize = pageSize;
 
-        const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
+        const response = await auctionMsApi.get('/auction-service/auctions/search', { params: queryParams });
         return response.data;
     } catch (error) {
         errorToast(error);
@@ -143,7 +158,7 @@ export const searchAuctionsWithFullQueryParams = async (pagingAndFilters) => {
     try {
         const queryParams = createQueryParams(pagingAndFilters);
         queryParams.page = pagingAndFilters.pageNumber;
-        const response = await auctionMsApi.get('/auction-service/auctions/search', {params: queryParams});
+        const response = await auctionMsApi.get('/auction-service/auctions/search', { params: queryParams });
         return response.data;
     } catch (error) {
         errorToast(error);

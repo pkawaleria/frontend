@@ -11,6 +11,7 @@ import { searchCities } from "../../services/citiesService";
 import { fetchFinalNodeCategories } from "../../services/categoryService";
 import { formatToOptions } from "../../services/formattingUtils";
 import {
+    updateAuction,
     fetchAuctionInfo,
     addImagesToAuction,
     getAuctionImages,
@@ -72,8 +73,9 @@ export default function EditAuction() {
                         setPhoneNumber(auctionData.phoneNumber);
                         setPrice(auctionData.price);
                         setCondition(auctionData.productCondition);
-                        setSelectedCityId(formatToOptions([{ name: auctionData.cityName }])[0])
-                        setSelectedCategory(formatToOptions([{ name: auctionData.category.name }])[0]);
+
+                        setSelectedCityId(formatToOptions([{id: auctionData.cityId, name: auctionData.cityName}]))
+                        setSelectedCategory(formatToOptions([auctionData.category]));
 
                         const imageIDs = await getAuctionImages(id);
                         const imageUrls = await Promise.all(
@@ -107,7 +109,7 @@ export default function EditAuction() {
 
     const handleImageUpload = (e) => {
         const selectedImages = Array.from(e.target.files);
-        const selectedImagePreviews = [...imagePreviews];
+        const selectedImagePreviews = new Array(10).fill(null);
 
         selectedImages.forEach((image, index) => {
             if (image.type.includes("image") && index < defaultImagePreviews.length) {
@@ -166,7 +168,6 @@ export default function EditAuction() {
             title &&
             selectedCategory &&
             selectedCityId &&
-            images.length > 0 &&
             description &&
             phoneNumber &&
             price &&
@@ -186,13 +187,12 @@ export default function EditAuction() {
 
     const prepareEditAuctionPayload = () => {
         return {
-            id: id,
             name: title,
             description: description,
-            price: price,
-            categoryId: selectedCategory.value,
+            price: formatPrice(price),
+            categoryId: selectedCategory[0].value,
             productCondition: condition,
-            cityId: selectedCityId.value,
+            cityId: selectedCityId[0].value,
             phoneNumber: phoneNumber,
         };
     };
@@ -201,10 +201,22 @@ export default function EditAuction() {
         if (!isConfirmationModalOpen) return;
         setIsConfirmationModalOpen(false);
 
+        console.log(prepareEditAuctionPayload())
+
         try {
-            //await updateAuction(prepareEditAuctionPayload());
-            const formData = prepareImageUploadFormData(images);
-            await addImagesToAuction(id, formData);
+            if (images.length > 0) {
+                if (images.length >= 10) {
+                    showPopupMessage("Zdjęć może być maksymalnie 10")
+                    return;
+                } else {
+                    const formData = prepareImageUploadFormData(images);
+                    await addImagesToAuction(id, formData);
+                }
+            }
+
+            const token = localStorage.getItem("accessToken")
+            await updateAuction(id, prepareEditAuctionPayload(), token);
+
             showPopupMessage("Ogłoszenie zostało pomyślnie zaktualizowane.", "success");
         } catch (error) {
             console.error("Error during auction update:", error);
@@ -238,11 +250,11 @@ export default function EditAuction() {
     };
 
     const handleCitySelectionChange = (selectedOption) => {
-        setSelectedCityId(selectedOption);
+        setSelectedCityId(formatToOptions([{id: selectedOption.value, name: selectedOption.label}]));
     };
 
     const handleCategorySelectionChange = (selectedOption) => {
-        setSelectedCategory(selectedOption);
+        setSelectedCategory(formatToOptions([{id: selectedOption.value, name: selectedOption.label}]));
     };
 
     const handlePopupClose = () => {
@@ -250,6 +262,10 @@ export default function EditAuction() {
             navigate("/twoje-ogloszenia");
         }
         setMessagePopup({ ...messagePopup, show: false });
+    };
+
+    const formatPrice = (price) => {
+        return parseFloat(price).toFixed(2)
     };
 
     return (
@@ -332,7 +348,7 @@ export default function EditAuction() {
                             <option value="DAMAGED" className="bg-gray-300 dark:bg-neutral-600">
                                 Uszkodzony
                             </option>
-                            <option value="NOT_APPLIED" className="bg-gray-300 dark:bg-neutral-600">
+                            <option value="NOT_APPLICABLE" className="bg-gray-300 dark:bg-neutral-600">
                                 Nie dotyczy
                             </option>
                         </select>
@@ -465,7 +481,7 @@ export default function EditAuction() {
                             type="number"
                             id="price"
                             name="price"
-                            value={price}
+                            value={formatPrice(price)}
                             onChange={(e) => {
                                 setPrice(e.target.value);
                                 validatePrice(e.target.value);
@@ -490,7 +506,7 @@ export default function EditAuction() {
                             onClick={handleEditAuction}
                             className={`${isFontLarge ? "text-2xl" : "text-base"} bg-blue-500 dark:bg-blue-900 dark:hover:bg-blue-700 ease-linear duration-100 text-white py-2 px-4 rounded-md hover:bg-blue-700 ${isFormValid() ? "" : "opacity-50 cursor-not-allowed"}`}
                             disabled={!isFormValid()}>
-                            Dodaj ogłoszenie
+                            Aktualizuj ogłoszenie
                         </Link>
                     </div>
                 </form>
