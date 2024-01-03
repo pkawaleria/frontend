@@ -16,12 +16,14 @@ import {
     fetchAuctionInfo,
     getAuctionImage,
     getAuctionImages,
+    deleteAuction
 } from "../../services/auctionsService";
 import { getUserShortInfo } from "../../services/userService";
 
 import "../../assets/styles/imageGallery/style.css";
 import Lightbox from "react-image-lightbox";
 import LoadingSpinner from "../spinner/LoadingSpinner";
+import { de } from "date-fns/locale";
 
 export default function FullAuctionInfo() {
     const navigate = useNavigate();
@@ -35,7 +37,10 @@ export default function FullAuctionInfo() {
     const [photoIndex, setPhotoIndex] = useState(0);
     const [emailTitle, setEmailTitle] = useState("");
     const [emailMessage, setEmailMessage] = useState("");
+    const [deleteAuctionEmailTitle, setDeleteAuctionEmailTitle] = useState("");
+    const [deleteAuctionEmailMessage, setDeleteAuctionEmailMessage] = useState("");
     const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+    const [isDeleteAuctionModalOpen, setIsDeleteAuctionModalOpen] = useState(false);
     const [currentCategory, setCurrentCategory] = useState(null);
     const [currentMainCategory, setCurrentMainCategory] = useState(null);
 
@@ -59,16 +64,24 @@ export default function FullAuctionInfo() {
         }
     };
 
-    const deleteAuction = async () => {
+    const handleDeleteAuction = async (title, message) => {
         try {
             const token = localStorage.getItem("accessToken");
             await deleteAuction(auctionInfo.id, token);
-            window.location = "/";
+            navigate("/")
         } catch (error) {
             console.log("Error during auction process:", error);
         }
     };
 
+    const isDeleteFormValid = () => {
+        return (
+            deleteAuctionEmailTitle &&
+            deleteAuctionEmailMessage &&
+            deleteAuctionEmailTitle.length > 0 &&
+            deleteAuctionEmailMessage.length > 0
+        )
+    }
     const handleFetchUserAndAuctionInfo = async () => {
         try {
             const responseAuctionInfo = await fetchAuctionInfo(id);
@@ -129,6 +142,10 @@ export default function FullAuctionInfo() {
 
     const sendMail = async () => {
         setIsConfirmationModalOpen(true);
+    };
+
+    const handleDeleteAuctionModal = () => {
+        setIsDeleteAuctionModalOpen(true);
     };
 
     const formatPrice = (price) => {
@@ -318,7 +335,7 @@ export default function FullAuctionInfo() {
                             className={`${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100`}
                             data-tooltip-id="deleteAd"
                             data-tooltip-content="Usuń ogłoszenie"
-                            onClick={deleteAuction}>
+                            onClick={handleDeleteAuctionModal}>
                             <BsXCircle className={`${isFontLarge ? "text-3xl" : "text-lg"} text-red-400 hover:text-red-600 ease-linear duration-100`} />
                             <Tooltip
                                 id="deleteAd"
@@ -327,6 +344,65 @@ export default function FullAuctionInfo() {
                                 delayShow={50}
                                 delayHide={50} />
                         </Link>
+                    </div>
+                )}
+                {isDeleteAuctionModalOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center z-50">
+                        <div className="absolute inset-0 bg-black opacity-50"></div>
+                        <div className="relative bg-white dark:bg-neutral-700 w-1/2 rounded-lg shadow-md p-8 opacity-100">
+                            <p className="text-lg font-semibold mb-4 text-center dark:text-neutral-300">
+                                Usuń ogłoszenie użytkownika
+                            </p>
+                            <div className="mb-4">
+                                <label
+                                    htmlFor="deleteAuctionEmailTitle"
+                                    className="block text-gray-600 dark:text-neutral-400 font-medium mb-2">
+                                    Tytuł:
+                                </label>
+                                <input
+                                    type="text"
+                                    id="deleteAuctionEmailTitle"
+                                    name="deleteAuctionEmailTitle"
+                                    value={deleteAuctionEmailTitle}
+                                    onChange={(e) => {
+                                        setDeleteAuctionEmailTitle(e.target.value)
+                                        isDeleteFormValid()
+                                    }}
+                                    className="w-full p-2 border dark:text-neutral-300 border-blue-500 dark:bg-neutral-500 dark:border-neutral-200 rounded-md focus:outline-none"
+                                    required />
+                            </div>
+                            <div className="mb-4">
+                                <label
+                                    htmlFor="deleteAuctionEmailMessage"
+                                    className="block text-gray-600 dark:text-neutral-400 font-medium mb-2">
+                                    Wiadomość:
+                                </label>
+                                <textarea
+                                    id="deleteAuctionEmailMessage"
+                                    name="deleteAuctionEmailMessage"
+                                    value={deleteAuctionEmailMessage}
+                                    onChange={(e) => {
+                                        setDeleteAuctionEmailMessage(e.target.value)
+                                        isDeleteFormValid()
+                                    }}
+                                    rows="4"
+                                    className="w-full p-2 border dark:text-neutral-300 border-blue-500 dark:bg-neutral-500 dark:border-neutral-200 rounded-md focus:outline-none"
+                                    required />
+                            </div>
+                            <div className="flex justify-center space-x-4">
+                                <button
+                                    className={`${isDeleteFormValid() ? "" : "cursor-not-allowed bg-green-500 hover:bg-green-500 dark:bg-green-900 hover:dark:bg-green-900"} text-white bg-green-500 hover:bg-green-700 dark:bg-green-900 dark:hover:bg-green-700 ease-linear duration-100 py-2 px-4 rounded-md`}
+                                    onClick={handleDeleteAuction}
+                                    disabled={!isDeleteFormValid()}>
+                                    Tak
+                                </button>
+                                <button
+                                    className="text-white bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-700 py-2 px-4 rounded-md"
+                                    onClick={() => setIsDeleteAuctionModalOpen(false)}>
+                                    Anuluj
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
                 {isConfirmationModalOpen && (
