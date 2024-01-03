@@ -7,27 +7,28 @@ import UsersAdministration from './UsersAdministration';
 import GeneralCategories from "../categories/GeneralCategories"
 import AdminRegister from './authorization/AdminRegister';
 import { useFontSize } from '../fontSize/FontSizeContext';
+import { canCreateAdminAccount, isSuperAdmin } from "./utils/PermissionsCheck"
 
 export default function AdminPanel() {
     const [selectedOption, setSelectedOption] = useState('statistics');
     const [permissionsExpanded, setPermissionsExpanded] = useState(false);
 
-    const {isFontLarge} = useFontSize();
+    const { isFontLarge } = useFontSize();
 
     const renderContent = () => {
         switch (selectedOption) {
             case 'statistics':
-                return <Statistics isFontLarge={isFontLarge}/>;
+                return <Statistics isFontLarge={isFontLarge} />;
             case 'addPermissions':
-                return <AddingPermissions isFontLarge={isFontLarge}/>;
+                return <AddingPermissions isFontLarge={isFontLarge} />;
             case 'deletePermissions':
-                return <DeletingPermissions isFontLarge={isFontLarge}/>;
+                return <DeletingPermissions isFontLarge={isFontLarge} />;
             case 'userAccounts':
-                return <UsersAdministration isFontLarge={isFontLarge}/>;
+                return <UsersAdministration isFontLarge={isFontLarge} />;
             case 'categories':
                 return <GeneralCategories />;
             case 'newAdmin':
-                return <AdminRegister isFontLarge={isFontLarge}/>;
+                return <AdminRegister isFontLarge={isFontLarge} />;
             default:
                 return null;
         }
@@ -74,14 +75,14 @@ export default function AdminPanel() {
                     }}>
                     Statystyki
                 </Button>
-                <Button
+                {isSuperAdmin() && <Button
                     className={`${isFontLarge ? "text-2xl" : "text-base"} w-full border border-white rounded mb-3 bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500`}
                     onClick={() => {
                         if (selectedOption === 'addPermissions' || selectedOption === 'deletePermissions') return
                         setPermissionsExpanded(!permissionsExpanded);
                     }}>
                     Uprawnienia
-                </Button>
+                </Button>}
                 {permissionsExpanded && renderPermissionsSubMenu()}
                 <Button
                     className={`w-full border border-white rounded mb-3
@@ -106,7 +107,7 @@ export default function AdminPanel() {
                     }}>
                     Kategorie
                 </Button>
-                <Button
+                {(isSuperAdmin() || canCreateAdminAccount()) && <Button
                     className={`w-full border border-white rounded mb-3 
                     bg-blue-500/5 hover:bg-blue-400/50 dark:bg-neutral-700 dark:hover:bg-neutral-500 
                     ${selectedOption === 'newAdmin' ? "bg-blue-400/50 dark:bg-neutral-500" : "bg-blue-500/5 dark:bg-neutral-700"}
@@ -116,7 +117,7 @@ export default function AdminPanel() {
                         setSelectedOption('newAdmin')
                     }}>
                     Nowy administrator
-                </Button>
+                </Button>}
             </div>
             <div className="w-5/6 items-center my-2 mr-8 p-2 border-2 border-white rounded">
                 {renderContent()}
