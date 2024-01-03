@@ -26,6 +26,8 @@ import LoadingSpinner from "../spinner/LoadingSpinner";
 import { de } from "date-fns/locale";
 
 export default function FullAuctionInfo() {
+    const token = localStorage.getItem("accessToken")
+
     const navigate = useNavigate();
     const [showPhoneNumber, setShowPhoneNumber] = useState(false);
     const { id } = useParams();
@@ -64,9 +66,8 @@ export default function FullAuctionInfo() {
         }
     };
 
-    const handleDeleteAuction = async (title, message) => {
+    const handleDeleteAuction = async () => {
         try {
-            const token = localStorage.getItem("accessToken");
             await deleteAuction(auctionInfo.id, token);
             navigate("/")
         } catch (error) {

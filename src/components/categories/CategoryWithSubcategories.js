@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import CategoryDetails from './CategoryDetails';
 import { fetchCategoryDetails, fetchSubcategories } from '../../services/categoryService';
-import { isSuperAdmin, canAddCateogires } from '../admins/utils/PermissionsCheck';
+import { isSuperAdmin, canAddCateogires, canEditCategories } from '../admins/utils/PermissionsCheck';
 import { formatToUrlOption } from '../../services/formattingUtils';
 import { useFontSize } from "../fontSize/FontSizeContext"
 
@@ -27,13 +27,6 @@ const CategoryWithSubcategories = () => {
         };
 
         fetchData();
-        try {
-            if (isSuperAdmin(localStorage.getItem('accessToken')) || canAddCateogires(localStorage.getItem('accessToken'))) {
-                setisAdmin(true);
-            }
-        } catch (error) {
-            console.error('Error checking permissions:', error);
-        }
     }, [id]);
 
     if (!currentCategory) return null;
@@ -53,7 +46,7 @@ const CategoryWithSubcategories = () => {
                     className={`${isFontLarge ? "text-xl" : "text-lg"} bg-blue-600 dark:bg-blue-900 dark:hover:bg-blue-800 text-white py-1 px-3 rounded mr-2 ease-linear duration-100 hover:bg-blue-700`}>
                     Pokaż aukcje
                 </button>
-                {isAdmin && (
+                {(isSuperAdmin() || canEditCategories()) && (
                     <>
                         <button className={`${isFontLarge ? "text-xl" : "text-lg"} bg-red-800 dark:bg-red-400 dark:hover:bg-red-600 text-white py-1 px-3 rounded mr-2 hover:bg-red-500 ease-linear duration-100`}>Usuń</button>
                         <button className={`${isFontLarge ? "text-xl" : "text-lg"} bg-blue-400 text-white py-1 px-3 rounded hover:bg-blue-500 ease-linear duration-100`}>Wyświetl szczegóły</button>

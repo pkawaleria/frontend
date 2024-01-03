@@ -7,6 +7,7 @@ import { Tooltip } from "react-tooltip";
 import LoadingSpinner from "../spinner/LoadingSpinner";
 import accountMsApi from "../../services/accountMsApi";
 import { successToast } from "../../services/toastService";
+import { canBlockUsers, isSuperAdmin } from "./utils/PermissionsCheck";
 
 export default function UsersAdministration({ isFontLarge }) {
     const [usersData, setUsersData] = useState([]);
@@ -139,7 +140,7 @@ export default function UsersAdministration({ isFontLarge }) {
                                                     delayShow={50}
                                                     delayHide={50} />
                                             </button>
-                                        ) : (
+                                        ) : ((canBlockUsers() || isSuperAdmin()) && 
                                             <button
                                                 className={`${isFontLarge ? "text-2xl" : "text-base"} ease-linear duration-100 pl-2`}
                                                 onClick={() => blockUser(user.id)}
